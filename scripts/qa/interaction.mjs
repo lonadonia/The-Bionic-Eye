@@ -34,28 +34,39 @@ const axeRun = async (page) => {
   await sleep(2500);
   const hero = await page.evaluate(() => {
     const v = document.querySelector("#top video");
-    return { paused: v.paused, muted: v.muted, t: Number(v.currentTime.toFixed(2)), src: v.currentSrc.split("/").pop() };
+    return {
+      paused: v.paused,
+      muted: v.muted,
+      t: Number(v.currentTime.toFixed(2)),
+      src: v.currentSrc.split("/").pop(),
+      decorative: v.getAttribute("aria-hidden"),
+    };
   });
-  check("QA-HERO-AUTOPLAY", !hero.paused && hero.muted && hero.t > 0.3, JSON.stringify(hero));
+  check("QA-HERO-AUTOPLAY", !hero.paused && hero.muted && hero.t > 0.3 && /hero-background-loop-1080/.test(hero.src), JSON.stringify(hero));
+  check("QA-HERO-DECORATIVE", hero.decorative === "true", `aria-hidden=${hero.decorative}`);
 
-  await page.getByRole("button", { name: /^Pause film/ }).click();
+  const ui = await page.evaluate(() => ({
+    ranges: document.querySelectorAll("#top input[type=range]").length,
+    lists: document.querySelectorAll("#top .hero ol").length,
+    playerText: /Sound off|Elapsed|Chapters in this film|C10 Use Case Shorts/.test(document.querySelector("#top .hero").innerText),
+    buttons: document.querySelectorAll("#top .hero button").length,
+  }));
+  check("QA-HERO-NO-PLAYER-UI", ui.ranges === 0 && ui.lists === 0 && !ui.playerText && ui.buttons === 1, JSON.stringify(ui));
+
+  await page.getByRole("button", { name: "Pause background film" }).click();
   await sleep(300);
   check("QA-HERO-PAUSE", await page.evaluate(() => document.querySelector("#top video").paused));
-
-  await page.getByRole("button", { name: /Sound off/ }).click();
-  check("QA-HERO-SOUND", await page.evaluate(() => !document.querySelector("#top video").muted));
-  await page.getByRole("button", { name: /Sound on/ }).click();
-
-  await page.locator('#top ol[aria-label="Chapters in this film"] button', { hasText: "Gutter cleaning" }).click();
+  await page.getByRole("button", { name: "Play background film" }).click();
   await sleep(600);
-  const g = await page.evaluate(() => document.querySelector("#top video").currentTime);
-  check("QA-HERO-CHAPTER", g >= 59.4 && g < 62, `t=${g.toFixed(2)}`);
+  check("QA-HERO-RESUME", await page.evaluate(() => !document.querySelector("#top video").paused));
 
-  await page.locator("#applications").scrollIntoViewIfNeeded();
-  await page.locator("#applications a", { hasText: "00:24" }).click();
+  await page.locator("#the-system").scrollIntoViewIfNeeded();
+  await sleep(900);
+  const offscreenPaused = await page.evaluate(() => document.querySelector("#top video").paused);
+  await page.evaluate(() => window.scrollTo(0, 0));
   await sleep(1200);
-  const f = await page.evaluate(() => ({ t: document.querySelector("#top video").currentTime, y: Math.round(window.scrollY) }));
-  check("QA-APP-CHAPTER-LINK", f.t >= 24 && f.t < 27, `t=${f.t.toFixed(2)} scrollY=${f.y}`);
+  const resumed = await page.evaluate(() => !document.querySelector("#top video").paused);
+  check("QA-HERO-OFFSCREEN-PAUSE", offscreenPaused && resumed, `paused off-screen=${offscreenPaused}, resumed on return=${resumed}`);
 
   await page.locator("#full-service-support").scrollIntoViewIfNeeded();
   await page.evaluate(() => window.scrollBy(0, 200));
@@ -130,6 +141,16 @@ const axeRun = async (page) => {
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(url, { waitUntil: "load" });
 
+  await sleep(1500);
+  const mobileHero = await page.evaluate(() => {
+    const v = document.querySelector("#top video");
+    const toggle = document.querySelector("#top .hero-toggle").getBoundingClientRect();
+    const cta = document.querySelector("#top .btn-primary").getBoundingClientRect();
+    const overlap = !(toggle.right <= cta.left || toggle.left >= cta.right || toggle.bottom <= cta.top || toggle.top >= cta.bottom);
+    return { src: v.currentSrc.split("/").pop(), playing: !v.paused, toggleOverlapsCta: overlap };
+  });
+  check("QA-HERO-MOBILE", /hero-background-loop-540/.test(mobileHero.src) && mobileHero.playing && !mobileHero.toggleOverlapsCta, JSON.stringify(mobileHero));
+
   await page.keyboard.press("Tab");
   const skip = await page.evaluate(() => document.activeElement?.textContent);
   check("QA-SKIP-LINK-FIRST", skip === "Skip to content", `first focus=${skip}`);
@@ -175,10 +196,10 @@ const axeRun = async (page) => {
   await sleep(1500);
   const rm = await page.evaluate(() => ({
     heroPaused: document.querySelector("#top video").paused,
-    overlay: [...document.querySelectorAll("#top button")].some((b) => b.textContent.includes("Play film")),
+    toggle: document.querySelector("#top .hero-toggle")?.getAttribute("aria-label"),
     anim: getComputedStyle(document.querySelector("[data-reveal]")).animationName,
   }));
-  check("QA-REDUCED-MOTION", rm.heroPaused && rm.overlay && rm.anim === "none", JSON.stringify(rm));
+  check("QA-REDUCED-MOTION", rm.heroPaused && rm.toggle === "Play background film" && rm.anim === "none", JSON.stringify(rm));
   await ctx.close();
 }
 

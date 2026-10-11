@@ -1,11 +1,21 @@
 {
   "url": "http://localhost:3100/",
-  "ranAt": "2026-10-11T21:24:25.989Z",
+  "ranAt": "2026-10-11T22:43:20.895Z",
   "results": [
     {
       "id": "QA-HERO-AUTOPLAY",
       "ok": true,
-      "detail": "{\"paused\":false,\"muted\":true,\"t\":2.15,\"src\":\"hero-c10-use-cases-1080.mp4\"}"
+      "detail": "{\"paused\":false,\"muted\":true,\"t\":2.27,\"src\":\"hero-background-loop-1080.mp4\",\"decorative\":\"true\"}"
+    },
+    {
+      "id": "QA-HERO-DECORATIVE",
+      "ok": true,
+      "detail": "aria-hidden=true"
+    },
+    {
+      "id": "QA-HERO-NO-PLAYER-UI",
+      "ok": true,
+      "detail": "{\"ranges\":0,\"lists\":0,\"playerText\":false,\"buttons\":1}"
     },
     {
       "id": "QA-HERO-PAUSE",
@@ -13,19 +23,14 @@
       "detail": ""
     },
     {
-      "id": "QA-HERO-SOUND",
+      "id": "QA-HERO-RESUME",
       "ok": true,
       "detail": ""
     },
     {
-      "id": "QA-HERO-CHAPTER",
+      "id": "QA-HERO-OFFSCREEN-PAUSE",
       "ok": true,
-      "detail": "t=60.03"
-    },
-    {
-      "id": "QA-APP-CHAPTER-LINK",
-      "ok": true,
-      "detail": "t=25.02 scrollY=407"
+      "detail": "paused off-screen=true, resumed on return=true"
     },
     {
       "id": "QA-NAV-SCROLLSPY",
@@ -55,7 +60,7 @@
     {
       "id": "QA-WATCH-VIDEO",
       "ok": true,
-      "detail": "{\"controls\":true,\"paused\":false,\"muted\":false,\"t\":1.63,\"focused\":true}"
+      "detail": "{\"controls\":true,\"paused\":false,\"muted\":false,\"t\":1.58,\"focused\":true}"
     },
     {
       "id": "QA-DATASHEET-PDF",
@@ -96,6 +101,11 @@
       "id": "QA-NO-CONSOLE-ERRORS-1440",
       "ok": true,
       "detail": ""
+    },
+    {
+      "id": "QA-HERO-MOBILE",
+      "ok": true,
+      "detail": "{\"src\":\"hero-background-loop-540.mp4\",\"playing\":true,\"toggleOverlapsCta\":false}"
     },
     {
       "id": "QA-SKIP-LINK-FIRST",
@@ -140,7 +150,7 @@
     {
       "id": "QA-REDUCED-MOTION",
       "ok": true,
-      "detail": "{\"heroPaused\":true,\"overlay\":true,\"anim\":\"none\"}"
+      "detail": "{\"heroPaused\":true,\"toggle\":\"Play background film\",\"anim\":\"none\"}"
     }
   ]
 }

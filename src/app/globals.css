@@ -384,29 +384,102 @@
     color: var(--color-signal-bright);
   }
 
-  /* ---------- Media frame + print crop marks ---------- */
-  .cropmarks {
+  /* ---------- Hero: full-bleed background film behind the headline ---------- */
+  .hero {
     position: relative;
+    isolation: isolate;
+    display: flex;
+    min-height: clamp(36rem, calc(100svh - 68px), 56rem);
+    overflow: hidden;
+    background: var(--color-ink);
   }
 
-  .cropmarks::before {
-    content: "";
+  .hero__content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding-block: 1.5rem 2.5rem;
+  }
+
+  .hero-video {
     position: absolute;
-    inset: -9px;
-    pointer-events: none;
-    --mark: currentColor;
-    --len: 12px;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* When the hero is narrower than 16:9 (phones, tablets), keep the right-hand side of the film —
+       where the C10 flies in most shots — rather than the centre, which the text covers anyway. */
+    object-position: 72% 45%;
+  }
+
+  /* Functional legibility scrim in brand ink — keeps white text above WCAG AA over any frame. */
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
     background:
-      linear-gradient(var(--mark), var(--mark)) top left / var(--len) 1px,
-      linear-gradient(var(--mark), var(--mark)) top left / 1px var(--len),
-      linear-gradient(var(--mark), var(--mark)) top right / var(--len) 1px,
-      linear-gradient(var(--mark), var(--mark)) top right / 1px var(--len),
-      linear-gradient(var(--mark), var(--mark)) bottom left / var(--len) 1px,
-      linear-gradient(var(--mark), var(--mark)) bottom left / 1px var(--len),
-      linear-gradient(var(--mark), var(--mark)) bottom right / var(--len) 1px,
-      linear-gradient(var(--mark), var(--mark)) bottom right / 1px var(--len);
-    background-repeat: no-repeat;
-    opacity: 0.55;
+      linear-gradient(180deg, rgb(29 29 27 / 0.86) 0px, rgb(29 29 27 / 0.8) 72px, rgb(29 29 27 / 0) 240px),
+      linear-gradient(0deg, rgb(29 29 27 / 0.94) 0%, rgb(29 29 27 / 0.82) 40%, rgb(29 29 27 / 0.3) 72%, rgb(29 29 27 / 0.12) 100%);
+  }
+
+  .hero-toggle {
+    position: absolute;
+    top: 2.25rem;
+    right: var(--spacing-page);
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid rgb(255 255 255 / 0.55);
+    background: rgb(29 29 27 / 0.35);
+    color: var(--color-paper);
+    backdrop-filter: blur(6px);
+    transition:
+      background-color 160ms var(--ease-precise),
+      border-color 160ms var(--ease-precise);
+  }
+
+  .hero-toggle:hover {
+    background: rgb(29 29 27 / 0.6);
+    border-color: var(--color-paper);
+  }
+
+  .hero-toggle:focus-visible {
+    outline: 3px solid var(--color-signal-bright);
+    outline-offset: 3px;
+  }
+
+  /* From 640px the dealer line occupies the top-right, so the toggle sits bottom-right, level with the CTA. */
+  @media (width >= 40rem) {
+    .hero-toggle {
+      top: auto;
+      bottom: 2.5rem;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .hero {
+      min-height: clamp(40rem, calc(100svh - 88px), 60rem);
+    }
+
+    .hero__content {
+      padding-block: 2.5rem 4rem;
+    }
+
+    .hero-toggle {
+      bottom: 4rem;
+    }
+
+    /* Desktop: text sits bottom-left, so the scrim darkens left and bottom and leaves the film clear on the right. */
+    .hero-scrim {
+      background:
+        linear-gradient(180deg, rgb(29 29 27 / 0.86) 0px, rgb(29 29 27 / 0.8) 84px, rgb(29 29 27 / 0) 260px),
+        linear-gradient(90deg, rgb(29 29 27 / 0.86) 0%, rgb(29 29 27 / 0.78) 42%, rgb(29 29 27 / 0.45) 62%, rgb(29 29 27 / 0.1) 82%, rgb(29 29 27 / 0) 94%),
+        linear-gradient(0deg, rgb(29 29 27 / 0.6) 0%, rgb(29 29 27 / 0) 52%);
+    }
   }
 
   .media-frame {
@@ -573,65 +646,3 @@
   }
 }
 
-/* Mobile: hero film runs edge to edge; crop marks only where there is margin to hold them. */
-@media (width < 48rem) {
-  .bleed-mobile {
-    margin-inline: calc(-1 * var(--spacing-page));
-  }
-
-  .bleed-mobile.cropmarks::before {
-    display: none;
-  }
-}
-
-/* Range input used as the film scrubber */
-.scrubber {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 1.75rem;
-  background: transparent;
-  cursor: pointer;
-}
-
-.scrubber::-webkit-slider-runnable-track {
-  height: 2px;
-  background: linear-gradient(
-    to right,
-    var(--color-ink) 0 var(--progress, 0%),
-    var(--color-line) var(--progress, 0%) 100%
-  );
-}
-
-.scrubber::-moz-range-track {
-  height: 2px;
-  background: var(--color-line);
-}
-
-.scrubber::-moz-range-progress {
-  height: 2px;
-  background: var(--color-ink);
-}
-
-.scrubber::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  margin-top: -5px;
-  background: var(--color-ink);
-  border: 2px solid var(--color-paper);
-  box-shadow: 0 0 0 1px var(--color-ink);
-}
-
-.scrubber::-moz-range-thumb {
-  width: 10px;
-  height: 10px;
-  background: var(--color-ink);
-  border: 2px solid var(--color-paper);
-  border-radius: 0;
-  box-shadow: 0 0 0 1px var(--color-ink);
-}
-
-.scrubber:focus-visible {
-  outline-offset: 2px;
-}

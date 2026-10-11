@@ -52,7 +52,7 @@ scripts/qa/       QA, export and media-pipeline scripts (not part of the build)
 
 ## Media
 
-`public/media` is generated from the client asset pack with `scripts/qa/encode-media.sh` (H.264, faststart, responsive hero sources, labelled excerpts for long films) and `scripts/qa/brand-svg.mjs` (logos from the supplied `.ai` files). The original asset pack is not committed.
+`public/media` is generated from the client asset pack with `scripts/qa/encode-media.sh` (H.264, faststart; a silent 25 s hero background loop cut from the named film, served at 1080p/540p; labelled excerpts for long films) and `scripts/qa/brand-svg.mjs` (logos from the supplied `.ai` files). The original asset pack is not committed.
 
 All photography, film, logos and the datasheet are © The Bionic Eye Ltd / ABZ Innovation, supplied for this contest. They are not licensed for any other use.
 

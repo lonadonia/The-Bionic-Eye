@@ -1,60 +1,56 @@
-import { applications, cta, hero, site } from "@/content/copy";
+import { cta, hero, site } from "@/content/copy";
 import { films } from "@/content/media";
 import { ArrowRight } from "../icons";
-import { HeroFilm } from "../video/hero-film";
+import { HeroBackground } from "../video/hero-background";
 
 export function Hero() {
-  const chapters = applications.items.map((a) => ({ id: a.id, label: a.label, time: a.chapter }));
-
   return (
-    <section id="top" aria-labelledby="hero-heading" className="pt-6 pb-16 lg:pt-10 lg:pb-24">
-      <div className="shell">
-        <div className="section-head">
-          <p className="t-label flex items-baseline gap-3">
-            <span className="section-head__index t-index">{hero.index}</span>
-            <span>{site.pageName}</span>
-          </p>
-          <p className="t-label muted hidden text-right sm:block">{site.dealerLine}</p>
-        </div>
+    <section id="top" aria-labelledby="hero-heading">
+      <div className="hero on-ink">
+        <HeroBackground film={films.hero} />
 
-        <div className="grid-12 mt-8 items-end gap-y-8 lg:mt-12">
-          <h1 id="hero-heading" className="t-display col-span-4 md:col-span-8 lg:col-span-12 xl:col-span-8">
-            {hero.heading.map((line) => (
-              <span key={line} className="block">
-                {line}
-              </span>
-            ))}
-          </h1>
-
-          <div className="col-span-4 md:col-span-6 lg:col-span-7 xl:col-span-4 xl:pb-1.5">
-            <p className="t-label flex items-center gap-2.5">
-              <span aria-hidden="true" className="inline-block h-2 w-2 bg-signal" />
-              {hero.kicker}
+        <div className="hero__content shell">
+          <div className="section-head">
+            <p className="t-label flex items-baseline gap-3">
+              <span className="section-head__index t-index">{hero.index}</span>
+              <span>{site.pageName}</span>
             </p>
-            <p className="t-lede mt-4 max-w-[36rem]">{hero.intro}</p>
-            <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4">
-              <a href={cta.href} className="btn btn-primary w-full sm:w-auto">
-                {cta.label}
-                <ArrowRight size={18} />
-              </a>
+            <p className="t-label hidden text-right text-paper/80 sm:block">{site.dealerLine}</p>
+          </div>
+
+          <div className="mt-auto grid-12 pt-16">
+            <div className="col-span-4 md:col-span-7 lg:col-span-8">
+              <p className="t-label flex items-center gap-2.5">
+                <span aria-hidden="true" className="inline-block h-2 w-2 bg-signal-bright" />
+                {hero.kicker}
+              </p>
+              <h1 id="hero-heading" className="t-display mt-5">
+                {hero.heading.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </h1>
+              <p className="t-lede mt-6 max-w-[36rem] text-paper/90">{hero.intro}</p>
+              <div className="mt-8">
+                <a href={cta.href} className="btn btn-primary w-full sm:w-auto">
+                  {cta.label}
+                  <ArrowRight size={18} />
+                </a>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="mt-10 lg:mt-14">
-          <HeroFilm film={films.hero} chapters={chapters} />
-        </div>
-
-        <ul
-          className="mt-14 grid border-t border-ink sm:grid-cols-3 lg:mt-20"
-          aria-label="Meet the ABZ Innovation C10"
-        >
+      <div className="shell">
+        <ul className="grid border-b border-line sm:grid-cols-3" aria-label="Meet the ABZ Innovation C10">
           {hero.triad.map((line, i) => (
             <li
               key={line}
               data-reveal
               style={{ ["--reveal-offset" as string]: `${i * 6}%` }}
-              className={`border-b border-line py-5 sm:border-b-0 sm:py-7 ${i > 0 ? "sm:border-l sm:pl-6 lg:pl-8" : ""} ${
+              className={`border-line py-5 sm:py-8 ${i > 0 ? "border-t sm:border-t-0 sm:border-l sm:pl-6 lg:pl-8" : ""} ${
                 i < 2 ? "sm:pr-6" : ""
               }`}
             >

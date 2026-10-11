@@ -17,7 +17,7 @@ Run on 11 October 2026 against the local **production** build (`next build` + `n
 |---|---|---|
 | Only client-approved copy and assets; British English | VERIFIED_PASS | `qa/copy-audit.json`: 154 verbatim (PDF text layer), 22 brief, 4 film titles, 4 UI/placeholder labels, **0 unverified**; localisation log in 01 §6.1; `lang="en-GB"` |
 | Header, sections 1–6 in order, footer | VERIFIED_PASS | QA-SECTION-ORDER: `top > applications > the-system > full-service-support > operating-legally > enquiry`; header and footer in both exports |
-| Named C10 video in hero | VERIFIED_PASS | QA-HERO-AUTOPLAY plays `hero-c10-use-cases-1080.mp4` (from `C10-Use-Case-Shorts-Final-Horizontal.mp4`) |
+| Named C10 video in hero | VERIFIED_PASS | QA-HERO-AUTOPLAY plays `hero-background-loop-1080.mp4` (25 s background loop cut from `C10-Use-Case-Shorts-Final-Horizontal.mp4`) |
 | All additional supplied videos thoughtfully placed | VERIFIED_PASS | 8/8 placed once each — 01 §5 |
 | Full desktop design 1440 | VERIFIED_PASS | `exports/asset-cleaning-1440-full.png` (1440 × 11 675) and `.pdf` (single page) |
 | Mobile 390: hero + another section | VERIFIED_PASS | `exports/asset-cleaning-390@2x-hero-applications.png` / `.pdf` (hero + Applications); full page `asset-cleaning-390@2x-full.png` |
@@ -31,11 +31,12 @@ Run on 11 October 2026 against the local **production** build (`next build` + `n
 
 | ID | REQ | Scenario | Result |
 |---|---|---|---|
-| QA-HERO-AUTOPLAY | 014 | Hero film plays muted when visible (motion allowed) | PASS — `{"paused":false,"muted":true,"t":2.2}` |
-| QA-HERO-PAUSE | 023 | Pause button pauses | PASS |
-| QA-HERO-SOUND | 023 | Sound toggle unmutes | PASS |
-| QA-HERO-CHAPTER | 014 | "Gutter cleaning" chapter seeks the film | PASS — t = 60.04 s |
-| QA-APP-CHAPTER-LINK | 015 | Applications "In the film 00:24" jumps hero to façade chapter and scrolls to it | PASS — t = 25.00 s |
+| QA-HERO-AUTOPLAY | 014 | Background film plays muted when visible (motion allowed) | PASS — `{"paused":false,"muted":true,"t":2.4}` |
+| QA-HERO-DECORATIVE | 014 | Background video hidden from assistive technology (`aria-hidden`) | PASS |
+| QA-HERO-NO-PLAYER-UI | 014 | No scrubber, chapter list, timer or sound control in the hero; exactly one control | PASS — `{"ranges":0,"lists":0,"buttons":1}` |
+| QA-HERO-PAUSE / QA-HERO-RESUME | 023 | Icon toggle pauses and resumes the film | PASS |
+| QA-HERO-OFFSCREEN-PAUSE | 014 | Pauses when scrolled away, resumes on return | PASS |
+| QA-HERO-MOBILE | 014 | 540p loop served on phones; toggle never overlaps the CTA | PASS |
 | QA-NAV-SCROLLSPY | 011 | Header marks the section in view (`aria-current`) | PASS — "Full service support" |
 | QA-SERVICE-PRESELECT | 017, 019 | Clicking "Training" pre-selects it in the form | PASS |
 | QA-FORM-VALIDATION | 019 | Empty submit → 2 errors, `aria-invalid`, focused error summary | PASS |
@@ -63,6 +64,7 @@ Run on 11 October 2026 against the local **production** build (`next build` + `n
 |---|---|
 | axe-core 4.x, tags WCAG 2.0/2.1 A+AA and 2.2 AA, 1440 | VERIFIED_PASS — 0 violations |
 | axe-core, 390 | VERIFIED_PASS — 0 violations (one `label-content-name-mismatch` found in an earlier run on film play buttons, fixed and re-tested) |
+| Hero text over moving film (`scripts/qa/hero-contrast.mjs`: 22 frames, P95 of the background under each text line) | VERIFIED_PASS — worst 6.22:1 desktop headline (3:1 needed); small text ≥ 6.61:1 (4.5:1 needed); `qa/hero-contrast.txt` |
 | Contrast of every token pair | VERIFIED_PASS — computed; lowest text pair 5.26:1, non-text ≥ 3.43:1 (02 §4.1) |
 | Reduced motion | VERIFIED_PASS — QA-REDUCED-MOTION: hero paused with "Play film", reveal animation `none` |
 | Manual screen-reader pass (NVDA / VoiceOver) | NOT_TESTED |
@@ -84,8 +86,8 @@ Evidence: `qa/overflow-check.txt`, `qa/screens/first-viewport-*.png`.
 
 | Check | Result |
 |---|---|
-| First-view transfer (no video), 20 Mbps throttle | ~0.86 MB at 1440 and 390 (images ~0.6 MB, JS 145 KB, fonts 88 KB) |
-| Hero streaming with motion allowed | ~9.6 MB in the first 10 s (1440, 1080p file) · ~4.9 MB (390, 540p file) — progressive, non-blocking |
+| First-view transfer (no video), 20 Mbps throttle | ~0.88 MB at 1440, ~0.94 MB at 390 (images ~0.6 MB, JS 144 KB, fonts 88 KB) — `qa/page-weight.txt` |
+| Hero loop with motion allowed | 7.4 MB in the first 10 s at 1440 (8.0 MB file) · 2.2 MB at 390 (2.9 MB file); loaded once, then looped from cache |
 | Responsive hero source | VERIFIED_PASS — 540p served ≤ 767 px, 1080p above |
 | Watch films | Nothing downloaded until clicked (verified in QA-WATCH-VIDEO) |
 | LCP (local, not field data) | ~0.6 s — indicative only |

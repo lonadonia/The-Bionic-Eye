@@ -21,20 +21,27 @@ export type Film = {
 };
 
 export const films = {
+  /**
+   * Hero background loop: eight shots cut on the film's own edits, in this order (film seconds):
+   * 10.92–14.02, 19.92–21.62, 21.98–23.90, 32.34–34.90, 39.06–40.50, 43.95–46.36, 61.30–68.70, 0.04–4.22.
+   * It opens on the solar-panel clean (drone right, text left) and excludes the on-screen title cards,
+   * the black end card, and the shots used as Applications tiles (16.5, 56.5, 70.5 s). Silent.
+   */
   hero: {
-    id: "c10-use-cases",
-    title: "C10 Use Case Shorts",
+    id: "c10-use-cases-background",
+    title: "C10 Use Case Shorts — background loop",
     source: "C10-Use-Case-Shorts-Final-Horizontal.mp4",
     src: {
-      large: "/media/video/hero-c10-use-cases-1080.mp4",
-      small: "/media/video/hero-c10-use-cases-540.mp4",
+      large: "/media/video/hero-background-loop-1080.mp4",
+      small: "/media/video/hero-background-loop-540.mp4",
     },
     poster: "/media/poster/hero-c10-use-cases.jpg",
-    duration: 83.4,
-    hasAudio: true,
+    duration: 25,
+    fullDuration: 83.4,
+    hasAudio: false,
     orientation: "landscape",
     description:
-      "ABZ Innovation film of the C10 at work: solar panel cleaning, façade cleaning, roof moss removal and gutter cleaning, each introduced by an on-screen title.",
+      "The C10 at work: hovering over open land, cleaning rooftop solar panels, façades, glazing, a moss-covered roof and gutters.",
   },
   applicationsMontage: {
     id: "c10-short",

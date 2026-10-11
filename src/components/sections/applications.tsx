@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { applications } from "@/content/copy";
 import { films } from "@/content/media";
-import { ChapterLink } from "../chapter-link";
 import { SectionHead } from "../section-head";
 import { AmbientVideo } from "../video/ambient-video";
 
@@ -38,9 +37,6 @@ export function Applications() {
                   <h3 id={`${item.id}-title`} className="t-h3">
                     {item.label}
                   </h3>
-                </div>
-                <div className="mt-2 pl-[calc(2ch+0.75rem)]">
-                  <ChapterLink time={item.chapter} label={item.label} />
                 </div>
               </article>
             </li>

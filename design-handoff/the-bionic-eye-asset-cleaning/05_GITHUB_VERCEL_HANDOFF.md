@@ -7,12 +7,12 @@ Stack:              Next.js 16.4.0 (App Router, static) · React 19.3.0 · TypeS
 Package manager:    npm 11.19.0 (package-lock.json committed) · Node ≥ 20.9 (built locally on 24.21.0)
 Local path:         C:\Users\PC\Desktop\W\Freelance & bot\contests\7\the-bionic-eye
 Local build:        PASS — `npm run build` exit 0; `npx eslint .` exit 0; `npx tsc --noEmit` exit 0
-QA:                 28/28 interaction + axe checks PASS; copy audit 0 unverified; no overflow at 1440/1024/768/390/360
+QA:                 30/30 interaction + axe checks PASS; hero text contrast PASS at 22 film frames; copy audit 0 unverified; no overflow at 1440/1024/768/390/360
 GitHub status:      PUSHED — normal push, no force; remote main verified equal to local (git ls-remote + GitHub API)
 GitHub repo URL:    https://github.com/lonadonia/The-Bionic-Eye
 Visibility:         public (verified via GitHub API, 11 Oct 2026)
 Branch:             main
-Code commit SHA:    e5064fefb603956a66937df10a6ee00c70926e4c (initial delivery; this document was updated in the following commit)
+Revisions:          e5064fe initial delivery · c8c1601 handoff status · next commit: hero as full-bleed background film (see git log)
 Vercel readiness:   VERIFIED_READY — Next.js preset, default build, no env vars, no vercel.json required
 Vercel preview:     PREVIEW_NOT_DEPLOYED — BLOCKED_EXTERNAL
 Vercel URL:         NOT_AVAILABLE
@@ -34,7 +34,7 @@ To finish (either route, about two minutes):
 
 ## What was pushed
 
-Source code, `package-lock.json`, `public/media` (≈ 110 MB of optimised video, posters, images and logo SVGs; largest file 29 MB), the datasheet PDF, the handoff documents, exports and QA evidence. Not pushed: the original asset pack (≈ 2.7 GB), `node_modules`, `.next`, `.env*`, `.vercel`.
+Source code, `package-lock.json`, `public/media` (≈ 78 MB of optimised video, posters, images and logo SVGs; largest file 18.7 MB), the datasheet PDF, the handoff documents, exports and QA evidence. Not pushed: the original asset pack (≈ 2.7 GB), `node_modules`, `.next`, `.env*`, `.vercel`.
 
 ## Vercel
 

@@ -12,9 +12,20 @@ mkdir -p "$OUT/video" "$OUT/poster" "$OUT/img"
 log() { echo "[$(date +%T)] $*"; }
 
 # ---------- Video ----------
-log "01 hero (1080p + 540p)"
-"$FF" -v error -y -i "$SRC/C10-Use-Case-Shorts-Final-Horizontal.mp4" -map 0:v:0 -map 0:a:0 -vf "scale=1920:-2:flags=lanczos" "${X264[@]}" -crf 26 -maxrate 3000k -bufsize 6000k -g 50 -c:a aac -b:a 96k -ac 2 "$OUT/video/hero-c10-use-cases-1080.mp4"
-"$FF" -v error -y -i "$SRC/C10-Use-Case-Shorts-Final-Horizontal.mp4" -map 0:v:0 -map 0:a:0 -vf "scale=960:-2:flags=lanczos" "${X264[@]}" -crf 27 -maxrate 1100k -bufsize 2200k -g 50 -c:a aac -b:a 80k -ac 2 "$OUT/video/hero-c10-use-cases-540.mp4"
+log "01 hero background loop (silent; eight shots cut on the film's own edits; title cards, end card and tile shots excluded)"
+TMP="$(mktemp -d)"
+: > "$TMP/list.txt"
+n=0
+for seg in "10.92 14.02" "19.92 21.62" "21.98 23.90" "32.34 34.90" "39.06 40.50" "43.95 46.36" "61.30 68.70" "0.04 4.22"; do
+  set -- $seg; n=$((n + 1))
+  "$FF" -v error -y -ss "$1" -to "$2" -i "$SRC/C10-Use-Case-Shorts-Final-Horizontal.mp4" -an -vf "scale=1920:-2:flags=lanczos,fps=25,format=yuv420p" -c:v libx264 -preset veryfast -crf 14 "$TMP/seg$n.mp4"
+  echo "file '$TMP/seg$n.mp4'" >> "$TMP/list.txt"
+done
+"$FF" -v error -y -f concat -safe 0 -i "$TMP/list.txt" -c copy "$TMP/loop.mp4"
+"$FF" -v error -y -i "$TMP/loop.mp4" -map 0:v:0 "${X264[@]}" -an -map_metadata -1 -write_tmcd 0 -crf 27 -maxrate 2600k -bufsize 5200k -g 50 "$OUT/video/hero-background-loop-1080.mp4"
+"$FF" -v error -y -i "$TMP/loop.mp4" -map 0:v:0 -vf "scale=960:-2:flags=lanczos" "${X264[@]}" -an -map_metadata -1 -write_tmcd 0 -crf 28 -maxrate 1000k -bufsize 2000k -g 50 "$OUT/video/hero-background-loop-540.mp4"
+"$FF" -v error -y -i "$OUT/video/hero-background-loop-1080.mp4" -frames:v 1 -vf "format=yuvj420p" -q:v 6 "$OUT/poster/hero-c10-use-cases.jpg"
+rm -rf "$TMP"
 log "02 applications"
 "$FF" -v error -y -i "$SRC/C10 Short Low bitrate.mp4" -map 0:v:0 -map 0:a:0 -vf "scale=1280:-2:flags=lanczos" "${X264[@]}" -crf 27 -maxrate 1800k -bufsize 3600k -g 50 -c:a aac -b:a 96k -ac 2 "$OUT/video/applications-c10-short-720.mp4"
 "$FF" -v error -y -i "$SRC/5f69a5e2-edb9-4dff-8bd8-14d3a8d570d0.MP4" -map 0:v:0 -vf "scale=720:-2:flags=lanczos,fps=30" "${X264[@]}" -crf 27 -maxrate 1600k -bufsize 3200k -g 60 -an "$OUT/video/applications-uk-cladding-portrait.mp4"
@@ -30,7 +41,6 @@ log "06 enquiry (loop excerpt)"
 # ---------- Posters (frames inside each served clip) ----------
 frame() { "$FF" -v error -y -ss "$2" -i "$SRC/$1" -frames:v 1 -vf "$3,format=yuvj420p" -q:v 3 "$4"; }
 log "posters"
-frame "C10-Use-Case-Shorts-Final-Horizontal.mp4" 0.2 "scale=1920:-2:flags=lanczos" "$OUT/poster/hero-c10-use-cases.jpg"
 frame "C10 Short Low bitrate.mp4" 3 "scale=1280:-2:flags=lanczos" "$OUT/poster/applications-c10-short.jpg"
 frame "5f69a5e2-edb9-4dff-8bd8-14d3a8d570d0.MP4" 5 "scale=720:-2:flags=lanczos" "$OUT/poster/applications-uk-cladding-portrait.jpg"
 frame "C10_Introduction_short.mp4" 13.5 "scale=1280:-2:flags=lanczos" "$OUT/poster/system-c10-introduction.jpg"

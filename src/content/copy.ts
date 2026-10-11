@@ -52,7 +52,6 @@ export const hero = {
 export type Application = {
   id: string;
   label: string;
-  chapter: number; // seconds into the hero film where the matching title card appears
   image: string;
   alt: string;
 };
@@ -66,28 +65,24 @@ export const applications = {
     {
       id: "solar-panel-cleaning",
       label: "Solar panel cleaning", // FILM 00:06.8
-      chapter: 6.7,
       image: "/media/img/app-solar-panel-cleaning.jpg",
       alt: "The C10 hovering above a rooftop solar array, its lance spraying the panels while the supply hose runs back across the roof.",
     },
     {
       id: "facade-cleaning",
       label: "Façade cleaning", // FILM 00:24.2 (card reads "FACADE CLEANING"; brochure spelling "façade" used)
-      chapter: 24.1,
       image: "/media/img/app-facade-cleaning.jpg",
       alt: "The C10 against a deep blue sky, spraying the stone cladding and glazing of a multi-storey building from its tethered hose.",
     },
     {
       id: "roof-moss-removal",
       label: "Roof moss removal", // FILM 00:40.6
-      chapter: 40.5,
       image: "/media/img/app-roof-moss-removal.jpg",
       alt: "The C10 hovering low over a moss-covered corrugated roof, a high-pressure jet lifting the growth from the tiles.",
     },
     {
       id: "gutter-cleaning",
       label: "Gutter cleaning", // FILM 00:59.6
-      chapter: 59.5,
       image: "/media/img/app-gutter-cleaning.jpg",
       alt: "The C10 flying alongside the roof edge of an industrial unit, spraying down into the red gutter below a solar-covered roof.",
     },

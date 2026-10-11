@@ -78,8 +78,7 @@ Font: **Archivo** (Google Fonts, variable). Width axis values in parentheses; if
 | `Button` | Type = Primary / Primary inverse / Ghost · Size = Default / Compact · State = Default / Hover / Focus |
 | `Section head` | Tone = Light / Ink · Aside = On / Off |
 | `Media control` | Kind = Play / Pause / Sound on / Sound off · Tone = Light / Ink |
-| `Hero film` | State = Playing / Paused poster |
-| `Chapter item` | State = Default / Active |
+| `Hero background` | State = Playing (pause icon) / Paused (play icon) — full-bleed image fill + ink scrim gradient; text layer above |
 | `Application tile` | (image swap) · Index 01–04 |
 | `Film card` | Kind = Watch (poster + play) / Ambient (frame + control bar) |
 | `Spec row` | Mark = None / * / ** |
@@ -89,13 +88,13 @@ Font: **Archivo** (Google Fonts, variable). Width axis values in parentheses; if
 | `Nav item` | State = Default / Current |
 | `Logo` | Lockup = Header (ink) / Footer (white + tagline) |
 
-Use auto layout for rows, buttons, chapter bars and form fields so the walkthrough can show them resizing.
+Use auto layout for rows, buttons and form fields so the walkthrough can show them resizing.
 
 ## 7. Images and logo
 
 - Use the files in `public/media/img`, `public/media/poster` and `public/media/brand` (SVG logo — paste as vector).
-- Keep tiles at 4:5, the hero plate at 16:9, and do not crop through burned-in titles or watermarks.
-- Show the hero plate with its poster (first frame of `C10-Use-Case-Shorts-Final-Horizontal.mp4`) and a "Play film" control to represent the video.
+- Keep tiles at 4:5 and do not crop through burned-in titles or watermarks.
+- Hero: fill the frame with `public/media/poster/hero-c10-use-cases.jpg` (first frame of the background loop), add the ink scrim as gradient layers (values in `src/app/globals.css`, `.hero-scrim`), and place the 44 px pause toggle bottom-right (top-right on mobile). Note on the frame that the fill is a silent looping film.
 
 ## 8. Annotations for judges (05 Notes page)
 

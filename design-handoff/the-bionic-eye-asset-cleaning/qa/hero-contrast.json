@@ -1,0 +1,64 @@
+{
+  "url": "http://localhost:3100/",
+  "ranAt": "2026-10-11T22:43:21.984Z",
+  "viewports": {
+    "1440x900": {
+      "section label (12px caps)": {
+        "need": 4.5,
+        "minP95": 15.550225225091658,
+        "minWorst": 15.396903695323804,
+        "atTime": 7.26
+      },
+      "dealer line (12px caps)": {
+        "need": 4.5,
+        "minP95": 9.904773710690687,
+        "minWorst": 9.44917598835776,
+        "atTime": 6.1
+      },
+      "kicker (12px caps)": {
+        "need": 4.5,
+        "minP95": 10.742489652164453,
+        "minWorst": 10.707398262163482,
+        "atTime": 22.34
+      },
+      "headline (large)": {
+        "need": 3,
+        "minP95": 6.224561865445104,
+        "minWorst": 3.6502762516876004,
+        "atTime": 3.78
+      },
+      "intro (body)": {
+        "need": 4.5,
+        "minP95": 11.800218549221977,
+        "minWorst": 9.587567970629067,
+        "atTime": 4.94
+      }
+    },
+    "390x844": {
+      "section label (12px caps)": {
+        "need": 4.5,
+        "minP95": 11.411235593077379,
+        "minWorst": 10.554145812509717,
+        "atTime": 24.66
+      },
+      "kicker (12px caps)": {
+        "need": 4.5,
+        "minP95": 6.612477349430946,
+        "minWorst": 5.777067214605494,
+        "atTime": 9.58
+      },
+      "headline (large)": {
+        "need": 3,
+        "minP95": 8.329534768011879,
+        "minWorst": 7.043394847025507,
+        "atTime": 24.66
+      },
+      "intro (body)": {
+        "need": 4.5,
+        "minP95": 11.411235593077379,
+        "minWorst": 10.26446785963403,
+        "atTime": 7.26
+      }
+    }
+  }
+}

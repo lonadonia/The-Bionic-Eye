@@ -83,8 +83,8 @@ Reference only (not in the pack, accessed 11 Oct 2026): thebioniceye.co.uk uses 
 | Section | Media placed | Treatment and rationale |
 |---|---|---|
 | Header | TBE lockup, ink (from `.ai`) | Stacked lockup as on the client's live site; restrained in-page navigation |
-| **01 Hero** | **`C10-Use-Case-Shorts-Final-Horizontal.mp4`** (mandated) | Full-width 16:9, `object-fit: contain` so burned-in title cards are never cropped; muted autoplay only while visible and never under reduced motion; play/pause, sound, scrubber with chapter ticks; four chapter buttons. 1080p (29 MB) desktop / 540p (10 MB) phones via `<source media>`; poster = first frame |
-| 02 Applications | 4 tiles: 3 stills from the hero film (16.5 s, 56.5 s, 70.5 s) + `C10 3.jpg` | Tiles are an **index into the hero film** — "In the film 00:07" jumps the hero to that chapter. Re-using film stills is deliberate (the tile *is* the chapter), not decorative repetition |
+| **01 Hero** | **`C10-Use-Case-Shorts-Final-Horizontal.mp4`** (mandated) | Full-bleed **background film** behind the headline and text: a 25 s silent loop cut from the film on its own edits (8 shots, opening on the solar-panel clean), leaving out the on-screen title cards, the black end card and the shots used as Applications tiles so nothing competes with the headline. Ink legibility scrim (white text ≥ 6:1 at every sampled frame); muted autoplay only while visible, never under reduced motion; one icon-only pause/play control. 1080p 8.0 MB / 540p 2.9 MB via `<source media>`; poster = the loop's first frame |
+| 02 Applications | 4 tiles: 3 stills from the hero film (16.5 s, 56.5 s, 70.5 s) + `C10 3.jpg` | Tile labels are the film's own title cards. The three stills come from shots that are **not** in the hero loop, so no footage repeats on the page |
 | 02 Applications | `C10 Short Low bitrate.mp4` (ambient, muted, sound toggle) + portrait `5f69a5e2…MP4` | Broad montage of surfaces + vertical phone footage that shows reach up a wall — the strongest evidence for "hard-to-reach areas" |
 | 03 The system | `C10_Introduction_short.mp4` (click-to-watch, with sound, full length) | The annotated product film belongs with the technology narrative; opens on The Bionic Eye's own title card |
 | 03 The system | `865A0018.jpg`; `C10-2.png` render | Field photo beside RTK / washing copy; studio render as the datasheet specimen |
@@ -255,15 +255,15 @@ Status after implementation and testing. Evidence IDs refer to `04_QA_ACCEPTANCE
 | REQ-011 | EXPLICIT | §3 | Header: supported brand assets, restrained nav, approved labels | MUST | `site-header.tsx`; labels = brief section names | screens | VERIFIED — global labels need client site map (A-002) |
 | REQ-012 | EXPLICIT | §3.1 | Client-supplied headline and introduction | MUST | BRO p. 2–3 | copy audit | VERIFIED — no separate deck supplied (A-001) |
 | REQ-013 | EXPLICIT | §3.1 | Prominent "Book a demonstration" | MUST | hero + header + footer + form | screens | VERIFIED |
-| REQ-014 | EXPLICIT | §3.1, §4 | Named hero video as primary visual; readable, performant, integrated | MUST | `hero-film.tsx` | QA-HERO-* | VERIFIED |
-| REQ-015 | EXPLICIT | §3.2 | Applications: what the C10 cleans; scannable; approved media | MUST | `applications.tsx` | QA-APP-CHAPTER-LINK | VERIFIED |
+| REQ-014 | EXPLICIT | §3.1, §4 | Named hero video as primary visual; readable, performant, integrated | MUST | `video/hero-background.tsx` | QA-HERO-*, hero contrast probe | VERIFIED |
+| REQ-015 | EXPLICIT | §3.2 | Applications: what the C10 cleans; scannable; approved media | MUST | `applications.tsx` | screens, exports | VERIFIED |
 | REQ-016 | EXPLICIT | §3.3 | Exact specs as a legible structured panel; nothing inferred | MUST | `system.tsx`, `specs.ts` | copy audit (114 spec strings) | VERIFIED |
 | REQ-017 | EXPLICIT | §3.4 | Sales, OA support, training, servicing, enhanced warranty — provided wording only | MUST | `support.tsx` | copy audit | VERIFIED — descriptions not supplied (A-005) |
 | REQ-018 | EXPLICIT | §3.5 | Concise regulatory note from approved copy; no implied approval | MUST | `legal.tsx` | copy audit | VERIFIED — UK wording pending (A-004) |
 | REQ-019 | EXPLICIT | §3.6 | Short form + clear CTA; unspecified fields marked as placeholders | MUST | `enquiry-form.tsx` | QA-FORM-* | VERIFIED |
 | REQ-020 | EXPLICIT | §3 | Footer with supplied information and assets only | MUST | `site-footer.tsx` | screens | VERIFIED |
 | REQ-021 | EXPLICIT | §4 | Every other video reviewed and placed in context | MUST | §5 | §5 | VERIFIED (8/8) |
-| REQ-022 | EXPLICIT | §4 | No repeated footage without rationale | MUST | §5 (film stills as chapter index) | §5 | VERIFIED |
+| REQ-022 | EXPLICIT | §4 | No repeated footage without rationale | MUST | §5 (hero loop excludes the tile shots) | §5 | VERIFIED |
 | REQ-023 | EXPLICIT | §4 | Consistent video treatments, posters, accessible controls | MUST | `video/*` | QA-HERO-*, QA-WATCH-VIDEO, axe | VERIFIED |
 | REQ-024 | EXPLICIT | §4 | No invented videos; no false claims of use | MUST | §5 | §5 | VERIFIED |
 | REQ-025 | EXPLICIT | §5 | Editorial-industrial identity | MUST | 02 | exports | VERIFIED (design review) |

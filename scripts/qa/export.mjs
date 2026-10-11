@@ -19,8 +19,6 @@ for (const w of widths) {
   const page = await ctx.newPage();
   await page.goto(url, { waitUntil: "networkidle" });
   await page.evaluate(() => document.fonts.ready);
-  // Hide the paused-state "Play film" chip so the hero reads as composed, not as a player UI state.
-  await page.addStyleTag({ content: "#top .media-frame > button { display: none !important; }" });
   await page.evaluate(async () => {
     for (let y = 0; y < document.body.scrollHeight; y += 500) {
       window.scrollTo(0, y);
@@ -30,6 +28,18 @@ for (const w of widths) {
   });
   await page.waitForLoadState("networkidle");
   await page.waitForTimeout(800);
+  // Show the default state (background film playing on its opening shot); reveal animations stay off.
+  await page.evaluate(async () => {
+    const v = document.querySelector("#top video");
+    if (!v) return;
+    // Full-page capture briefly reports the hero as off-screen, which would pause the film mid-capture.
+    // For this static export only, keep it playing so the comp shows the default (playing) state.
+    v.pause = () => undefined;
+    v.currentTime = 0.2;
+    await v.play().catch(() => undefined);
+  });
+  await page.waitForFunction(() => document.querySelector("#top .hero-toggle")?.getAttribute("aria-label") === "Pause background film", null, { timeout: 15000 });
+  await page.waitForTimeout(300);
   const file = `${outDir}/asset-cleaning-${w}${scale > 1 ? `@${scale}x` : ""}-full.png`;
   await page.screenshot({ path: file, fullPage: true });
   const h = await page.evaluate(() => document.documentElement.scrollHeight);
