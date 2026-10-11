@@ -8,16 +8,25 @@ Package manager:    npm 11.19.0 (package-lock.json committed) · Node ≥ 20.9 (
 Local path:         C:\Users\PC\Desktop\W\Freelance & bot\contests\7\the-bionic-eye
 Local build:        PASS — `npm run build` exit 0; `npx eslint .` exit 0; `npx tsc --noEmit` exit 0
 QA:                 28/28 interaction + axe checks PASS; copy audit 0 unverified; no overflow at 1440/1024/768/390/360
-GitHub status:      PENDING_PUSH
+GitHub status:      PUSHED — normal push, no force; remote main verified equal to local (git ls-remote + GitHub API)
 GitHub repo URL:    https://github.com/lonadonia/The-Bionic-Eye
 Visibility:         public (verified via GitHub API, 11 Oct 2026)
 Branch:             main
-Commit SHA:         NOT_YET_COMMITTED
+Code commit SHA:    e5064fefb603956a66937df10a6ee00c70926e4c (initial delivery; this document was updated in the following commit)
 Vercel readiness:   VERIFIED_READY — Next.js preset, default build, no env vars, no vercel.json required
-Vercel preview:     PREVIEW_NOT_DEPLOYED
+Vercel preview:     PREVIEW_NOT_DEPLOYED — BLOCKED_EXTERNAL
 Vercel URL:         NOT_AVAILABLE
 Environment keys:   none
 ```
+
+## Why there is no Vercel preview yet
+
+Earlier in the session the Vercel connector was authenticated (Hobby account with the `lonadonia` GitHub namespace already installed). The Claude account was then switched, which disconnected that connector; the alternative Vercel connector needs a new browser OAuth authorisation by the account owner. Nothing was deployed, and no Vercel project was created for this repository.
+
+To finish (either route, about two minutes):
+
+- **Dashboard:** open https://vercel.com/new, choose the `lonadonia` GitHub account, import `The-Bionic-Eye`, keep the detected Next.js settings, Deploy. Importing from the dashboard deploys `main` to production (`<project>.vercel.app`).
+- **Claude Code:** authorise the Vercel connector, then ask Claude to "create the Vercel preview" — it will link the repository and create a non-production preview deployment from `main`, then verify it.
 
 ## Important: the repository is public
 
