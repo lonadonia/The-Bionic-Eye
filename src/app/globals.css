@@ -1,0 +1,637 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — The Bionic Eye · Asset Cleaning
+ * Every colour is traceable to a supplied asset:
+ *   ink           #1D1D1B  The Bionic Eye logo artwork (BionicEyeLogoLargeBlack2.ai)
+ *   signal        #008DD2  The Bionic Eye title card, C10_Introduction_short.mp4 (sampled)
+ *   signal-bright #00A6DF  same title card, lighter field (sampled) — used on ink only
+ *   signal-deep   #006A9E  accessible text/button variant of signal (5.9:1 on white)
+ * Neutrals (paper, concrete, line, graphite, fog) are proposed supporting tones.
+ * Typeface: Archivo — the face used in The Bionic Eye "Specifications of C10" datasheet.
+ */
+@theme {
+  --color-ink: #1d1d1b;
+  --color-ink-raised: #272725;
+  --color-ink-line: rgb(255 255 255 / 0.16);
+  --color-paper: #ffffff;
+  --color-concrete: #f2f2ee;
+  --color-line: #d6d6d0;
+  --color-graphite: #5c5c57;
+  --color-fog: #a9a9a2;
+  --color-signal: #008dd2;
+  --color-signal-deep: #006a9e;
+  --color-signal-bright: #00a6df;
+  --color-danger: #b42318;
+  --color-danger-on-ink: #ff8a7a;
+
+  --font-sans: var(--font-archivo), "Archivo", ui-sans-serif, system-ui, sans-serif;
+
+  --ease-precise: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  /* Page margin: 20px on phones, 64px at 1440 (Figma grids: 4 col/20/16 · 8 col/~34/20 · 12 col/64/24). */
+  --spacing-page: clamp(1.25rem, 4.45vw, 4rem);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: 96px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-feature-settings: "kern", "liga";
+  }
+
+  ::selection {
+    background: var(--color-signal);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-signal);
+    outline-offset: 3px;
+  }
+
+  .on-ink :focus-visible {
+    outline-color: var(--color-signal-bright);
+  }
+
+  img,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+@layer components {
+  /* ---------- Layout ---------- */
+  .shell {
+    width: 100%;
+    max-width: 90rem;
+    margin-inline: auto;
+    padding-inline: var(--spacing-page);
+  }
+
+  .grid-12 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 1rem;
+  }
+
+  @media (width >= 48rem) {
+    .grid-12 {
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      column-gap: 1.25rem;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .grid-12 {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: 1.5rem;
+    }
+  }
+
+  .section {
+    padding-block: clamp(4.5rem, 8.5vw, 8.5rem);
+  }
+
+  .on-ink {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  /* ---------- Typography ---------- */
+  .t-display {
+    font-size: clamp(2.625rem, 0.6rem + 6.9vw, 7rem);
+    line-height: 0.92;
+    font-weight: 560;
+    font-stretch: 112%;
+    letter-spacing: -0.032em;
+  }
+
+  .t-h2 {
+    font-size: clamp(2rem, 1.1rem + 3.3vw, 4.25rem);
+    line-height: 0.98;
+    font-weight: 560;
+    font-stretch: 110%;
+    letter-spacing: -0.028em;
+    text-wrap: balance;
+  }
+
+  .t-h3 {
+    font-size: clamp(1.3125rem, 1.05rem + 0.75vw, 1.75rem);
+    line-height: 1.15;
+    font-weight: 600;
+    font-stretch: 104%;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+  }
+
+  .t-h4 {
+    font-size: 1.125rem;
+    line-height: 1.3;
+    font-weight: 620;
+    font-stretch: 102%;
+    letter-spacing: -0.005em;
+  }
+
+  .t-lede {
+    font-size: clamp(1.0625rem, 0.95rem + 0.45vw, 1.3125rem);
+    line-height: 1.5;
+    font-weight: 400;
+    text-wrap: pretty;
+  }
+
+  .t-body {
+    font-size: 1rem;
+    line-height: 1.62;
+    text-wrap: pretty;
+  }
+
+  .t-label {
+    font-size: 0.75rem;
+    line-height: 1.2;
+    font-weight: 600;
+    font-stretch: 92%;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .t-meta {
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    font-weight: 500;
+    font-stretch: 94%;
+    letter-spacing: 0.01em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .t-figure {
+    font-size: clamp(2rem, 1.25rem + 2.3vw, 3.5rem);
+    line-height: 1;
+    font-weight: 560;
+    font-stretch: 110%;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .t-index {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  .muted {
+    color: var(--color-graphite);
+  }
+
+  .on-ink .muted {
+    color: var(--color-fog);
+  }
+
+  /* ---------- Section head: index · label ---------- */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px solid var(--color-ink);
+    padding-top: 0.875rem;
+  }
+
+  .on-ink .section-head {
+    border-top-color: rgb(255 255 255 / 0.55);
+  }
+
+  .section-head__index {
+    color: var(--color-signal-deep);
+  }
+
+  .on-ink .section-head__index {
+    color: var(--color-signal-bright);
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 3.25rem;
+    padding: 0.875rem 1.375rem;
+    font-size: 1rem;
+    line-height: 1.1;
+    font-weight: 600;
+    font-stretch: 102%;
+    letter-spacing: -0.005em;
+    border: 1.5px solid transparent;
+    border-radius: 0;
+    transition:
+      background-color 160ms var(--ease-precise),
+      color 160ms var(--ease-precise),
+      border-color 160ms var(--ease-precise);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .btn svg {
+    transition: transform 220ms var(--ease-precise);
+  }
+
+  .btn:hover svg {
+    transform: translateX(3px);
+  }
+
+  .btn-primary {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-signal-deep);
+  }
+
+  .btn-primary:active {
+    background: #00557f;
+  }
+
+  .on-ink .btn-primary,
+  .btn-primary--inverse {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  .on-ink .btn-primary:hover,
+  .btn-primary--inverse:hover {
+    background: var(--color-signal-bright);
+    color: var(--color-ink);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: inherit;
+    border-color: currentColor;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--color-signal-deep);
+    color: var(--color-signal-deep);
+  }
+
+  .on-ink .btn-ghost:hover {
+    border-color: var(--color-signal-bright);
+    color: var(--color-signal-bright);
+  }
+
+  .btn-compact {
+    min-height: 2.75rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.9375rem;
+  }
+
+  /* Paper surfaces nested inside ink sections (e.g. the enquiry form card) restore light-context styling. */
+  .on-ink .on-paper {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  .on-ink .on-paper .btn-primary {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .on-ink .on-paper .btn-primary:hover {
+    background: var(--color-signal-deep);
+    color: var(--color-paper);
+  }
+
+  .on-ink .on-paper .btn-ghost:hover,
+  .on-ink .on-paper .link:hover {
+    border-color: var(--color-signal-deep);
+    color: var(--color-signal-deep);
+  }
+
+  .on-ink .on-paper .muted {
+    color: var(--color-graphite);
+  }
+
+  .on-ink .on-paper :focus-visible {
+    outline-color: var(--color-signal);
+  }
+
+  /* Control bar under media (shared by hero film and field footage) */
+  .media-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    margin-top: 0.75rem;
+  }
+
+  .media-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.5rem;
+    padding-inline: 0.75rem;
+    border: 1px solid currentColor;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition:
+      color 160ms var(--ease-precise),
+      border-color 160ms var(--ease-precise);
+  }
+
+  .media-btn:hover {
+    color: var(--color-signal-deep);
+  }
+
+  .on-ink .media-btn:hover {
+    color: var(--color-signal-bright);
+  }
+
+  /* Text link with engineered underline */
+  .link {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+    transition:
+      color 160ms var(--ease-precise),
+      text-decoration-color 160ms var(--ease-precise);
+  }
+
+  .link:hover {
+    color: var(--color-signal-deep);
+    text-decoration-color: currentColor;
+  }
+
+  .on-ink .link:hover {
+    color: var(--color-signal-bright);
+  }
+
+  /* ---------- Media frame + print crop marks ---------- */
+  .cropmarks {
+    position: relative;
+  }
+
+  .cropmarks::before {
+    content: "";
+    position: absolute;
+    inset: -9px;
+    pointer-events: none;
+    --mark: currentColor;
+    --len: 12px;
+    background:
+      linear-gradient(var(--mark), var(--mark)) top left / var(--len) 1px,
+      linear-gradient(var(--mark), var(--mark)) top left / 1px var(--len),
+      linear-gradient(var(--mark), var(--mark)) top right / var(--len) 1px,
+      linear-gradient(var(--mark), var(--mark)) top right / 1px var(--len),
+      linear-gradient(var(--mark), var(--mark)) bottom left / var(--len) 1px,
+      linear-gradient(var(--mark), var(--mark)) bottom left / 1px var(--len),
+      linear-gradient(var(--mark), var(--mark)) bottom right / var(--len) 1px,
+      linear-gradient(var(--mark), var(--mark)) bottom right / 1px var(--len);
+    background-repeat: no-repeat;
+    opacity: 0.55;
+  }
+
+  .media-frame {
+    position: relative;
+    overflow: hidden;
+    background: #0f0f0e;
+  }
+
+  .media-frame > video,
+  .media-frame > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Overlay control (pause / play / sound) on media */
+  .media-ctl {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.5rem;
+    padding: 0.5rem 0.75rem;
+    background: rgb(17 17 16 / 0.72);
+    color: var(--color-paper);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-stretch: 94%;
+    letter-spacing: 0.02em;
+    backdrop-filter: blur(6px);
+    transition: background-color 160ms var(--ease-precise);
+  }
+
+  .media-ctl:hover {
+    background: rgb(17 17 16 / 0.9);
+  }
+
+  .media-ctl:focus-visible {
+    outline-color: var(--color-signal-bright);
+    outline-offset: 2px;
+  }
+
+  /* ---------- Specification table ---------- */
+  .spec-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: 1rem;
+    padding-block: 0.8125rem;
+    border-bottom: 1px solid var(--color-line);
+    break-inside: avoid;
+  }
+
+  .spec-row dt {
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    color: var(--color-graphite);
+    font-weight: 500;
+  }
+
+  .spec-row dd {
+    font-size: 1.0625rem;
+    line-height: 1.38;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.003em;
+  }
+
+  /* ---------- Forms ---------- */
+  .field {
+    display: grid;
+    gap: 0.4375rem;
+  }
+
+  .field__label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.005em;
+  }
+
+  .field__input {
+    width: 100%;
+    min-height: 3.125rem;
+    padding: 0.75rem 0.875rem;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    border: 1.5px solid #8b8b85;
+    border-radius: 0;
+    font-size: 1rem;
+    line-height: 1.4;
+    transition: border-color 160ms var(--ease-precise);
+  }
+
+  .field__input:hover {
+    border-color: var(--color-ink);
+  }
+
+  .field__input:focus-visible {
+    outline: 3px solid var(--color-signal);
+    outline-offset: 0;
+    border-color: var(--color-ink);
+  }
+
+  .field__input[aria-invalid="true"] {
+    border-color: var(--color-danger);
+  }
+
+  .field__error {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-danger);
+  }
+
+  .pending-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3125rem 0.625rem;
+    border: 1px dashed currentColor;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-stretch: 94%;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- Skip link ---------- */
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -4rem;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-weight: 600;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+}
+
+/* ---------- Motion: progressive, reduced-motion safe ----------
+ * Scroll-driven reveal in pure CSS (no JavaScript, portable to a WordPress theme as-is).
+ * Browsers without view timelines simply show content immediately; reduced-motion users never animate.
+ */
+@keyframes tbe-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    [data-reveal] {
+      animation: tbe-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry calc(38% + var(--reveal-offset, 0%));
+    }
+  }
+}
+
+/* Mobile: hero film runs edge to edge; crop marks only where there is margin to hold them. */
+@media (width < 48rem) {
+  .bleed-mobile {
+    margin-inline: calc(-1 * var(--spacing-page));
+  }
+
+  .bleed-mobile.cropmarks::before {
+    display: none;
+  }
+}
+
+/* Range input used as the film scrubber */
+.scrubber {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 1.75rem;
+  background: transparent;
+  cursor: pointer;
+}
+
+.scrubber::-webkit-slider-runnable-track {
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    var(--color-ink) 0 var(--progress, 0%),
+    var(--color-line) var(--progress, 0%) 100%
+  );
+}
+
+.scrubber::-moz-range-track {
+  height: 2px;
+  background: var(--color-line);
+}
+
+.scrubber::-moz-range-progress {
+  height: 2px;
+  background: var(--color-ink);
+}
+
+.scrubber::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  margin-top: -5px;
+  background: var(--color-ink);
+  border: 2px solid var(--color-paper);
+  box-shadow: 0 0 0 1px var(--color-ink);
+}
+
+.scrubber::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  background: var(--color-ink);
+  border: 2px solid var(--color-paper);
+  border-radius: 0;
+  box-shadow: 0 0 0 1px var(--color-ink);
+}
+
+.scrubber:focus-visible {
+  outline-offset: 2px;
+}

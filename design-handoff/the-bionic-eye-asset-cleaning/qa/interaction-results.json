@@ -1,0 +1,146 @@
+{
+  "url": "http://localhost:3100/",
+  "ranAt": "2026-10-11T21:24:25.989Z",
+  "results": [
+    {
+      "id": "QA-HERO-AUTOPLAY",
+      "ok": true,
+      "detail": "{\"paused\":false,\"muted\":true,\"t\":2.15,\"src\":\"hero-c10-use-cases-1080.mp4\"}"
+    },
+    {
+      "id": "QA-HERO-PAUSE",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "QA-HERO-SOUND",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "QA-HERO-CHAPTER",
+      "ok": true,
+      "detail": "t=60.03"
+    },
+    {
+      "id": "QA-APP-CHAPTER-LINK",
+      "ok": true,
+      "detail": "t=25.02 scrollY=407"
+    },
+    {
+      "id": "QA-NAV-SCROLLSPY",
+      "ok": true,
+      "detail": "current=Full service support"
+    },
+    {
+      "id": "QA-SERVICE-PRESELECT",
+      "ok": true,
+      "detail": "select=training"
+    },
+    {
+      "id": "QA-FORM-VALIDATION",
+      "ok": true,
+      "detail": "{\"invalid\":2,\"alert\":true,\"focus\":\"alert\"}"
+    },
+    {
+      "id": "QA-FORM-EMAIL-FORMAT",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "QA-FORM-PREVIEW-STATE",
+      "ok": true,
+      "detail": "Design previewForm validated — nothing has been sent.This preview has no live connection. In the Wor"
+    },
+    {
+      "id": "QA-WATCH-VIDEO",
+      "ok": true,
+      "detail": "{\"controls\":true,\"paused\":false,\"muted\":false,\"t\":1.63,\"focused\":true}"
+    },
+    {
+      "id": "QA-DATASHEET-PDF",
+      "ok": true,
+      "detail": "200 application/pdf"
+    },
+    {
+      "id": "QA-ONE-H1",
+      "ok": true,
+      "detail": "h1=1"
+    },
+    {
+      "id": "QA-SECTION-ORDER",
+      "ok": true,
+      "detail": "top > applications > the-system > full-service-support > operating-legally > enquiry"
+    },
+    {
+      "id": "QA-LANG-EN-GB",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "QA-IMG-ALT",
+      "ok": true,
+      "detail": "missing=0"
+    },
+    {
+      "id": "QA-NOINDEX-PREVIEW",
+      "ok": true,
+      "detail": "noindex, nofollow"
+    },
+    {
+      "id": "QA-AXE-WCAG-AA-1440",
+      "ok": true,
+      "detail": "0 violations"
+    },
+    {
+      "id": "QA-NO-CONSOLE-ERRORS-1440",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "QA-SKIP-LINK-FIRST",
+      "ok": true,
+      "detail": "first focus=Skip to content"
+    },
+    {
+      "id": "QA-DRAWER-OPEN",
+      "ok": true,
+      "detail": "{\"open\":true,\"focusInside\":true,\"overflow\":\"hidden\"}"
+    },
+    {
+      "id": "QA-DRAWER-FOCUS-TRAP",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "QA-DRAWER-ESC-RETURNS-FOCUS",
+      "ok": true,
+      "detail": "{\"closed\":true,\"focus\":\"Menu\"}"
+    },
+    {
+      "id": "QA-SPEC-MOBILE-COLLAPSE",
+      "ok": true,
+      "detail": "true,false,false,false,false"
+    },
+    {
+      "id": "QA-SPEC-MOBILE-EXPAND",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "QA-AXE-WCAG-AA-390",
+      "ok": true,
+      "detail": "0 violations"
+    },
+    {
+      "id": "QA-NO-PAGE-ERRORS-390",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "QA-REDUCED-MOTION",
+      "ok": true,
+      "detail": "{\"heroPaused\":true,\"overlay\":true,\"anim\":\"none\"}"
+    }
+  ]
+}

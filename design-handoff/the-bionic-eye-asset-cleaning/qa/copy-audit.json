@@ -1,0 +1,1115 @@
+{
+  "ranAt": "2026-10-11T21:26:09.520Z",
+  "counts": {
+    "BRIEF": 22,
+    "VERBATIM": 154,
+    "FILM TITLE": 4,
+    "UI / PLACEHOLDER": 4
+  },
+  "rows": [
+    {
+      "where": "copy.applications.label",
+      "text": "Applications",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.applications.heading",
+      "text": "Access the Inaccessible",
+      "status": "VERBATIM",
+      "evidence": "BRO p.5"
+    },
+    {
+      "where": "copy.applications.lede",
+      "text": "Perfectly suitable for hard-to-reach areas where traditional machinery cannot fit.",
+      "status": "VERBATIM",
+      "evidence": "BRO p.5"
+    },
+    {
+      "where": "copy.applications.items[0].label",
+      "text": "Solar panel cleaning",
+      "status": "FILM TITLE",
+      "evidence": "hero film title card"
+    },
+    {
+      "where": "copy.applications.items[1].label",
+      "text": "Façade cleaning",
+      "status": "FILM TITLE",
+      "evidence": "hero film title card"
+    },
+    {
+      "where": "copy.applications.items[2].label",
+      "text": "Roof moss removal",
+      "status": "FILM TITLE",
+      "evidence": "hero film title card"
+    },
+    {
+      "where": "copy.applications.items[3].label",
+      "text": "Gutter cleaning",
+      "status": "FILM TITLE",
+      "evidence": "hero film title card"
+    },
+    {
+      "where": "copy.applications.versatility.lead",
+      "text": "Versatility",
+      "status": "VERBATIM",
+      "evidence": "BRO p.3, BRO p.4, BRO p.7"
+    },
+    {
+      "where": "copy.applications.versatility.points[0]",
+      "text": "Compatible with Osmosis (RO) water for streak-free glass cleaning and specialised nozzles for complex surfaces.",
+      "status": "VERBATIM",
+      "evidence": "BRO p.4"
+    },
+    {
+      "where": "copy.applications.versatility.points[1]",
+      "text": "The payload includes interchangeable nozzle holders (straight and tilting) to adapt to different architectural features.",
+      "status": "VERBATIM",
+      "evidence": "BRO p.7"
+    },
+    {
+      "where": "copy.cta.label",
+      "text": "Book a demonstration",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.enquiry.label",
+      "text": "Enquiry",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.enquiry.heading",
+      "text": "Ready to rethink high-altitude cleaning?",
+      "status": "VERBATIM",
+      "evidence": "BRO p.11"
+    },
+    {
+      "where": "copy.enquiry.contactLead",
+      "text": "Contact us:",
+      "status": "VERBATIM",
+      "evidence": "BRO p.11"
+    },
+    {
+      "where": "copy.hero.kicker",
+      "text": "Meet the ABZ Innovation C10",
+      "status": "VERBATIM",
+      "evidence": "BRO p.2"
+    },
+    {
+      "where": "copy.hero.heading[0]",
+      "text": "Clean smarter,",
+      "status": "VERBATIM",
+      "evidence": "BRO p.2"
+    },
+    {
+      "where": "copy.hero.heading[1]",
+      "text": "safer, higher",
+      "status": "VERBATIM",
+      "evidence": "BRO p.2"
+    },
+    {
+      "where": "copy.hero.intro",
+      "text": "The C10 is a purpose-built industrial cleaning drone engineered to carry high-pressure cleaning lances to elevated surfaces while keeping all heavy equipment—pumps, hoses, and water sources—securely on the ground.",
+      "status": "VERBATIM",
+      "evidence": "BRO p.3"
+    },
+    {
+      "where": "copy.hero.triad[0]",
+      "text": "No Scaffolding.",
+      "status": "VERBATIM",
+      "evidence": "BRO p.3, BRO p.10"
+    },
+    {
+      "where": "copy.hero.triad[1]",
+      "text": "No Height Risks.",
+      "status": "VERBATIM",
+      "evidence": "BRO p.3"
+    },
+    {
+      "where": "copy.hero.triad[2]",
+      "text": "No Compromise.",
+      "status": "VERBATIM",
+      "evidence": "BRO p.3"
+    },
+    {
+      "where": "copy.legal.label",
+      "text": "Operating legally",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.legal.heading",
+      "text": "Operating legally",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.legal.statement.lead",
+      "text": "Remote ID:",
+      "status": "VERBATIM",
+      "evidence": "BRO p.9"
+    },
+    {
+      "where": "copy.legal.statement.text",
+      "text": "Dronetag DRI module (EU/US compliant)",
+      "status": "VERBATIM",
+      "evidence": "BRO p.9"
+    },
+    {
+      "where": "copy.legal.statementSource",
+      "text": "ABZ Innovation C10 product catalogue, p. 9",
+      "status": "UI / PLACEHOLDER",
+      "evidence": "designer UI label, flagged"
+    },
+    {
+      "where": "copy.legal.crossRef.label",
+      "text": "Operational Authorisation support",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.legal.pending",
+      "text": "Approved regulatory wording to be supplied by The Bionic Eye before publication.",
+      "status": "UI / PLACEHOLDER",
+      "evidence": "designer UI label, flagged"
+    },
+    {
+      "where": "copy.nav[0].label",
+      "text": "Applications",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.nav[1].label",
+      "text": "The system",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.nav[2].label",
+      "text": "Full service support",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.nav[3].label",
+      "text": "Operating legally",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.nav[4].label",
+      "text": "Enquiry",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.site.company",
+      "text": "The Bionic Eye Ltd",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.site.dealerLine",
+      "text": "UK and Ireland dealer for ABZ Innovation",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.site.pageName",
+      "text": "Asset cleaning",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.site.phone.display",
+      "text": "+44 1753 655886",
+      "status": "VERBATIM",
+      "evidence": "BRO p.14"
+    },
+    {
+      "where": "copy.site.email.display",
+      "text": "info@thebioniceye.co.uk",
+      "status": "VERBATIM",
+      "evidence": "BRO p.11, BRO p.14"
+    },
+    {
+      "where": "copy.site.shop.display",
+      "text": "shop.thebioniceye.co.uk",
+      "status": "VERBATIM",
+      "evidence": "BRO p.14"
+    },
+    {
+      "where": "copy.site.contactHeading",
+      "text": "Find more about us",
+      "status": "VERBATIM",
+      "evidence": "BRO p.14"
+    },
+    {
+      "where": "copy.support.label",
+      "text": "Full service support",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.support.heading",
+      "text": "Full service support",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.support.services[0].title",
+      "text": "Sales",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.support.services[0].note",
+      "text": "All prices are indicative, please ask for your custom tailored quote from our representative.",
+      "status": "VERBATIM",
+      "evidence": "BRO p.14"
+    },
+    {
+      "where": "copy.support.services[1].title",
+      "text": "Operational Authorisation support",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.support.services[2].title",
+      "text": "Training",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.support.services[3].title",
+      "text": "Servicing",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.support.services[4].title",
+      "text": "Enhanced warranty option",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.system.label",
+      "text": "The system",
+      "status": "BRIEF",
+      "evidence": "contest brief"
+    },
+    {
+      "where": "copy.system.heading",
+      "text": "Engineered for precision",
+      "status": "VERBATIM",
+      "evidence": "BRO p.6"
+    },
+    {
+      "where": "copy.system.lede",
+      "text": "The C10 isn’t just a drone; it’s a precision instrument. The drone is equipped with advanced avionics designed specifically for stability near structures.",
+      "status": "VERBATIM",
+      "evidence": "BRO p.6"
+    },
+    {
+      "where": "copy.system.radar.title",
+      "text": "Automatic Radar-Controlled Distance System",
+      "status": "VERBATIM",
+      "evidence": "BRO p.6"
+    },
+    {
+      "where": "copy.system.radar.body",
+      "text": "Precision is key. The C10 features a front-mounted radar that measures the distance to the wall with an accuracy of 2–6 cm (≈ 0.8–2.4 in).",
+      "status": "VERBATIM",
+      "evidence": "BRO p.6"
+    },
+    {
+      "where": "copy.system.radar.points[0].lead",
+      "text": "How it works:",
+      "status": "VERBATIM",
+      "evidence": "BRO p.6"
+    },
+    {
+      "where": "copy.system.radar.points[0].text",
+      "text": "The pilot sets a “Desired Distance” (e.g., 1.5 metres (≈ 4.9 ft)). The drone automatically maintains this position relative to the surface, ensuring even cleaning.",
+      "status": "VERBATIM",
+      "evidence": "BRO p.6"
+    },
+    {
+      "where": "copy.system.radar.points[1].lead",
+      "text": "Emergency Push:",
+      "status": "VERBATIM",
+      "evidence": "BRO p.6"
+    },
+    {
+      "where": "copy.system.radar.points[1].text",
+      "text": "If the drone detects it is too close to the wall (e.g., due to a wind gust), the system automatically pushes the drone back to a safe distance (up to 2 metres (≈ 6.6 ft)) and switches to manual loiter mode for safety.",
+      "status": "VERBATIM",
+      "evidence": "BRO p.6"
+    },
+    {
+      "where": "copy.system.rtk.title",
+      "text": "RTK Positioning for Centimetre Precision",
+      "status": "VERBATIM",
+      "evidence": "BRO p.7"
+    },
+    {
+      "where": "copy.system.rtk.body",
+      "text": "For environments requiring maximum stability, the C10 supports Emlid RTK base stations and Network RTK (NTRIP). This allows the drone to use GNSS for altitude hold rather than barometers, preventing vertical drift in fluctuating pressure zones.",
+      "status": "VERBATIM",
+      "evidence": "BRO p.7"
+    },
+    {
+      "where": "copy.system.washing.title",
+      "text": "Optimised Washing System",
+      "status": "VERBATIM",
+      "evidence": "BRO p.7"
+    },
+    {
+      "where": "copy.system.washing.lead",
+      "text": "Capacity:",
+      "status": "VERBATIM",
+      "evidence": "BRO p.7"
+    },
+    {
+      "where": "copy.system.washing.text",
+      "text": "The system is engineered to handle the weight of the water-filled hose up to a working height of 60 metres (≈ 196.9 ft).",
+      "status": "VERBATIM",
+      "evidence": "BRO p.7"
+    },
+    {
+      "where": "copy.system.workflow.heading",
+      "text": "Workflow: A smarter way to work",
+      "status": "VERBATIM",
+      "evidence": "BRO p.10"
+    },
+    {
+      "where": "copy.system.workflow.intro",
+      "text": "Professional efficiency in three steps.",
+      "status": "VERBATIM",
+      "evidence": "BRO p.10"
+    },
+    {
+      "where": "copy.system.workflow.steps[0].title",
+      "text": "Setup",
+      "status": "VERBATIM",
+      "evidence": "BRO p.5, BRO p.10"
+    },
+    {
+      "where": "copy.system.workflow.steps[0].text",
+      "text": "The team positions the ground unit centrally. No heavy lifts, no scaffolding.",
+      "status": "VERBATIM",
+      "evidence": "BRO p.10"
+    },
+    {
+      "where": "copy.system.workflow.steps[1].title",
+      "text": "Launch",
+      "status": "VERBATIM",
+      "evidence": "BRO p.10"
+    },
+    {
+      "where": "copy.system.workflow.steps[1].text",
+      "text": "The pilot ascends to the target height while the helper manages the pressure unit.",
+      "status": "VERBATIM",
+      "evidence": "BRO p.10"
+    },
+    {
+      "where": "copy.system.workflow.steps[2].title",
+      "text": "Clean",
+      "status": "VERBATIM",
+      "evidence": "BRO p.1, BRO p.2, BRO p.3, BRO p.4, BRO p.5, BRO p.6, BRO p.9, BRO p.10, BRO p.11, DS p.1, DS p.2"
+    },
+    {
+      "where": "copy.system.workflow.steps[2].text",
+      "text": "The pilot engages the radar-based automatic distance control. The drone locks onto the façade, delivering a consistent, high-pressure wash while the operator monitors via HD FPV camera.",
+      "status": "VERBATIM",
+      "evidence": "BRO p.10"
+    },
+    {
+      "where": "specs.datasheet.label",
+      "text": "Datasheet",
+      "status": "UI / PLACEHOLDER",
+      "evidence": "designer UI label, flagged"
+    },
+    {
+      "where": "specs.datasheet.meta",
+      "text": "PDF · 368 KB",
+      "status": "UI / PLACEHOLDER",
+      "evidence": "designer UI label, flagged"
+    },
+    {
+      "where": "specs.keyFigures[0].label",
+      "text": "Maximum flight time",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.keyFigures[0].value",
+      "text": "18 min",
+      "status": "VERBATIM",
+      "evidence": "BRO p.8, DS p.1"
+    },
+    {
+      "where": "specs.keyFigures[1].label",
+      "text": "Max. tolerable wind speed",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.keyFigures[1].value",
+      "text": "10 m/s",
+      "status": "VERBATIM",
+      "evidence": "BRO p.8, DS p.3"
+    },
+    {
+      "where": "specs.keyFigures[2].label",
+      "text": "Effective signal range of RC",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.keyFigures[2].value",
+      "text": "~3.5 km",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.keyFigures[3].label",
+      "text": "Battery charging time",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.keyFigures[3].value",
+      "text": "min. 11 minutes",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specFootnotes[0].text",
+      "text": "The weight parameters vary by ±1kg according to the final product configuration",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specFootnotes[1].text",
+      "text": "Maximum distance between the tips of two opposite propellers",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[0].title",
+      "text": "General specifications",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[0].label",
+      "text": "Payload",
+      "status": "VERBATIM",
+      "evidence": "BRO p.7, BRO p.8, DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[0].value",
+      "text": "High-pressure cleaning system",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[1].label",
+      "text": "Max. take-off weight",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[1].value",
+      "text": "29 kg",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[2].label",
+      "text": "Total weight (with battery)",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[2].value",
+      "text": "17.3 kg",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[3].label",
+      "text": "Total weight (without battery)",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[3].value",
+      "text": "13 kg",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[4].label",
+      "text": "Maximum characteristic dimension",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[4].value",
+      "text": "2290 mm",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[5].label",
+      "text": "Dimensions (arms & propellers unfolded) with Spray lance (L x W x H)",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[5].value",
+      "text": "2060 x 1600 x 600 mm",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[6].label",
+      "text": "Dimensions (arms and propellers folded) with Spray lance (L x W x H)",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[6].value",
+      "text": "1170 x 540 x 600 mm",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[7].label",
+      "text": "Dimensions (arms and propellers folded) without Spray lance (L x W x H)",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[7].value",
+      "text": "770 x 540 x 600 mm",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[8].label",
+      "text": "Maximum flight time",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[8].value",
+      "text": "18 min",
+      "status": "VERBATIM",
+      "evidence": "BRO p.8, DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[9].label",
+      "text": "GPS",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[9].value",
+      "text": "GPS, GLONASS, Galileo, BeiDou",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[10].label",
+      "text": "Hovering precision",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[10].value",
+      "text": "±10 cm (RTK) ±1.5 m (without RTK)",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[11].label",
+      "text": "Heading",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[11].value",
+      "text": "Dual-RTK",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[12].label",
+      "text": "Rotor dimensions",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[12].value",
+      "text": "30 x 11",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[13].label",
+      "text": "Battery type",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[13].value",
+      "text": "Li-Po Smart",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    },
+    {
+      "where": "specs.specGroups[0].rows[14].label",
+      "text": "Battery capacity",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[14].value",
+      "text": "16000 mAh",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[15].label",
+      "text": "Battery voltage (nominal)",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[15].value",
+      "text": "44.4V",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[16].label",
+      "text": "Battery weight",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[16].value",
+      "text": "4.2 kg",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[17].label",
+      "text": "Battery charging time",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[17].value",
+      "text": "min. 11 minutes",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[18].label",
+      "text": "Battery charger channels",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[18].value",
+      "text": "4 ports (2 balance)",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[19].label",
+      "text": "Battery charger power",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[19].value",
+      "text": "3000 W",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[20].label",
+      "text": "Camera",
+      "status": "VERBATIM",
+      "evidence": "BRO p.10, DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[20].value",
+      "text": "Wide angle, vertically adjustable (0-180°)",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[21].label",
+      "text": "Camera resolution",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[21].value",
+      "text": "FHD",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[22].label",
+      "text": "Effective signal range of RC",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[22].value",
+      "text": "~3.5 km",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[23].label",
+      "text": "Intrusion protection",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[0].rows[23].value",
+      "text": "Limited water and dust resistance",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[1].title",
+      "text": "Cleaning system",
+      "status": "VERBATIM",
+      "evidence": "BRO p.9, DS p.1, DS p.2"
+    },
+    {
+      "where": "specs.specGroups[1].rows[0].label",
+      "text": "Spray lance",
+      "status": "VERBATIM",
+      "evidence": "DS p.1, DS p.2"
+    },
+    {
+      "where": "specs.specGroups[1].rows[0].value",
+      "text": "Removable for transport",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[1].rows[1].label",
+      "text": "Spray lance extension range",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[1].rows[1].value",
+      "text": "± 180 mm",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[1].rows[2].label",
+      "text": "Spray nozzle",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[1].rows[2].value",
+      "text": "25°",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[1].rows[3].label",
+      "text": "Spray nozzle holder compatibility",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[1].rows[3].value",
+      "text": "M18 x 1.5",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[1].rows[4].label",
+      "text": "Nozzle holder",
+      "status": "VERBATIM",
+      "evidence": "BRO p.7, DS p.2"
+    },
+    {
+      "where": "specs.specGroups[1].rows[4].value",
+      "text": "fix / tiltable",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[1].rows[5].label",
+      "text": "Hose length",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[1].rows[5].value",
+      "text": "optional 30 m / 60 m",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[2].title",
+      "text": "High Pressure system (optional)",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[2].rows[0].label",
+      "text": "Cleaning system",
+      "status": "VERBATIM",
+      "evidence": "BRO p.9, DS p.1, DS p.2"
+    },
+    {
+      "where": "specs.specGroups[2].rows[0].value",
+      "text": "Kärcher HD 7/17 M PLUS",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[2].rows[1].label",
+      "text": "Flow rate",
+      "status": "VERBATIM",
+      "evidence": "BRO p.4, DS p.2"
+    },
+    {
+      "where": "specs.specGroups[2].rows[1].value",
+      "text": "11.6 l/min",
+      "status": "VERBATIM",
+      "evidence": "DS p.2"
+    },
+    {
+      "where": "specs.specGroups[2].rows[2].label",
+      "text": "Working pressure",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[2].rows[2].value",
+      "text": "170 / 17 bar/MPa",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[2].rows[3].label",
+      "text": "Max. pressure",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[2].rows[3].value",
+      "text": "255 / 25,5 bar/MPa",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[2].rows[4].label",
+      "text": "Water inlet",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[2].rows[4].value",
+      "text": "3/4\"",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[2].rows[5].label",
+      "text": "Type",
+      "status": "VERBATIM",
+      "evidence": "DS p.1, DS p.3"
+    },
+    {
+      "where": "specs.specGroups[2].rows[5].value",
+      "text": "Electric",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[2].rows[6].label",
+      "text": "Supply voltage",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[2].rows[6].value",
+      "text": "3 Phase / 400 V / 50 Hz",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[2].rows[7].label",
+      "text": "Weight (with accessories)",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[2].rows[7].value",
+      "text": "32 kg",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[2].rows[8].label",
+      "text": "Weight incl. packaging",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[2].rows[8].value",
+      "text": "36 kg",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[2].rows[9].label",
+      "text": "Dimensions (L x W x H)",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[2].rows[9].value",
+      "text": "455 x 400 x 700 mm",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[3].title",
+      "text": "Frequency bands",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[3].rows[0].label",
+      "text": "Radio Control and Telemetry",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[3].rows[0].value",
+      "text": "2.4GHz",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[3].rows[1].label",
+      "text": "WLAN",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[3].rows[1].value",
+      "text": "2.4GHz",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[3].rows[2].label",
+      "text": "LoRA",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[3].rows[2].value",
+      "text": "862–1020 MHz",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[4].title",
+      "text": "Flight",
+      "status": "VERBATIM",
+      "evidence": "BRO p.8, DS p.1, DS p.3"
+    },
+    {
+      "where": "specs.specGroups[4].rows[0].label",
+      "text": "Max. pitch angle",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[4].rows[0].value",
+      "text": "17°",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[4].rows[1].label",
+      "text": "Max. level speed",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[4].rows[1].value",
+      "text": "3 m/s",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[4].rows[2].label",
+      "text": "Max. flight altitude (AMSL)",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[4].rows[2].value",
+      "text": "4500 m",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[4].rows[3].label",
+      "text": "Max. flight altitude (AGL)",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[4].rows[3].value",
+      "text": "120 m",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[4].rows[4].label",
+      "text": "Max. tolerable wind speed",
+      "status": "VERBATIM",
+      "evidence": "DS p.3"
+    },
+    {
+      "where": "specs.specGroups[4].rows[4].value",
+      "text": "10 m/s",
+      "status": "VERBATIM",
+      "evidence": "BRO p.8, DS p.3"
+    },
+    {
+      "where": "specs.specTitle",
+      "text": "Specifications of C10",
+      "status": "VERBATIM",
+      "evidence": "DS p.1"
+    }
+  ]
+}

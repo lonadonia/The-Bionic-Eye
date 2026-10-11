@@ -1,0 +1,30 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+*.tsbuildinfo
+
+# production
+/build
+
+# environment files (never commit secrets; .env.example is the documented template)
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# logs and OS noise
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db
+
+# local QA scratch output (exports/ is committed deliberately)
+/qa-tmp/
