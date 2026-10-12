@@ -14,7 +14,7 @@ Start the production build first: `npm run build && npm start` (default http://l
 
 | Script | What it does | Example |
 |---|---|---|
-| `interaction.mjs` | 28 functional, keyboard, reduced-motion and axe-core (WCAG 2.2 AA) checks | `node scripts/qa/interaction.mjs http://localhost:3000/ qa.json` |
+| `interaction.mjs` | 43 functional, keyboard, reduced-motion and axe-core (WCAG 2.2 AA) checks; film playback checks report SKIP where the browser lacks H.264 | `node scripts/qa/interaction.mjs http://localhost:3000/ qa.json` |
 | `copy-audit.mjs` | Matches every string in `src/content/{copy,specs}.ts` against the PDFs' text layers | `node scripts/qa/copy-audit.mjs . "<asset-pack-dir>" audit.json` |
 | `copy-deck.mjs` | Turns the audit into the markdown copy deck used in 01 §6 | `node scripts/qa/copy-deck.mjs audit.json deck.md` |
 | `capture.mjs` | Per-section screenshots + horizontal-overflow check at given widths | `node scripts/qa/capture.mjs http://localhost:3000/ out 1440,1024,768,390,360 sections` |

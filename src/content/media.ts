@@ -156,6 +156,29 @@ export const photos = {
   },
 } as const;
 
+/**
+ * Capability stills for "The system": single frames taken from C10_Introduction_short.mp4 (the film
+ * shown in the same section) at the timestamps given, exported at the film's 1280 × 720. Frames at
+ * 01:18–01:22 were rejected because their burned-in "180 bars" and "30/40 meter" overlays contradict
+ * the datasheet (01_CLIENT_BRIEF_ANALYSIS.md §8.1, C-4 and C-5).
+ */
+export const systemStills = {
+  rtk: {
+    src: "/media/img/system-rtk-stability.jpg",
+    width: 1280,
+    height: 720,
+    source: "C10_Introduction_short.mp4 @ 01:41",
+    alt: "Overhead shot of the C10 above a paved yard beside a Kärcher service building, with the film’s on-screen annotation “Stability: advanced radar, dual RTK, Emlid RTK”.",
+  },
+  washing: {
+    src: "/media/img/system-washing-hose.jpg",
+    width: 1280,
+    height: 720,
+    source: "C10_Introduction_short.mp4 @ 02:02",
+    alt: "The C10 spraying the upper edge of a sloping metal-clad building, its water-filled supply hose hanging straight down beneath it.",
+  },
+} as const;
+
 export function formatTime(seconds: number) {
   const s = Math.max(0, Math.round(seconds));
   const m = Math.floor(s / 60);

@@ -2,7 +2,8 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { cta, support } from "@/content/copy";
-import { ArrowRight, Check } from "./icons";
+import { ui } from "@/content/ui";
+import { Alert, Check, Spinner } from "./icons";
 import { INTEREST_EVENT } from "./service-link";
 
 /*
@@ -31,16 +32,26 @@ function validate(v: Values): Errors {
   return errors;
 }
 
+/**
+ * Submission seam. The preview resolves locally and sends nothing; the WordPress build replaces this
+ * with the approved form handler. The pending state below is already wired for a real request.
+ */
+async function submitEnquiry(values: Values): Promise<void> {
+  void values;
+}
+
 export function EnquiryForm() {
   const uid = useId();
   const [values, setValues] = useState<Values>(initial);
   const [errors, setErrors] = useState<Errors>({});
+  const [touched, setTouched] = useState<Partial<Record<keyof Values, boolean>>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [pending, setPending] = useState(false);
   const [done, setDone] = useState(false);
   const summaryRef = useRef<HTMLDivElement>(null);
   const doneRef = useRef<HTMLDivElement>(null);
 
-  // Service rows in "Full service support" pre-select the matching interest.
+  // Service links elsewhere on the page pre-select the matching interest.
   useEffect(() => {
     const onInterest = (e: Event) => {
       const id = (e as CustomEvent<string>).detail;
@@ -57,14 +68,26 @@ export function EnquiryForm() {
     if (done) doneRef.current?.focus();
   }, [done]);
 
+  // Errors show for fields the visitor has left (or for every field after a submit attempt).
+  const visible = (all: Errors, t: typeof touched, s: boolean): Errors =>
+    s ? all : Object.fromEntries(Object.entries(all).filter(([k]) => t[k as keyof Values]));
+
   const update = (key: keyof Values) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const next = { ...values, [key]: e.target.value };
     setValues(next);
-    if (submitted) setErrors(validate(next));
+    if (submitted || touched[key]) setErrors(visible(validate(next), touched, submitted));
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const blur = (key: keyof Values) => () => {
+    if (!values[key].trim() && !submitted) return; // don't scold an empty field the visitor merely tabbed past
+    const t = { ...touched, [key]: true };
+    setTouched(t);
+    setErrors(visible(validate(values), t, submitted));
+  };
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (pending) return;
     setSubmitted(true);
     const found = validate(values);
     setErrors(found);
@@ -72,7 +95,13 @@ export function EnquiryForm() {
       requestAnimationFrame(() => summaryRef.current?.focus());
       return;
     }
-    setDone(true);
+    setPending(true);
+    try {
+      await submitEnquiry(values);
+      setDone(true);
+    } finally {
+      setPending(false);
+    }
   };
 
   const field = (key: keyof Values) => ({
@@ -80,9 +109,18 @@ export function EnquiryForm() {
     name: key,
     value: values[key],
     onChange: update(key),
+    onBlur: blur(key),
     "aria-invalid": errors[key] ? (true as const) : undefined,
     "aria-describedby": errors[key] ? `${uid}-${key}-error` : undefined,
   });
+
+  const errorText = (key: keyof Values) =>
+    errors[key] ? (
+      <p id={`${uid}-${key}-error`} className="field__error">
+        <Alert size={16} className="mt-px shrink-0" />
+        {errors[key]}
+      </p>
+    ) : null;
 
   const errorList = Object.entries(errors) as [keyof Values, string][];
 
@@ -90,18 +128,28 @@ export function EnquiryForm() {
     const chosen = interestOptions.find((o) => o.value === values.interest)?.label;
     return (
       <div ref={doneRef} tabIndex={-1} className="grid gap-5 outline-none" role="status">
-        <p className="pending-tag w-fit text-graphite">Design preview</p>
-        <p className="flex items-center gap-3 text-[1.5rem] leading-tight font-semibold tracking-[-0.02em] [font-stretch:106%]">
-          <span className="grid h-9 w-9 place-items-center bg-ink text-paper">
+        <p className="chip text-slate">Design preview</p>
+        <p className="flex items-center gap-3 font-display text-[1.375rem] leading-tight font-semibold tracking-[-0.02em]">
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-signal-strong text-white">
             <Check size={18} />
           </span>
           Form validated — nothing has been sent.
         </p>
-        <p className="t-body text-graphite">
+        <p className="t-body text-slate">
           This preview has no live connection. In the WordPress build this request ({chosen}) will be routed to The Bionic Eye
           through the approved form handler.
         </p>
-        <button type="button" className="btn btn-ghost w-fit" onClick={() => { setValues(initial); setErrors({}); setSubmitted(false); setDone(false); }}>
+        <button
+          type="button"
+          className="btn btn-secondary w-fit"
+          onClick={() => {
+            setValues(initial);
+            setErrors({});
+            setTouched({});
+            setSubmitted(false);
+            setDone(false);
+          }}
+        >
           Start again
         </button>
       </div>
@@ -109,18 +157,20 @@ export function EnquiryForm() {
   }
 
   return (
-    <form noValidate onSubmit={onSubmit} aria-labelledby={`${uid}-title`} className="grid gap-5">
+    <form noValidate onSubmit={onSubmit} aria-labelledby={`${uid}-title`} aria-busy={pending} className="grid gap-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h3 id={`${uid}-title`} className="t-h3">
           {cta.label}
         </h3>
-        <p className="pending-tag text-graphite">Proposed fields · pending approval</p>
+        <p className="chip text-slate">Proposed fields, pending approval</p>
       </div>
 
       {errorList.length ? (
-        <div ref={summaryRef} tabIndex={-1} role="alert" className="border-l-[3px] border-danger bg-danger/5 p-4 outline-none">
-          <p className="font-semibold">Check {errorList.length === 1 ? "this field" : `these ${errorList.length} fields`}:</p>
-          <ul className="mt-2 grid gap-1">
+        <div ref={summaryRef} tabIndex={-1} role="alert" className="rounded-[2px] border-l-2 border-danger bg-danger/5 px-4 py-3.5 outline-none">
+          <p className="font-display text-[0.9375rem] font-semibold">
+            Check {errorList.length === 1 ? "this field" : `these ${errorList.length} fields`}:
+          </p>
+          <ul className="mt-1.5 grid gap-1 text-[0.9375rem]">
             {errorList.map(([key, msg]) => (
               <li key={key}>
                 <a className="link text-danger" href={`#${uid}-${key}`}>
@@ -135,10 +185,10 @@ export function EnquiryForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="field">
           <label className="field__label" htmlFor={`${uid}-name`}>
-            Name <span className="text-graphite">(required)</span>
+            Name <span className="field__req">(required)</span>
           </label>
           <input className="field__input" type="text" autoComplete="name" required {...field("name")} />
-          {errors.name ? <p id={`${uid}-name-error`} className="field__error">{errors.name}</p> : null}
+          {errorText("name")}
         </div>
         <div className="field">
           <label className="field__label" htmlFor={`${uid}-company`}>
@@ -148,17 +198,25 @@ export function EnquiryForm() {
         </div>
         <div className="field">
           <label className="field__label" htmlFor={`${uid}-email`}>
-            Email <span className="text-graphite">(required)</span>
+            Email <span className="field__req">(required)</span>
           </label>
-          <input className="field__input" type="email" inputMode="email" autoComplete="email" required {...field("email")} />
-          {errors.email ? <p id={`${uid}-email-error`} className="field__error">{errors.email}</p> : null}
+          <input
+            className="field__input"
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            spellCheck={false}
+            required
+            {...field("email")}
+          />
+          {errorText("email")}
         </div>
         <div className="field">
           <label className="field__label" htmlFor={`${uid}-phone`}>
             Phone
           </label>
           <input className="field__input" type="tel" inputMode="tel" autoComplete="tel" {...field("phone")} />
-          {errors.phone ? <p id={`${uid}-phone-error`} className="field__error">{errors.phone}</p> : null}
+          {errorText("phone")}
         </div>
       </div>
 
@@ -166,7 +224,14 @@ export function EnquiryForm() {
         <label className="field__label" htmlFor={`${uid}-interest`}>
           Interested in
         </label>
-        <select className="field__input appearance-none bg-[length:12px] bg-[right_1rem_center] bg-no-repeat pr-10" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%231d1d1b' stroke-width='1.5'/%3E%3C/svg%3E\")" }} {...field("interest")}>
+        <select
+          className="field__input appearance-none bg-[length:12px] bg-[right_1rem_center] bg-no-repeat pr-10"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23111719' stroke-width='1.5'/%3E%3C/svg%3E\")",
+          }}
+          {...field("interest")}
+        >
           {interestOptions.map((o) => (
             <option key={o.value} value={o.value}>
               {o.label}
@@ -182,12 +247,12 @@ export function EnquiryForm() {
         <textarea className="field__input min-h-[7.5rem] resize-y" rows={4} {...field("message")} />
       </div>
 
-      <div className="grid gap-3 pt-1">
-        <button type="submit" className="btn btn-primary w-full sm:w-auto sm:justify-self-start">
-          {cta.label}
-          <ArrowRight size={18} />
+      <div className="grid gap-3 border-t border-line pt-5">
+        <button type="submit" className="btn btn-primary btn-lg w-full sm:w-auto sm:justify-self-start" aria-busy={pending} disabled={pending}>
+          {pending ? <Spinner size={18} className="animate-spin" /> : null}
+          {pending ? ui.form.sending : cta.label}
         </button>
-        <p className="t-meta text-graphite">
+        <p className="t-meta text-slate">
           Design preview: this form validates input but does not send or store any data. Privacy notice wording pending
           client approval.
         </p>

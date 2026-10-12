@@ -1,19 +1,20 @@
 type SectionHeadProps = {
   index: string;
-  label: string;
+  /** Chapter label; omit when the section's own heading already says the same words. */
+  label?: string;
   aside?: React.ReactNode;
   className?: string;
 };
 
-/** The recurring index rule that opens every section: "02 — Applications". */
+/** The recurring rule that opens every chapter: index, label, and an optional right-hand note. */
 export function SectionHead({ index, label, aside, className = "" }: SectionHeadProps) {
   return (
     <div className={`section-head ${className}`}>
-      <p className="t-label flex items-baseline gap-3">
-        <span className="section-head__index t-index">{index}</span>
-        <span>{label}</span>
+      <p className="section-head__label t-label">
+        <span className="section-head__index">{index}</span>
+        {label ? <span>{label}</span> : null}
       </p>
-      {aside ? <div className="t-label muted hidden text-right sm:block">{aside}</div> : null}
+      {aside ? <div className="section-head__aside hidden sm:block">{aside}</div> : null}
     </div>
   );
 }

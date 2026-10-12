@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-/* A small, consistent icon set: 20px grid, 1.5px stroke, square caps — drawn to match Archivo's geometry. */
+/* A small, consistent icon set: 20px grid, 1.5px stroke, square caps — matched to Manrope's squared terminals. */
 
 type IconProps = SVGProps<SVGSVGElement> & { size?: number };
 
@@ -103,6 +103,38 @@ export const Globe = (p: IconProps) => (
   <Svg {...p}>
     <circle cx="10" cy="10" r="7" />
     <path d="M3 10h14M10 3c2 2 2.8 4.4 2.8 7s-.8 5-2.8 7c-2-2-2.8-4.4-2.8-7S8 5 10 3Z" />
+  </Svg>
+);
+
+export const ChevronDown = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="m5 7.5 5 5 5-5" />
+  </Svg>
+);
+
+export const ChevronRight = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="m7.5 5 5 5-5 5" />
+  </Svg>
+);
+
+export const Search = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="8.75" cy="8.75" r="5.25" />
+    <path d="m12.5 12.5 4.5 4.5" />
+  </Svg>
+);
+
+export const Alert = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="10" cy="10" r="7" />
+    <path d="M10 6.5v4.25M10 13.25v.5" />
+  </Svg>
+);
+
+export const Spinner = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M10 3a7 7 0 1 1-7 7" strokeLinecap="round" />
   </Svg>
 );
 

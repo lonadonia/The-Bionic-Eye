@@ -21,16 +21,19 @@ No environment variables are required (see `.env.example`).
 
 ## Stack
 
-Next.js 16 (App Router, static) · React 19 · TypeScript · Tailwind CSS 4 · Archivo via `next/font` · no backend.
+Next.js 16 (App Router, static) · React 19 · TypeScript · Tailwind CSS 4 · Manrope + DM Sans via `next/font` · CSS-first motion (no animation library) · no backend.
+
+Design refinement ("Precision in Motion"): diagnosis, tokens, layout and motion system in [`docs/ASSET_CLEANING_DESIGN_REFINEMENT.md`](docs/ASSET_CLEANING_DESIGN_REFINEMENT.md).
 
 ## Structure
 
 ```
 src/
   app/            layout, page (mandated section order), tokens (globals.css), favicon
-  components/     header/nav, sections/*, video/*, spec group, form, icons
+  components/     header/nav, sections/*, video/*, capability story, spec table, service explorer, form, motion, icons
   content/
-    copy.ts       every visible word — verbatim client copy with source references
+    copy.ts       every product word — verbatim client copy with source references
+    ui.ts         interface labels only (buttons, captions, filter, states) — no product claims
     specs.ts      "Specifications of C10" datasheet, EU column, verbatim
     media.ts      film and photo registry (each item names its source file)
 public/
@@ -45,7 +48,7 @@ scripts/qa/       QA, export and media-pipeline scripts (not part of the build)
 
 ## Content rules
 
-- Words live only in `src/content/copy.ts` and `src/content/specs.ts`. Every string is verbatim from `C10 Brochure.pdf`, `C10_Datasheet.pdf`, the contest brief, or the hero film's title cards — checked automatically by `scripts/qa/copy-audit.mjs` (current result: 0 unverified).
+- Product words live only in `src/content/copy.ts` and `src/content/specs.ts` (interface labels in `src/content/ui.ts`). Every string is verbatim from `C10 Brochure.pdf`, `C10_Datasheet.pdf`, the contest brief, or the hero film's title cards — checked automatically by `scripts/qa/copy-audit.mjs` (current result: 0 unverified).
 - British English; localisations are logged in `01_CLIENT_BRIEF_ANALYSIS.md` §6.1.
 - Missing client content is shown as a visible "pending" flag, never invented.
 - The enquiry form is a **design preview**: it validates input but sends and stores nothing, and says so on screen.
