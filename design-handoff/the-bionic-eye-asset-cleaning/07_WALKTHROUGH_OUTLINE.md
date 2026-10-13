@@ -1,5 +1,8 @@
 # 07 · Walkthrough speaking outline (target 2 min 30 s)
 
+> **Note (13 October 2026).** The section names and order changed with the contest copy: Hero → Applications → The system → Full service support → Operating legally → Proven in the field → Enquiry. Adjust the talking points to `docs/ASSET_CLEANING_REFINEMENT_2.md`.
+
+
 **Status: for the human entrant.** The contest requires a 2–3 minute screen recording **in your own voice**, navigating the **actual Figma file**. This outline is a prompt sheet, not a script to be read by a synthetic voice — an AI-generated narration would not meet the requirement.
 
 Record at 1080p or higher, Figma at 100 % zoom on each frame, cursor visible. Rehearse once; aim for 2:20–2:40.

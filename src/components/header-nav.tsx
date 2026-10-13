@@ -1,67 +1,75 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Close, Menu } from "./icons";
-
-type NavItem = { id: string; index: string; label: string };
-type Link = { display: string; href: string };
+import type { NavItem } from "@/content/copy";
+import { site } from "@/content/copy";
+import { ui } from "@/content/ui";
+import { ArrowUpRight, Close, Menu } from "./icons";
 
 type HeaderNavProps = {
   items: readonly NavItem[];
   cta: { label: string; href: string };
-  phone: Link;
-  email: Link;
 };
 
-export function HeaderNav({ items, cta, phone, email }: HeaderNavProps) {
+const inPage = (item: NavItem) => !item.external && item.href !== "#top";
+
+function NavLink({
+  item,
+  className,
+  current,
+  onNavigate,
+}: {
+  item: NavItem;
+  className: string;
+  current?: boolean;
+  onNavigate?: () => void;
+}) {
+  if (item.external) {
+    return (
+      <a href={item.href} className={className} target="_blank" rel="noopener" onClick={onNavigate}>
+        {item.label}
+        <ArrowUpRight size={15} />
+        <span className="sr-only"> {ui.header.external}</span>
+      </a>
+    );
+  }
+  return (
+    <a href={item.href} className={className} onClick={onNavigate} aria-current={current ? "location" : undefined}>
+      {item.label}
+    </a>
+  );
+}
+
+export function HeaderNav({ items, cta }: HeaderNavProps) {
   const [active, setActive] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
 
-  // Header state: transparent while the top 8px of the page is in view. Observed, not scroll-polled,
-  // and written straight to <html data-top> so no React render happens while scrolling.
+  // Scroll-spy for the labels that have a section on this page. Observed, never scroll-polled.
   useEffect(() => {
-    const sentinel = document.createElement("div");
-    sentinel.setAttribute("aria-hidden", "true");
-    sentinel.style.cssText = "position:absolute;top:0;left:0;width:1px;height:8px;pointer-events:none;";
-    document.body.prepend(sentinel);
-    const observer = new IntersectionObserver(([entry]) => {
-      document.documentElement.dataset.top = String(entry.isIntersecting);
-    });
-    observer.observe(sentinel);
-    return () => {
-      observer.disconnect();
-      sentinel.remove();
-    };
-  }, []);
-
-  // Scroll-spy: highlight the section currently crossing the reading line.
-  useEffect(() => {
-    const sections = items
-      .map((item) => document.getElementById(item.id))
+    const targets = items
+      .filter(inPage)
+      .map((item) => document.querySelector<HTMLElement>(item.href))
       .filter((el): el is HTMLElement => Boolean(el));
-    if (!sections.length) return;
+    if (!targets.length) return;
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) setActive(entry.target.id);
+          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
         }
       },
-      { rootMargin: "-40% 0px -55% 0px" },
+      { rootMargin: "-45% 0px -50% 0px" },
     );
-    sections.forEach((s) => observer.observe(s));
-    const hero = document.getElementById("top");
-    const heroObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setActive(null);
-      },
-      { rootMargin: "-40% 0px -55% 0px" },
-    );
-    if (hero) heroObserver.observe(hero);
+    targets.forEach((t) => observer.observe(t));
+    const top = document.getElementById("top");
+    const topObserver = new IntersectionObserver(([entry]) => entry.isIntersecting && setActive(null), {
+      rootMargin: "-45% 0px -50% 0px",
+    });
+    if (top) topObserver.observe(top);
     return () => {
       observer.disconnect();
-      heroObserver.disconnect();
+      topObserver.disconnect();
     };
   }, [items]);
 
@@ -70,7 +78,7 @@ export function HeaderNav({ items, cta, phone, email }: HeaderNavProps) {
     menuButton.current?.focus();
   }, []);
 
-  // Drawer: Escape to close, focus trap, scroll lock, auto-close when the desktop nav appears.
+  // Drawer: Escape closes, focus stays inside, page scroll is locked, desktop width closes it.
   useEffect(() => {
     if (!open) return;
     const previousOverflow = document.body.style.overflow;
@@ -98,7 +106,7 @@ export function HeaderNav({ items, cta, phone, email }: HeaderNavProps) {
       }
     };
     document.addEventListener("keydown", onKey);
-    const mq = window.matchMedia("(min-width: 80rem)");
+    const mq = window.matchMedia("(min-width: 74rem)");
     const onMq = () => mq.matches && setOpen(false);
     mq.addEventListener("change", onMq);
     return () => {
@@ -110,81 +118,62 @@ export function HeaderNav({ items, cta, phone, email }: HeaderNavProps) {
 
   return (
     <>
-      <nav aria-label="On this page" className="ml-auto hidden pr-1 xl:block">
-        <ul className="flex items-center gap-7">
+      <nav aria-label="Main" className="site-nav">
+        <ul>
           {items.map((item) => (
-            <li key={item.id}>
-              <a
-                href={`#${item.id}`}
-                aria-current={active === item.id ? "location" : undefined}
-                className="site-nav__link"
-              >
-                {item.label}
-                <span aria-hidden="true" className="site-nav__bar" />
-              </a>
+            <li key={item.label}>
+              <NavLink item={item} className="site-nav__link" current={active === item.href} />
             </li>
           ))}
         </ul>
       </nav>
 
-      <a href={phone.href} className="site-header__phone hidden border-l border-current/20 pl-6 hover:text-signal-ink xl:block">
-        {phone.display}
-      </a>
-
-      <a href={cta.href} className="btn btn-primary btn-compact ml-auto hidden sm:inline-flex xl:ml-0">
+      <a href={cta.href} className="btn btn-primary btn-compact site-header__cta">
         {cta.label}
       </a>
 
       <button
         ref={menuButton}
         type="button"
-        className="site-header__menu ml-auto sm:ml-0 xl:hidden"
+        className="site-header__menu"
         aria-expanded={open}
         aria-controls="site-drawer"
         onClick={() => setOpen(true)}
       >
         <Menu size={18} />
-        Menu
+        {ui.header.menu}
       </button>
 
       {open ? (
-        <div
-          id="site-drawer"
-          ref={panel}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Page navigation"
-          className="on-ink fixed inset-0 z-[60] flex flex-col overflow-y-auto overscroll-contain"
-        >
-          <div className="shell flex h-16 shrink-0 items-center justify-between border-b border-ink-line lg:h-[4.25rem]">
-            <p className="t-label text-fog">On this page</p>
-            <button type="button" onClick={close} className="site-header__menu">
+        <div id="site-drawer" ref={panel} role="dialog" aria-modal="true" aria-label={ui.header.menuTitle} className="drawer">
+          <div className="shell flex h-[var(--header-h)] shrink-0 items-center justify-between border-b border-deep-line">
+            <p className="t-label text-on-deep-2">{ui.header.menuTitle}</p>
+            <button type="button" onClick={close} className="site-header__menu ml-0">
               <Close size={18} />
-              Close
+              {ui.header.close}
             </button>
           </div>
-          <ul className="shell flex-1 py-4">
-            {items.map((item) => (
-              <li key={item.id} className="border-b border-ink-line">
-                <a href={`#${item.id}`} onClick={() => setOpen(false)} className="drawer-link">
-                  <span className="t-meta text-signal-bright">{item.index}</span>
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <div className="shell grid gap-5 border-t border-ink-line py-6">
-            <a href={cta.href} onClick={() => setOpen(false)} className="btn btn-primary btn-lg w-full">
+          <nav aria-label="Main" className="shell flex-1 py-3">
+            <ul>
+              {items.map((item) => (
+                <li key={item.label} className="border-b border-deep-line">
+                  <NavLink item={item} className="drawer__link" onNavigate={() => setOpen(false)} />
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div className="shell grid gap-5 border-t border-deep-line py-6">
+            <a href={cta.href} onClick={() => setOpen(false)} className="btn btn-primary w-full">
               {cta.label}
             </a>
-            <div className="t-small flex flex-wrap gap-x-6 gap-y-2 text-fog">
-              <a className="link" href={phone.href}>
-                {phone.display}
+            <p className="t-label flex flex-wrap gap-x-6 gap-y-2">
+              <a className="link" href={site.phone.href}>
+                {site.phone.display}
               </a>
-              <a className="link" href={email.href}>
-                {email.display}
+              <a className="link" href={site.email.href}>
+                {site.email.display}
               </a>
-            </div>
+            </p>
           </div>
         </div>
       ) : null}

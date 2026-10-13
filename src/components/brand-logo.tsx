@@ -8,8 +8,8 @@ type LogoProps = {
 
 /**
  * The Bionic Eye logo, converted losslessly from the supplied BionicEyeLogoLarge*.ai artwork.
- * Lockup without tagline mirrors the header usage on thebioniceye.co.uk and the C10 datasheet;
- * the tagline lockup ("UNMANNED & UNMATCHED") is reserved for the footer sign-off.
+ * The artwork fills its artboard (≈98% of the width), so the rendered size is the visible size.
+ * The tagline lockup ("UNMANNED & UNMATCHED") is reserved for the footer.
  */
 export function BrandLogo({ tone = "ink", withTagline = false, className }: LogoProps) {
   const file = withTagline ? `tbe-lockup-tagline-${tone}.svg` : `tbe-lockup-${tone}.svg`;

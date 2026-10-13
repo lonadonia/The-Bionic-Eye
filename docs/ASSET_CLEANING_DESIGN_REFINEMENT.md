@@ -1,5 +1,8 @@
 # Asset Cleaning — design refinement ("Precision in Motion")
 
+> **Superseded (13 October 2026)** by `docs/ASSET_CLEANING_REFINEMENT_2.md`, which applies the supplied contest copy and replaces this direction's copy, specification table, capability story and motion.
+
+
 Refinement pass on the existing coded preview (`src/`), 11–12 October 2026. It supersedes the typography, colour, layout and motion sections of `design-handoff/…/02_CREATIVE_DESIGN_BLUEPRINT.md` and the type styles in `06_FIGMA_BUILD_SPEC.md`; the design note (`08`) has been updated to match. Scope: the Asset Cleaning page and the components it shares (header, footer, video, form). Copy rules from `design-handoff/…/01_CLIENT_BRIEF_ANALYSIS.md` still apply: every product string is verbatim from the brochure, the datasheet or the brief. Only interface labels (button text, filter field, captions that name a source file) are new. They live in `src/content/ui.ts` and make no product claims.
 
 ## 1. Diagnosis of the previous build (baseline screenshots at 1440 and 390)

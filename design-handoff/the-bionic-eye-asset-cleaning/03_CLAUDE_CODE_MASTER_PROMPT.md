@@ -10,25 +10,28 @@ You are continuing the **Asset Cleaning page for The Bionic Eye Ltd** (UK and Ir
 
 ## Read first (source of truth, in priority order)
 
-1. `design-handoff/the-bionic-eye-asset-cleaning/01_CLIENT_BRIEF_ANALYSIS.md` — requirements (REQ-001…042), asset map, approved copy deck, contradictions, assumptions.
-2. `02_CREATIVE_DESIGN_BLUEPRINT.md` — the "Field Manual" direction, tokens, type scale, grid, components, motion, WordPress map.
-3. `04_QA_ACCEPTANCE_CHECKLIST.md` — the tests that must stay green.
+1. `design-handoff/the-bionic-eye-asset-cleaning/source-reference/Asset_Cleaning_Contest_Copy.pdf` — the client's contest copy. **Use its text exactly as written.**
+2. `docs/ASSET_CLEANING_REFINEMENT_2.md` — current design, source differences (announcement vs PDF), removed content, verification and open items.
+3. `design-handoff/the-bionic-eye-asset-cleaning/qa/` — current QA evidence; `scripts/qa/README.md` for how to rerun it.
 4. `05_GITHUB_VERCEL_HANDOFF.md` — repo, branch, deployment state.
-5. Code: `src/content/copy.ts`, `src/content/specs.ts`, `src/content/media.ts` (all words and media), `src/app/globals.css` (tokens), `src/components/**`.
+5. Code: `src/content/copy.ts` (every visitor-facing word), `src/content/ui.ts` (interface labels only), `src/content/media.ts`, `src/app/globals.css` (tokens), `src/components/**`.
 
 Run `git status`, `git log --oneline -5` and `git remote -v` before editing. Never overwrite uncommitted work you did not make.
 
 ## Immovable requirements
 
-- **Section order:** Header → 01 Hero → 02 Applications → 03 The system → 04 Full service support → 05 Operating legally → 06 Enquiry → Footer. Never reorder or drop a section.
-- **Copy:** only verbatim client copy from `C10 Brochure.pdf`, `C10_Datasheet.pdf`, the brief, or the hero film's title cards. Do not write, paraphrase or "improve" marketing copy. British English (log any localisation in 01 §6.1). New interface labels must be functional and marked as UI in `copy.ts`.
-- **No fabrication:** no invented specifications, figures, claims, certifications, testimonials, logos, photos, videos or regulatory assurances. Where content is missing, show a visible pending flag and list the dependency in 01 §8.3.
-- **Hero video:** `C10-Use-Case-Shorts-Final-Horizontal.mp4`, shown as a silent full-bleed background loop behind the headline (`public/media/video/hero-background-loop-*`; edit list in `src/content/media.ts`). Keep the ink scrim and the single pause toggle, and re-run `scripts/qa/hero-contrast.mjs` after any change to the loop, scrim or hero text.
-- **Specifications:** the datasheet EU column verbatim (`specs.ts`), including its quirks, until the client corrects it. Headline figures only from values no other source contradicts (see C-1…C-6).
-- **CTA label:** "Book a demonstration".
-- **Brand:** logo SVGs in `public/media/brand` (converted from the supplied `.ai` files) — do not redraw or recolour. Typeface Archivo. Colours from `globals.css @theme` only.
-- **Accessibility:** WCAG 2.2 AA; visible focus; every moving video pausable; reduced motion honoured; one H1.
-- **WordPress feasibility:** no behaviour that cannot be rebuilt with core blocks, ACF, and small vanilla scripts.
+- **Provenance:** this is a Claude-assisted **internal prototype**. The contest currently prohibits AI-generated layouts and images; never present it, its exports or a Figma conversion of it as the entry unless the organiser permits it.
+- **Section order:** Header → Hero → Applications → The system → Full service support → Operating legally → Proven in the field → Enquiry → Footer.
+- **Copy:** only the contest copy PDF, character for character (typographic apostrophes allowed), plus the announcement's section names, `Book a demonstration` and the five service areas. No brochure or datasheet wording, slogans, extra figures, testimonials, logos, pricing, guarantees or certifications. `scripts/qa/copy-audit.mjs` must report 0 unverified.
+- **Hero:** headline `Facade and structure cleaning without access equipment.`, both opening paragraphs complete, one `Book a demonstration` button, film = loop cut from `C10-Use-Case-Shorts-Final-Horizontal.mp4` with an operational poster and a working Play/Pause control. Rerun `scripts/qa/hero-contrast.mjs` after changing the loop, scrim or hero text.
+- **Specifications:** exactly the five supplied rows with all qualifiers (`Over`, `Up to`, `Around … up to … at peak`), always visible.
+- **Applications:** all seven entries, including `Surface coating and treatment, currently in development`. Never relabel an unrelated photograph as evidence for an entry.
+- **Support:** five service areas; the three supplied paragraphs stay whole and visible.
+- **Form:** fields Name, Company, Email, Telephone, Sites or work involved; submit `Discuss a requirement`. No handler exists: never show a success state or add fields.
+- **Design system:** Manrope only; tokens in `globals.css`; dark ink text on the cyan button; at most three decoration motifs (accent rule, corner marks, stage grid).
+- **Media:** a changed file in `public/media` gets a new file name (it is served as immutable).
+- **Accessibility:** WCAG 2.2 AA; visible focus; every moving film pausable; reduced motion and `?capture=1` honoured; one H1.
+- **WordPress feasibility:** no behaviour that cannot be rebuilt with core blocks, ACF and small vanilla scripts.
 
 ## Stack and commands
 
@@ -49,15 +52,15 @@ Media derivatives are produced from the client asset pack with `scripts/qa/encod
 1. **Discover:** read the files above; restate the task as REQ IDs (add new IDs to 01 §7 if the client adds requirements).
 2. **Plan:** list files to change; keep changes minimal and in the existing structure.
 3. **Build:** implement in code. Copy goes in `src/content/*`; visual tokens in `globals.css`; components in `src/components/*`.
-4. **Verify:** `npm run lint`, `npm run typecheck`, `npm run build`. Then run the QA scripts in `scripts/qa/` against `next start` (see `scripts/qa/README.md`): interaction suite (must stay 30/30 or higher), hero contrast probe (all PASS), copy audit (0 unverified), overflow check at 1440/1024/768/390/360, and review screenshots of every changed section at 1440 and 390.
-5. **Exports:** if the visual design changed, regenerate `design-handoff/…/exports/` (1440 full PNG + PDF; 390 hero + one section PNG + PDF).
+4. **Verify:** `npm run lint`, `npm run typecheck`, `npm run build`. Then run the QA scripts in `scripts/qa/` against `next start` (see `scripts/qa/README.md`): interaction suite (52 checks, all PASS), hero contrast probe (all PASS), copy audit (0 unverified), and review screenshots of every changed section at 1440, 1024 and 390.
+5. **Exports:** if the visual design changed, regenerate `design-handoff/…/exports/` with `scripts/qa/export.mjs` (capture state; 1440 full PNG + PDF; 390 @2x full and hero + Applications PNG + PDF) and read back the raster sizes.
 6. **Commit and push:** stage only intended files, scan for secrets, commit with a descriptive message, push normally to `origin` (`https://github.com/lonadonia/The-Bionic-Eye`). Never force-push or rewrite history. If `main` is protected, push a feature branch and open a PR.
 7. **Vercel:** the repo is linked to a Vercel project (see 05). Pushes to `main` create a **production** deployment of that project; push to a feature branch for a preview unless the user explicitly asks for production. Verify the deployment state and open the URL before reporting it.
 8. **Report:** files changed, commands and results, REQ status changes, screenshots reviewed, commit SHA, branch, deployment URL (only if verified), open blockers.
 
 ## Tooling policy
 
-Use what is installed. Prefer CSS for motion; do not add GSAP or UI kits without a clear need and the user's approval. Do not install third-party skills or plugins without approval. Never claim Figma work: this environment has no Figma access unless a Figma tool is visibly available — if not, update `06_FIGMA_BUILD_SPEC.md` instead.
+Use what is installed. Prefer CSS for motion; do not add GSAP, Motion or UI kits without a clear need and the user's approval. Do not install third-party skills or plugins without approval. Never claim Figma work that was not done through an available, authorised Figma tool, and never substitute a flattened screenshot for editable layers.
 
 ## Definition of done
 

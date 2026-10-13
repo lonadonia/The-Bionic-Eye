@@ -1,5 +1,8 @@
 # 01 · Client brief analysis — The Bionic Eye · Asset Cleaning (ABZ C10)
 
+> **Superseded in part (13 October 2026).** The client has since supplied `source-reference/Asset_Cleaning_Contest_Copy.pdf`, which is now the copy authority. The brochure/datasheet copy deck in §6, the headline figures and the datasheet table no longer appear on the page, and assumptions A-001, A-004, A-005 and A-006 are resolved by that PDF. For the current source map, source differences and removed content, see `docs/ASSET_CLEANING_REFINEMENT_2.md`. The asset inventory (§2) and contradictions C-1…C-6 (§8.1) remain useful reference.
+
+
 Prepared 11 October 2026. Inspection was done directly from the files listed in §2 (video frames, PDF text layers, image pixels and the logo vector data). Nothing here relies on assumed content.
 
 ## 1. Project snapshot

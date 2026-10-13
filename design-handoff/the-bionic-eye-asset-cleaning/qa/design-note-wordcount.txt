@@ -1,6 +1,6 @@
 Design note word count
-Counted: 2026-10-12T00:03:14.178Z
-Words (tokens containing a letter, digit or #): 89
-All whitespace-separated tokens (incl. dashes): 91
+Counted: 2026-10-13T22:39:18Z
+Words (tokens containing a letter, digit or #): 95
+All whitespace-separated tokens (incl. dashes): 97
 Limit: 100
 Result: PASS

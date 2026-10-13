@@ -1,5 +1,28 @@
 # 05 · GitHub and Vercel handoff
 
+## Refinement 2 (13 October 2026)
+
+```
+Implementation:     BUILT — internal prototype of the Asset Cleaning page from the contest copy PDF
+Local build:        PASS — npm run lint, npm run typecheck, npm run build (static prerender)
+QA:                 52/52 interaction + axe checks PASS (hero playback via VP9 stand-in); copy audit 0 unverified;
+                    hero contrast 12/12 PASS; no overflow at 1440/1280/1024/768/720/640/390/360
+GitHub:             pushed normally (no force) to branch claude/new-session-hmdixa of lonadonia/The-Bionic-Eye
+                    (commit: see `git log`; recorded in the session report). main is unchanged at 95dc5f2.
+Pull request:       none opened
+Vercel:             NOT VERIFIED from this environment. The brief's screenshot names the-bionic-eye.vercel.app, so
+                    a Vercel project appears to exist, but *.vercel.app is blocked by this environment's egress
+                    policy (HTTP 403) and no Vercel tool is attached. If the project is Git-linked, the branch push
+                    creates a preview deployment automatically; production (main) is unchanged.
+Environment keys:   none
+```
+
+Open the branch preview in Chrome or Safari once to confirm H.264 playback of the hero loop and the click-to-watch films (this environment's Chromium has no H.264 decoder).
+
+---
+
+## Earlier delivery (11 October 2026)
+
 ```
 Project:            The Bionic Eye — Asset Cleaning (ABZ C10) · contest preview
 Implementation:     BUILT — single page, all six sections + header and footer

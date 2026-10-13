@@ -35,26 +35,24 @@ log "04 support (excerpts)"
 "$FF" -v error -y -ss 0 -t 60 -i "$SRC/C10 Academy.mp4" -map 0:v:0 -map 0:a:0 -vf "scale=1280:-2:flags=lanczos" "${X264[@]}" -crf 27 -maxrate 1500k -bufsize 3000k -g 50 -c:a aac -b:a 96k -ac 2 "$OUT/video/support-c10-academy-excerpt.mp4"
 "$FF" -v error -y -ss 0 -t 75 -i "$SRC/ABZ Clean Station _ Full Setup & Operation Guide.mp4" -map 0:v:0 -map 0:a:0 -vf "scale=1280:-2:flags=lanczos,fps=24" "${X264[@]}" -crf 27 -maxrate 1500k -bufsize 3000k -g 48 -c:a aac -b:a 96k -ac 2 "$OUT/video/support-clean-station-excerpt.mp4"
 "$FF" -v error -y -ss 0 -t 60 -i "$SRC/TBE_Cleaning_Van-Compressed2.mp4" -map 0:v:0 -map 0:a:0 -vf "scale=1280:-2:flags=lanczos" "${X264[@]}" -crf 27 -maxrate 1500k -bufsize 3000k -g 50 -c:a aac -b:a 96k -ac 2 "$OUT/video/support-tbe-cleaning-van-excerpt.mp4"
-log "06 enquiry (loop excerpt)"
+log "02 applications: field footage clip (IMG_2236 excerpt, played from the Industrial tile)"
 "$FF" -v error -y -ss 4 -t 24 -i "$SRC/IMG_2236.MOV" -map 0:v:0 -vf "scale=1280:-2:flags=lanczos,fps=30" "${X264[@]}" -crf 27 -maxrate 1600k -bufsize 3200k -g 60 -an "$OUT/video/enquiry-uk-demonstration-loop.mp4"
 
-# ---------- Posters (frames inside each served clip) ----------
+# ---------- Posters (operational frames inside each served clip; never a logo or title card) ----------
+# A poster that changes gets a new file name (suffix = film timecode), because /media is served as immutable.
 frame() { "$FF" -v error -y -ss "$2" -i "$SRC/$1" -frames:v 1 -vf "$3,format=yuvj420p" -q:v 3 "$4"; }
 log "posters"
-frame "C10 Short Low bitrate.mp4" 3 "scale=1280:-2:flags=lanczos" "$OUT/poster/applications-c10-short.jpg"
+frame "C10 Short Low bitrate.mp4" 12 "scale=1280:-2:flags=lanczos" "$OUT/poster/applications-c10-short-0012.jpg"
 frame "5f69a5e2-edb9-4dff-8bd8-14d3a8d570d0.MP4" 5 "scale=720:-2:flags=lanczos" "$OUT/poster/applications-uk-cladding-portrait.jpg"
-frame "C10_Introduction_short.mp4" 13.5 "scale=1280:-2:flags=lanczos" "$OUT/poster/system-c10-introduction.jpg"
+frame "C10_Introduction_short.mp4" 106.2 "scale=1280:-2:flags=lanczos" "$OUT/poster/system-c10-introduction-0146.jpg"
 frame "C10 Academy.mp4" 9.5 "scale=1280:-2:flags=lanczos" "$OUT/poster/support-c10-academy.jpg"
-frame "ABZ Clean Station _ Full Setup & Operation Guide.mp4" 54.6 "scale=1280:-2:flags=lanczos" "$OUT/poster/support-clean-station.jpg"
+frame "ABZ Clean Station _ Full Setup & Operation Guide.mp4" 22.5 "scale=1280:-2:flags=lanczos" "$OUT/poster/support-clean-station-0022.jpg"
 frame "TBE_Cleaning_Van-Compressed2.mp4" 20.5 "scale=1280:-2:flags=lanczos" "$OUT/poster/support-tbe-cleaning-van.jpg"
 frame "IMG_2236.MOV" 4.1 "scale=1280:-2:flags=lanczos" "$OUT/poster/enquiry-uk-demonstration.jpg"
 
-# ---------- Application tiles (4:5) — stills from the hero film's chapters + one photograph ----------
-log "application tiles"
+# ---------- Application still (4:5 source, cropped on the page) ----------
+log "application still"
 frame "C10-Use-Case-Shorts-Final-Horizontal.mp4" 16.5 "crop=1728:2160:1596:0,scale=960:1200:flags=lanczos" "$OUT/img/app-solar-panel-cleaning.jpg"
-frame "C10-Use-Case-Shorts-Final-Horizontal.mp4" 56.5 "crop=1728:2160:1056:0,scale=960:1200:flags=lanczos" "$OUT/img/app-roof-moss-removal.jpg"
-frame "C10-Use-Case-Shorts-Final-Horizontal.mp4" 70.5 "crop=1728:2160:976:0,scale=960:1200:flags=lanczos" "$OUT/img/app-gutter-cleaning.jpg"
-"$FF" -v error -y -i "$SRC/C10 3.jpg" -vf "crop=2700:3376:1700:0,scale=960:1200:flags=lanczos,format=yuvj420p" -q:v 3 "$OUT/img/app-facade-cleaning.jpg"
 
 # ---------- Photographs and render ----------
 log "photographs"

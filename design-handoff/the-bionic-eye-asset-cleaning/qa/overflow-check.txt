@@ -1,5 +1,0 @@
-w=1440 scrollWidth=1440 clientWidth=1440 height=10960 no-overflow
-w=1024 scrollWidth=1024 clientWidth=1024 height=10179 no-overflow
-w=768 scrollWidth=768 clientWidth=768 height=13260 no-overflow
-w=390 scrollWidth=390 clientWidth=390 height=14199 no-overflow
-w=360 scrollWidth=360 clientWidth=360 height=14258 no-overflow

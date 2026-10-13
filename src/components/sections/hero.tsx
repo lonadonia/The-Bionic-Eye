@@ -1,48 +1,31 @@
 import { cta, hero } from "@/content/copy";
 import { films } from "@/content/media";
-import { ui } from "@/content/ui";
-import { ArrowDown } from "../icons";
 import { HeroFilm } from "../video/hero-background";
 
-/** Section 01 — the C10 Use Case film is the visual; copy sits bottom-left and leaves the drone clear. */
+/**
+ * Hero. One copy of the content in reading order: headline → film → introduction → action.
+ * Phones stack it in that order; from 1024px the film becomes the full-bleed background and the
+ * copy sits in a 600px reading zone on the left, leaving the drone and its jet clear on the right.
+ */
 export function Hero() {
   return (
     <section id="top" aria-labelledby="hero-heading" className="hero">
-      <HeroFilm
-        film={films.hero}
-        rail={
-          <ul className="hero__benefits" aria-label={hero.kicker}>
-            {hero.triad.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-          </ul>
-        }
-      >
-        <div className="hero__copy">
-          <p className="hero__kicker hero-in" style={{ ["--i" as string]: 0 }}>
-            {hero.kicker}
-          </p>
-          <h1 id="hero-heading" className="t-display hero__title">
-            {hero.heading.map((line, i) => (
-              <span key={line} className="hero-in" style={{ ["--i" as string]: i + 1 }}>
-                {line}
-              </span>
-            ))}
-          </h1>
-          <p className="t-lede hero__intro hero-in" style={{ ["--i" as string]: 3 }}>
-            {hero.intro}
-          </p>
-          <div className="hero__actions hero-in" style={{ ["--i" as string]: 4 }}>
-            <a href={cta.href} className="btn btn-primary btn-lg w-full sm:w-auto">
-              {cta.label}
-            </a>
-            <a href={ui.hero.secondary.href} className="btn btn-text">
-              <span>{ui.hero.secondary.label}</span>
-              <ArrowDown size={16} />
-            </a>
-          </div>
+      <div className="shell hero__grid">
+        <h1 id="hero-heading" className="t-h1 hero__title hero-in" style={{ ["--i" as string]: 0 }}>
+          {hero.heading}
+        </h1>
+        <HeroFilm film={films.hero} />
+        <div className="hero__intro t-body hero-in" style={{ ["--i" as string]: 1 }}>
+          {hero.paragraphs.map((p) => (
+            <p key={p}>{p}</p>
+          ))}
         </div>
-      </HeroFilm>
+        <div className="hero__actions hero-in" style={{ ["--i" as string]: 3 }}>
+          <a href={cta.demonstration.href} className="btn btn-primary">
+            {cta.demonstration.label}
+          </a>
+        </div>
+      </div>
     </section>
   );
 }

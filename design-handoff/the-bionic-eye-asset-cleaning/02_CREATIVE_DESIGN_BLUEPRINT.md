@@ -1,5 +1,8 @@
 # 02 · Creative design blueprint — "Field Manual"
 
+> **Superseded (13 October 2026).** The page now follows the refined industrial editorial direction in `docs/ASSET_CLEANING_REFINEMENT_2.md` (Manrope only, cyan/graphite interface tokens, three decoration motifs). The WordPress mapping in §9 still applies section by section.
+
+
 ## 1. Experience thesis
 
 > For cleaning contractors and facilities managers deciding whether a drone can replace scaffolding and rope access, the page should feel **engineered, evidenced and calm** — an indexed technical document whose expressive moments are real footage of the C10 at work — leading to a confident "Book a demonstration".

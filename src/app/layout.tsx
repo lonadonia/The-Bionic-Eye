@@ -1,22 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Manrope } from "next/font/google";
+import { Manrope } from "next/font/google";
 import { RevealObserver } from "@/components/motion/reveal-observer";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { hero, site } from "@/content/copy";
 import "./globals.css";
 
-// Manrope: headings, figures and interface labels. DM Sans: body, captions and form text.
+// One family for the whole page: Manrope (SIL Open Font License 1.1), variable weight axis,
+// self-hosted by next/font. The page uses 400, 500, 600 and 700.
 const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-manrope",
-  display: "swap",
-});
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  axes: ["opsz"],
-  variable: "--font-dm-sans",
   display: "swap",
 });
 
@@ -25,12 +19,12 @@ const deployedHost = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VE
 export const metadata: Metadata = {
   ...(deployedHost ? { metadataBase: new URL(`https://${deployedHost}`) } : {}),
   title: `${site.pageName} — ABZ Innovation C10 | The Bionic Eye`,
-  description: hero.intro,
-  // Contest design preview: keep it out of search indexes so it never competes with the client's site.
+  description: hero.paragraphs[0],
+  // Internal prototype: keep it out of search indexes so it never competes with the client's site.
   robots: { index: false, follow: false },
   openGraph: {
     title: `${site.pageName} — ABZ Innovation C10 | The Bionic Eye`,
-    description: hero.intro,
+    description: hero.paragraphs[0],
     images: [{ url: "/media/poster/hero-c10-use-cases.jpg", width: 1920, height: 1080 }],
     locale: "en_GB",
     type: "website",
@@ -38,23 +32,23 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#111719",
+  themeColor: "#11191d",
   width: "device-width",
   initialScale: 1,
 };
 
 /*
- * Runs before first paint and records whether the page starts at the top, so the header can sit
- * transparently over the hero film without flashing its solid state first. Without JavaScript the
- * attribute is never set and the header simply stays solid and readable.
+ * Static capture state for screenshots and PDFs: `?capture=1` sets <html data-capture> before first
+ * paint. CSS then drops animation, pending reveals and sticky positioning, and films stay on their
+ * chosen posters. The design and content are unchanged.
  */
-const headerStateScript = `document.documentElement.dataset.top=String(window.scrollY<8)`;
+const captureScript = `if(/[?&]capture=1\\b/.test(location.search))document.documentElement.dataset.capture="1"`;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-GB" className={`${manrope.variable} ${dmSans.variable}`} suppressHydrationWarning>
+    <html lang="en-GB" className={manrope.variable} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: headerStateScript }} />
+        <script dangerouslySetInnerHTML={{ __html: captureScript }} />
       </head>
       <body>
         <a href="#main" className="skip-link">

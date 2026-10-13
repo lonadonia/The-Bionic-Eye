@@ -1,8 +1,9 @@
 /**
- * Media registry — every file here is a web-optimised derivative of a file in the client asset pack.
- * `source` names the original file so each placement is auditable (see 01_CLIENT_BRIEF_ANALYSIS.md,
- * "Asset-to-section map"). Titles are the client's own file names, tidied for display.
- * Excerpts are labelled as such in the UI; production should host full-length films (e.g. Vimeo/YouTube).
+ * Media registry. Every file is a web derivative of a file in the client asset pack; `source` names
+ * the original so each placement can be audited. Titles are the client's file names, tidied for
+ * display (functional captions only, never promotional). Excerpts say so in the interface.
+ * Posters are chosen operational frames (drone, jet and surface), never a logo or title card.
+ * A changed file gets a new name (suffix = film timecode): /media is served as immutable.
  */
 
 export type Film = {
@@ -11,6 +12,8 @@ export type Film = {
   source: string;
   src: { large: string; small?: string };
   poster: string;
+  /** Where the poster comes from, for the handover. */
+  posterFrame: string;
   /** Duration of the file served on this page, in seconds. */
   duration: number;
   /** Duration of the original supplied film, when the page serves an excerpt. */
@@ -22,62 +25,76 @@ export type Film = {
 
 export const films = {
   /**
-   * Hero background loop: eight shots cut on the film's own edits, in this order (film seconds):
-   * 10.92–14.02, 19.92–21.62, 21.98–23.90, 32.34–34.90, 39.06–40.50, 43.95–46.36, 61.30–68.70, 0.04–4.22.
-   * It opens on the solar-panel clean (drone right, text left) and excludes the on-screen title cards,
-   * the black end card, and the shots used as Applications tiles (16.5, 56.5, 70.5 s). Silent.
+   * Hero: a silent 25 s loop cut on the film's own edits from C10-Use-Case-Shorts-Final-Horizontal.mp4
+   * (film seconds 10.92–14.02, 19.92–21.62, 21.98–23.90, 32.34–34.90, 39.06–40.50, 43.95–46.36,
+   * 61.30–68.70, 0.04–4.22). It leaves out the on-screen title cards and the end card. Served at
+   * 1080p and 540p.
    */
   hero: {
     id: "c10-use-cases-background",
-    title: "C10 Use Case Shorts — background loop",
+    title: "C10 Use Case Shorts",
     source: "C10-Use-Case-Shorts-Final-Horizontal.mp4",
     src: {
       large: "/media/video/hero-background-loop-1080.mp4",
       small: "/media/video/hero-background-loop-540.mp4",
     },
     poster: "/media/poster/hero-c10-use-cases.jpg",
+    posterFrame: "First frame of the loop (film 00:10.9): the C10 rinsing a rooftop solar array",
     duration: 25,
     fullDuration: 83.4,
     hasAudio: false,
     orientation: "landscape",
-    description:
-      "The C10 at work: hovering over open land, cleaning rooftop solar panels, façades, glazing, a moss-covered roof and gutters.",
+    description: "The C10 at work: rinsing rooftop solar panels, façades, glazing and roof edges.",
   },
-  applicationsMontage: {
+  montage: {
     id: "c10-short",
     title: "C10 Short",
     source: "C10 Short Low bitrate.mp4",
     src: { large: "/media/video/applications-c10-short-720.mp4" },
-    poster: "/media/poster/applications-c10-short.jpg",
+    poster: "/media/poster/applications-c10-short-0012.jpg",
+    posterFrame: "Film frame 00:12: the C10 spraying a glass curtain wall",
     duration: 55.2,
     hasAudio: true,
     orientation: "landscape",
-    description:
-      "Montage of the C10 washing building façades, glazing, metal cladding and rooftop solar arrays.",
+    description: "Montage of the C10 washing building façades, glazing, metal cladding and rooftop solar arrays.",
   },
-  applicationsCladding: {
+  claddingPortrait: {
     id: "cladding-portrait",
-    title: "Cladding wash",
+    title: "Cladding wash, phone footage",
     source: "5f69a5e2-edb9-4dff-8bd8-14d3a8d570d0.MP4",
     src: { large: "/media/video/applications-uk-cladding-portrait.mp4" },
     poster: "/media/poster/applications-uk-cladding-portrait.jpg",
+    posterFrame: "Film frame: the C10 high on a white composite-clad wall, its blue supply hose to the ground",
     duration: 38.6,
     hasAudio: false,
     orientation: "portrait",
     description:
       "Phone footage looking up at the C10 as it washes a tall wall of white composite cladding panels, its blue supply hose running down to the ground.",
   },
+  fieldCladding: {
+    id: "field-cladding",
+    title: "Field footage, IMG_2236",
+    source: "IMG_2236.MOV",
+    src: { large: "/media/video/enquiry-uk-demonstration-loop.mp4" },
+    poster: "/media/poster/enquiry-uk-demonstration.jpg",
+    posterFrame: "Clip frame (film 00:04): the C10 spraying green corrugated steel cladding",
+    duration: 24,
+    fullDuration: 134,
+    hasAudio: false,
+    orientation: "landscape",
+    description: "The C10 washing the green corrugated steel cladding of a large industrial building under a clear sky.",
+  },
   systemIntroduction: {
     id: "c10-introduction",
     title: "C10 Introduction",
     source: "C10_Introduction_short.mp4",
     src: { large: "/media/video/system-c10-introduction-720.mp4" },
-    poster: "/media/poster/system-c10-introduction.jpg",
+    poster: "/media/poster/system-c10-introduction-0146.jpg",
+    posterFrame: "Film frame 01:46: the C10 holding off a building and spraying its façade (the film opens on a title card)",
     duration: 143.5,
     hasAudio: true,
     orientation: "landscape",
-    description:
-      "The Bionic Eye introduction to the C10, with on-screen annotations of the cleaning system and its stability features.",
+    description: "The Bionic Eye introduction to the C10: the drone in flight and cleaning façades, glazing and roofs.",
   },
   academy: {
     id: "c10-academy",
@@ -85,6 +102,7 @@ export const films = {
     source: "C10 Academy.mp4",
     src: { large: "/media/video/support-c10-academy-excerpt.mp4" },
     poster: "/media/poster/support-c10-academy.jpg",
+    posterFrame: "Film frame: the C10 beside grey cladding",
     duration: 60,
     fullDuration: 304.3,
     hasAudio: true,
@@ -93,10 +111,11 @@ export const films = {
   },
   cleanStation: {
     id: "clean-station-guide",
-    title: "ABZ Clean Station – Full Setup & Operation Guide",
+    title: "ABZ Clean Station, setup and operation guide",
     source: "ABZ Clean Station _ Full Setup & Operation Guide.mp4",
     src: { large: "/media/video/support-clean-station-excerpt.mp4" },
-    poster: "/media/poster/support-clean-station.jpg",
+    poster: "/media/poster/support-clean-station-0022.jpg",
+    posterFrame: "Film frame 00:22: the Clean Station ground unit, tanks and pump",
     duration: 75,
     fullDuration: 349.4,
     hasAudio: true,
@@ -110,6 +129,7 @@ export const films = {
     source: "TBE_Cleaning_Van-Compressed2.mp4",
     src: { large: "/media/video/support-tbe-cleaning-van-excerpt.mp4" },
     poster: "/media/poster/support-tbe-cleaning-van.jpg",
+    posterFrame: "Film frame: the technician at the open rear of the van, hose reel and pressure unit behind him",
     duration: 60,
     fullDuration: 657.2,
     hasAudio: true,
@@ -117,20 +137,9 @@ export const films = {
     description:
       "Walkthrough of The Bionic Eye cleaning van: the presenter explains the hose reel, pressure unit and water system fitted in the rear of the van.",
   },
-  enquiryDemonstration: {
-    id: "demonstration-loop",
-    title: "Field footage",
-    source: "IMG_2236.MOV",
-    src: { large: "/media/video/enquiry-uk-demonstration-loop.mp4" },
-    poster: "/media/poster/enquiry-uk-demonstration.jpg",
-    duration: 24,
-    fullDuration: 134,
-    hasAudio: false,
-    orientation: "landscape",
-    description:
-      "The C10 washing the green corrugated cladding of a large agricultural-style building under a clear blue sky.",
-  },
 } satisfies Record<string, Film>;
+
+export type Photo = { src: string; width: number; height: number; source: string; alt: string };
 
 export const photos = {
   productSide: {
@@ -140,6 +149,20 @@ export const photos = {
     source: "C10-2.png",
     alt: "Studio side view of the ABZ Innovation C10 with arms unfolded, the carbon spray lance mounted beneath the frame and the yellow hose coupling at the rear.",
   },
+  facade: {
+    src: "/media/img/field-rendered-wall.jpg",
+    width: 2048,
+    height: 1378,
+    source: "865A0018.jpg",
+    alt: "The C10 hovering beside a rendered building facade between two tall windows, its lance throwing a fine spray across the wall.",
+  },
+  solar: {
+    src: "/media/img/app-solar-panel-cleaning.jpg",
+    width: 960,
+    height: 1200,
+    source: "C10-Use-Case-Shorts-Final-Horizontal.mp4 @ 00:16.5",
+    alt: "The C10 hovering above a rooftop solar array, its lance spraying the panels while the yellow supply hose runs back across the roof.",
+  },
   demonstration: {
     src: "/media/img/field-uk-demonstration.jpg",
     width: 2400,
@@ -147,40 +170,16 @@ export const photos = {
     source: "IMG_2240.JPG",
     alt: "Two people standing on gravel watch the C10 spray the roofline of a green corrugated steel building, the red supply hose coiled across the yard.",
   },
-  renderedWall: {
-    src: "/media/img/field-rendered-wall.jpg",
-    width: 2048,
-    height: 1378,
-    source: "865A0018.jpg",
-    alt: "The C10 hovering beside a rendered wall between two tall windows, its lance throwing a fine spray across the surface.",
-  },
-} as const;
-
-/**
- * Capability stills for "The system": single frames taken from C10_Introduction_short.mp4 (the film
- * shown in the same section) at the timestamps given, exported at the film's 1280 × 720. Frames at
- * 01:18–01:22 were rejected because their burned-in "180 bars" and "30/40 meter" overlays contradict
- * the datasheet (01_CLIENT_BRIEF_ANALYSIS.md §8.1, C-4 and C-5).
- */
-export const systemStills = {
-  rtk: {
-    src: "/media/img/system-rtk-stability.jpg",
-    width: 1280,
-    height: 720,
-    source: "C10_Introduction_short.mp4 @ 01:41",
-    alt: "Overhead shot of the C10 above a paved yard beside a Kärcher service building, with the film’s on-screen annotation “Stability: advanced radar, dual RTK, Emlid RTK”.",
-  },
-  washing: {
-    src: "/media/img/system-washing-hose.jpg",
-    width: 1280,
-    height: 720,
-    source: "C10_Introduction_short.mp4 @ 02:02",
-    alt: "The C10 spraying the upper edge of a sloping metal-clad building, its water-filled supply hose hanging straight down beneath it.",
-  },
-} as const;
+} as const satisfies Record<string, Photo>;
 
 export function formatTime(seconds: number) {
   const s = Math.max(0, Math.round(seconds));
   const m = Math.floor(s / 60);
   return `${String(m).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
+}
+
+export function filmLength(film: Film) {
+  return film.fullDuration
+    ? `Excerpt, ${formatTime(film.duration)} of ${formatTime(film.fullDuration)}`
+    : formatTime(film.duration);
 }

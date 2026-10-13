@@ -1,9 +1,0 @@
-1440px  section label (12px caps)    min P95 15.55:1 (t=7.26s)  brightest pixel 15.40:1  need 4.5:1  PASS
-1440px  dealer line (12px caps)      min P95 9.90:1 (t=6.1s)  brightest pixel 9.45:1  need 4.5:1  PASS
-1440px  kicker (12px caps)           min P95 10.74:1 (t=22.34s)  brightest pixel 10.71:1  need 4.5:1  PASS
-1440px  headline (large)             min P95 6.22:1 (t=3.78s)  brightest pixel 3.65:1  need 3:1  PASS
-1440px  intro (body)                 min P95 11.80:1 (t=4.94s)  brightest pixel 9.59:1  need 4.5:1  PASS
-390px  section label (12px caps)    min P95 11.41:1 (t=24.66s)  brightest pixel 10.55:1  need 4.5:1  PASS
-390px  kicker (12px caps)           min P95 6.61:1 (t=9.58s)  brightest pixel 5.78:1  need 4.5:1  PASS
-390px  headline (large)             min P95 8.33:1 (t=24.66s)  brightest pixel 7.04:1  need 3:1  PASS
-390px  intro (body)                 min P95 11.41:1 (t=7.26s)  brightest pixel 10.26:1  need 4.5:1  PASS

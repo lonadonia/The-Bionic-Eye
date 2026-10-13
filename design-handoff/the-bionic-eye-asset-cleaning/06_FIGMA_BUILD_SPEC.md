@@ -1,5 +1,8 @@
 # 06 · Figma build specification
 
+> **Superseded in part (13 October 2026).** Use the current exports in `exports/` and the tokens and type scale in `docs/ASSET_CLEANING_REFINEMENT_2.md` §4. A Figma connector is now attached to the Claude session; no Figma file has been created yet. Because the contest currently prohibits AI-generated layouts, any Figma file made from this Claude-assisted prototype is for internal handover only.
+
+
 **Status: BLOCKED_EXTERNAL.** This environment has no Figma access, so no Figma file was created and no Figma link exists. The contest makes a view-accessible Figma link mandatory; the entrant must build it. This spec makes that a precise, fast job and keeps the file identical to the coded design and the exports.
 
 ## 1. Two build routes

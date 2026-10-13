@@ -1,63 +1,121 @@
 {
-  "url": "http://localhost:3100/",
-  "ranAt": "2026-10-11T22:43:21.984Z",
+  "url": "http://localhost:3200/",
+  "ranAt": "2026-10-13T22:37:55.107Z",
+  "samples": [
+    0.2,
+    1.27,
+    2.34,
+    3.4,
+    4.47,
+    5.54,
+    6.61,
+    7.67,
+    8.74,
+    9.81,
+    10.88,
+    11.95,
+    13.01,
+    14.08,
+    15.15,
+    16.22,
+    17.29,
+    18.35,
+    19.42,
+    20.49,
+    21.56,
+    22.62,
+    23.69,
+    24.76
+  ],
   "viewports": {
     "1440x900": {
-      "section label (12px caps)": {
-        "need": 4.5,
-        "minP95": 15.550225225091658,
-        "minWorst": 15.396903695323804,
-        "atTime": 7.26
-      },
-      "dealer line (12px caps)": {
-        "need": 4.5,
-        "minP95": 9.904773710690687,
-        "minWorst": 9.44917598835776,
-        "atTime": 6.1
-      },
-      "kicker (12px caps)": {
-        "need": 4.5,
-        "minP95": 10.742489652164453,
-        "minWorst": 10.707398262163482,
-        "atTime": 22.34
-      },
-      "headline (large)": {
+      "headline": {
         "need": 3,
-        "minP95": 6.224561865445104,
-        "minWorst": 3.6502762516876004,
-        "atTime": 3.78
+        "minP95": 10.16,
+        "brightestPixel": 6.84,
+        "atTime": 21.56,
+        "pass": true
       },
-      "intro (body)": {
+      "intro paragraph 1": {
         "need": 4.5,
-        "minP95": 11.800218549221977,
-        "minWorst": 9.587567970629067,
-        "atTime": 4.94
+        "minP95": 10.1,
+        "brightestPixel": 6.93,
+        "atTime": 4.47,
+        "pass": true
+      },
+      "intro paragraph 2": {
+        "need": 4.5,
+        "minP95": 10.7,
+        "brightestPixel": 8.41,
+        "atTime": 4.47,
+        "pass": true
+      },
+      "film control": {
+        "need": 4.5,
+        "minP95": 8.19,
+        "brightestPixel": 7.07,
+        "atTime": 9.81,
+        "pass": true
       }
     },
-    "390x844": {
-      "section label (12px caps)": {
-        "need": 4.5,
-        "minP95": 11.411235593077379,
-        "minWorst": 10.554145812509717,
-        "atTime": 24.66
-      },
-      "kicker (12px caps)": {
-        "need": 4.5,
-        "minP95": 6.612477349430946,
-        "minWorst": 5.777067214605494,
-        "atTime": 9.58
-      },
-      "headline (large)": {
+    "1280x900": {
+      "headline": {
         "need": 3,
-        "minP95": 8.329534768011879,
-        "minWorst": 7.043394847025507,
-        "atTime": 24.66
+        "minP95": 9.63,
+        "brightestPixel": 5.63,
+        "atTime": 21.56,
+        "pass": true
       },
-      "intro (body)": {
+      "intro paragraph 1": {
         "need": 4.5,
-        "minP95": 11.411235593077379,
-        "minWorst": 10.26446785963403,
-        "atTime": 7.26
+        "minP95": 8.3,
+        "brightestPixel": 4.35,
+        "atTime": 4.47,
+        "pass": true
+      },
+      "intro paragraph 2": {
+        "need": 4.5,
+        "minP95": 9.78,
+        "brightestPixel": 6.34,
+        "atTime": 3.4,
+        "pass": true
+      },
+      "film control": {
+        "need": 4.5,
+        "minP95": 8.08,
+        "brightestPixel": 7.09,
+        "atTime": 9.81,
+        "pass": true
+      }
+    },
+    "1024x900": {
+      "headline": {
+        "need": 3,
+        "minP95": 7.3,
+        "brightestPixel": 4.41,
+        "atTime": 4.47,
+        "pass": true
+      },
+      "intro paragraph 1": {
+        "need": 4.5,
+        "minP95": 6.2,
+        "brightestPixel": 3.2,
+        "atTime": 4.47,
+        "pass": true
+      },
+      "intro paragraph 2": {
+        "need": 4.5,
+        "minP95": 5.98,
+        "brightestPixel": 3.45,
+        "atTime": 23.69,
+        "pass": true
+      },
+      "film control": {
+        "need": 4.5,
+        "minP95": 7.78,
+        "brightestPixel": 7.33,
+        "atTime": 9.81,
+        "pass": true
       }
     }
   }

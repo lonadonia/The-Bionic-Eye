@@ -1,67 +1,61 @@
-import { cta, nav, site } from "@/content/copy";
+import { footer } from "@/content/copy";
 import { BrandLogo } from "./brand-logo";
-import { ArrowUp } from "./icons";
 
+/**
+ * Footer: four readable groups of supplied information (identity and operating address, contact,
+ * specialist brands, authorisation), then the company registration line with the registered office,
+ * kept distinct from the operating address. No promotional buttons, logos or newsletter.
+ */
 export function SiteFooter() {
   return (
-    <footer className="on-ink border-t border-ink-line">
-      <div className="shell grid-12 gap-y-12 py-16 lg:py-20">
+    <footer className="site-footer on-deep border-t border-deep-line">
+      <div className="shell grid-12 gap-y-10 py-14 lg:py-16">
+        <div id="about" className="col-span-4 md:col-span-4 lg:col-span-4">
+          <BrandLogo tone="white" withTagline className="h-auto w-[148px]" />
+          <p className="mt-6 max-w-[22rem]">{footer.address}</p>
+        </div>
+
         <div className="col-span-4 md:col-span-4 lg:col-span-4">
-          <BrandLogo tone="white" withTagline className="h-auto w-[168px] lg:w-[196px]" />
-          <p className="t-small mt-8 max-w-[22rem] text-fog">
-            {site.company}
-            <br />
-            {site.dealerLine}
+          <p>
+            {footer.telephone.lead}
+            <a className="link" href={footer.telephone.link.href}>
+              {footer.telephone.link.display}
+            </a>
+            {footer.telephone.trail}
           </p>
-        </div>
-
-        <div className="col-span-4 md:col-span-4 lg:col-span-4">
-          <h2 className="t-label text-fog">{site.contactHeading}</h2>
-          <ul className="mt-5 grid gap-3 font-display text-[1.0625rem] font-semibold tracking-[-0.01em]">
-            <li>
-              <a className="link" href={site.phone.href}>
-                {site.phone.display}
-              </a>
-            </li>
-            <li>
-              <a className="link" href={site.email.href}>
-                {site.email.display}
-              </a>
-            </li>
-            <li>
-              <a className="link" href={site.shop.href} target="_blank" rel="noopener">
-                {site.shop.display}
-              </a>
-            </li>
-          </ul>
-          <a href={cta.href} className="btn btn-primary btn-compact mt-8">
-            {cta.label}
-          </a>
-        </div>
-
-        <nav aria-label="Footer — on this page" className="col-span-4 md:col-span-8 lg:col-span-4">
-          <h2 className="t-label text-fog">{site.pageName}</h2>
-          <ul className="mt-5 grid border-t border-ink-line">
-            {nav.map((item) => (
-              <li key={item.id} className="border-b border-ink-line">
-                <a href={`#${item.id}`} className="flex min-h-11 items-baseline gap-3 py-3 transition-colors hover:text-signal-bright">
-                  <span className="t-meta text-signal-bright">{item.index}</span>
-                  <span className="font-display text-[0.9375rem] font-medium">{item.label}</span>
-                </a>
+          <p className="mt-1">
+            {footer.email.lead}
+            <a className="link" href={footer.email.link.href}>
+              {footer.email.link.display}
+            </a>
+            {footer.email.trail}
+          </p>
+          <p className="mt-7">
+            <strong>{footer.brandsLabel}:</strong>
+          </p>
+          <ul className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-white" aria-label={footer.brandsLabel}>
+            {footer.brands.map((b, i) => (
+              <li key={b} className="flex gap-3 whitespace-nowrap">
+                {b}
+                {i < footer.brands.length - 1 ? (
+                  <span aria-hidden="true" className="text-on-deep-2">
+                    |
+                  </span>
+                ) : null}
               </li>
             ))}
           </ul>
-        </nav>
+        </div>
+
+        <div className="col-span-4 md:col-span-8 lg:col-span-4">
+          <p className="text-white">{footer.operator}</p>
+          <p className="mt-4">{footer.approval}</p>
+        </div>
       </div>
 
-      <div className="border-t border-ink-line">
-        <div className="shell t-meta flex flex-wrap items-center justify-between gap-x-8 gap-y-3 py-6 text-fog">
-          <p>© {site.company}</p>
-          <p>Design preview for contest review — not a live website.</p>
-          <a href="#top" className="inline-flex min-h-10 items-center gap-2 transition-colors hover:text-white">
-            <ArrowUp size={16} />
-            Back to top
-          </a>
+      <div className="border-t border-deep-line">
+        <div className="shell py-6 text-[0.875rem]">
+          <p>{footer.registration}</p>
         </div>
       </div>
     </footer>

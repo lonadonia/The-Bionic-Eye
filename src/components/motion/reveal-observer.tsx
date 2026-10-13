@@ -10,13 +10,15 @@ import { useEffect } from "react";
  * revealed once when it reaches the viewport — scrolling back up never replays it. Visitors who
  * prefer reduced motion, and browsers without IntersectionObserver, see everything immediately.
  *
- * Variants (value of data-reveal): "" — fade and 16px rise; "mask" / "mask-left" — the image
- * unclips upward / from the left. Stagger with the CSS custom property --reveal-delay.
+ * One variant: a 500ms fade with a 14px rise. Stagger with the CSS custom property --reveal-delay.
+ * The static capture state (?capture=1) skips reveals entirely.
  */
 export function RevealObserver() {
   useEffect(() => {
     if (!("IntersectionObserver" in window)) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Static capture state: everything is shown as laid out, nothing waits for a scroll.
+    if (document.documentElement.dataset.capture !== undefined) return;
 
     const viewportBottom = window.innerHeight;
     const targets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]")).filter(
@@ -24,12 +26,7 @@ export function RevealObserver() {
     );
     if (!targets.length) return;
 
-    // A fully clipped element has no visible area, so masked elements are watched via their parent.
-    const watched = new Map<Element, HTMLElement[]>();
-    for (const el of targets) {
-      const node = el.dataset.reveal?.startsWith("mask") && el.parentElement ? el.parentElement : el;
-      watched.set(node, [...(watched.get(node) ?? []), el]);
-    }
+    const watched = new Map<Element, HTMLElement[]>(targets.map((el) => [el, [el]]));
 
     const observer = new IntersectionObserver(
       (entries) => {

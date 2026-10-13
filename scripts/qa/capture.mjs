@@ -1,4 +1,4 @@
-// QA capture: per-section screenshots + full page, console/network errors, overflow check.
+// QA capture: per-section screenshots + full page in the static capture state, console/network errors, overflow check.
 import { chromium } from "playwright-core";
 const [,, url, outDir, widthsArg = "1440,390", mode = "sections"] = process.argv;
 const widths = widthsArg.split(",").map(Number);
@@ -18,7 +18,7 @@ for (const w of widths) {
   page.on("pageerror", (e) => logs.push(`[pageerror] ${e.message}`));
   page.on("requestfailed", (r) => logs.push(`[requestfailed] ${r.url()} ${r.failure()?.errorText}`));
   page.on("response", (r) => { if (r.status() >= 400) logs.push(`[http ${r.status()}] ${r.url()}`); });
-  await page.goto(url, { waitUntil: "networkidle" });
+  await page.goto(url + (url.includes("?") ? "&" : "?") + "capture=1", { waitUntil: "networkidle" });
   await page.evaluate(() => document.fonts.ready);
   // Trigger lazy images by scrolling through the page, then return to top.
   await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 600) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 60)); } window.scrollTo(0, 0); });
@@ -27,8 +27,7 @@ for (const w of widths) {
   console.log(`w=${w} scrollWidth=${overflow.sw} clientWidth=${overflow.cw} height=${overflow.h} ${overflow.sw > overflow.cw ? "OVERFLOW!" : "no-overflow"}`);
   await page.screenshot({ path: `${outDir}/fold-${w}.png` });
   if (mode === "sections" || mode === "both") {
-    await page.addStyleTag({ content: "header{position:relative !important}" });
-    const ids = ["top", "applications", "the-system", "full-service-support", "operating-legally", "enquiry"];
+    const ids = ["top", "applications", "system", "support", "regulation", "evidence", "enquiry"];
     for (const id of ids) {
       const el = await page.$(`#${id}`);
       if (el) await el.screenshot({ path: `${outDir}/sec-${w}-${id}.png` });
