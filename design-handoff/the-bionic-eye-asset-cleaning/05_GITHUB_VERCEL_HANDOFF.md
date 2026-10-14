@@ -11,19 +11,17 @@ QA:                 60/60 interaction + axe checks PASS (Chrome 155, real H.264)
                     hero contrast PASS at 1440/1280/1024; no overflow at 1440/1280/1024/768/720/640/390/360
 Dependencies:       + gsap 3.15.0, + @gsap/react 2.1.2 (package.json and package-lock.json)
 GitHub:             pushed normally (no force) to branch refinement-3-product-presentation in three commits
-                    (7fe2382 code, f9155e4 films, 8f7d1f6 exports; one 66 MB push timed out with HTTP 408);
-                    main left at c6d4f45. Verified with the GitHub API.
-Pull request:       none opened from this environment (no GitHub CLI); compare link:
-                    https://github.com/lonadonia/The-Bionic-Eye/compare/main...refinement-3-product-presentation
-Vercel:             Git-linked project hakims-projects-8cc34b62/the-bionic-eye. Preview deployment for 8f7d1f6: state
-                    "success" (GitHub deployments API), https://the-bionic-o4cixay8a-hakims-projects-8cc34b62.vercel.app
-                    It is behind Vercel Authentication (HTTP 302 to the Vercel login from here), so its pages were NOT
-                    opened from this environment; open it while signed in to Vercel. Production
-                    (https://the-bionic-eye.vercel.app, HTTP 200) still serves main c6d4f45 (refinement 2).
+                    (7fe2382 code, f9155e4 films, 8f7d1f6 exports; one 66 MB push timed out with HTTP 408), then
+                    main fast-forwarded c6d4f45 → ecc51b8 at the owner's request (no merge commit, no history rewrite).
+                    Verified with the GitHub API.
+Vercel:             Git-linked project hakims-projects-8cc34b62/the-bionic-eye. Production deployment of ecc51b8: state
+                    "success". https://the-bionic-eye.vercel.app serves refinement 3 (checked: page markup and the new
+                    films and images return 200/206), and qa/interaction.mjs run against it: 60/60 PASS
+                    (qa/interaction-results-production.json). Branch previews are behind Vercel Authentication.
 Environment keys:   none
 ```
 
-To publish on the production URL, merge the branch into `main` (fast-forward), or ask Claude to do it. Only the account owner should take that step.
+Later changes: push to a branch for a (protected) preview; pushing to `main` updates production.
 
 ---
 

@@ -1,0 +1,309 @@
+{
+  "url": "https://the-bionic-eye.vercel.app/",
+  "ranAt": "2026-10-14T01:13:38.007Z",
+  "totals": {
+    "PASS": 60
+  },
+  "results": [
+    {
+      "id": "QA-ONE-H1",
+      "status": "PASS",
+      "detail": "Facade and structure cleaning without access equipment."
+    },
+    {
+      "id": "QA-SECTION-ORDER",
+      "status": "PASS",
+      "detail": "top → applications → system → support → regulation → evidence → enquiry"
+    },
+    {
+      "id": "QA-LANG-EN-GB",
+      "status": "PASS",
+      "detail": "en-GB"
+    },
+    {
+      "id": "QA-HERO-POSTER",
+      "status": "PASS",
+      "detail": "/media/poster/hero-c10-use-cases.jpg"
+    },
+    {
+      "id": "QA-HERO-FILM-SOURCE",
+      "status": "PASS",
+      "detail": "/media/video/hero-background-loop-540.mp4, /media/video/hero-background-loop-1080.mp4"
+    },
+    {
+      "id": "QA-HERO-COPY-COMPLETE",
+      "status": "PASS",
+      "detail": "2 paragraphs"
+    },
+    {
+      "id": "QA-HERO-ONE-CTA",
+      "status": "PASS",
+      "detail": "[[\"Book a demonstration\",\"#enquiry\"]]"
+    },
+    {
+      "id": "QA-HERO-AUTOPLAY-AND-PAUSE",
+      "status": "PASS",
+      "detail": "playing=true paused=true label=Play film, background film"
+    },
+    {
+      "id": "QA-HERO-CONTROL-HONEST",
+      "status": "PASS",
+      "detail": "Pause film, background film"
+    },
+    {
+      "id": "QA-HERO-FULL-FILM",
+      "status": "PASS",
+      "detail": "{\"open\":true,\"modal\":true,\"src\":\"/media/video/hero-c10-use-cases-full-720.mp4\",\"controls\":true,\"focusInside\":true,\"closed\":true,\"videoGone\":true,\"focusBack\":true}"
+    },
+    {
+      "id": "QA-NAV-LABELS",
+      "status": "PASS",
+      "detail": "Solutions | Support | Regulation | Sectors | About Us | Contact | Shop"
+    },
+    {
+      "id": "QA-NAV-SHOP",
+      "status": "PASS",
+      "detail": "{\"href\":\"https://shop.thebioniceye.co.uk/\",\"target\":\"_blank\"}"
+    },
+    {
+      "id": "QA-HEADER-STICKY",
+      "status": "PASS",
+      "detail": "sticky, 84px"
+    },
+    {
+      "id": "QA-HEADER-NO-SHIFT",
+      "status": "PASS",
+      "detail": "top 0, height 84"
+    },
+    {
+      "id": "QA-NAV-SUPPORT",
+      "status": "PASS",
+      "detail": "{\"headerBottom\":84,\"targetTop\":84}"
+    },
+    {
+      "id": "QA-NAV-REGULATION",
+      "status": "PASS",
+      "detail": "{\"headerBottom\":84,\"targetTop\":84}"
+    },
+    {
+      "id": "QA-NAV-SECTORS",
+      "status": "PASS",
+      "detail": "{\"headerBottom\":84,\"targetTop\":84}"
+    },
+    {
+      "id": "QA-NAV-CONTACT",
+      "status": "PASS",
+      "detail": "{\"headerBottom\":84,\"targetTop\":84}"
+    },
+    {
+      "id": "QA-CTA-REACHES-FORM",
+      "status": "PASS",
+      "detail": "{\"headerBottom\":84,\"targetTop\":232}"
+    },
+    {
+      "id": "QA-WATCH-VIDEO",
+      "status": "PASS",
+      "detail": "{\"before\":0,\"watch\":{\"controls\":true,\"focused\":true,\"src\":\"/media/video/system-c10-introduction-720.mp4\"}}"
+    },
+    {
+      "id": "QA-ALL-FILMS-REACHABLE",
+      "status": "PASS",
+      "detail": "{\"inline\":6,\"dialogs\":[\"Watch the full film01:23 — C10 Use Case \",\"Play film00:39 — ABZ Clean Station, setu\",\"Play film01:15 — ABZ Clean Station, setu\"]}"
+    },
+    {
+      "id": "QA-EXPLORER-VIEWS",
+      "status": "PASS",
+      "detail": "{\"radios\":3,\"checked\":\"Front\",\"active\":\"false,false,true\",\"alt\":\"Studio front view of the\",\"callouts\":\"hidden,shown\",\"stageH\":460}"
+    },
+    {
+      "id": "QA-EXPLORER-KEYBOARD",
+      "status": "PASS",
+      "detail": "{\"focus\":\"Three-quarter\",\"view\":\"Three-quarter\",\"callouts\":\"hidden,hidden\"}"
+    },
+    {
+      "id": "QA-SPECS-EXACT",
+      "status": "PASS",
+      "detail": "Working height: Over 60 metres | Flow rate: Up to 15 litres per minute | Working pressure: Around 170 bar at the nozzle, up to 255 bar at peak | Collision avoidance: Radar, with standoff control | Maximum take-off mass: 29 kg"
+    },
+    {
+      "id": "QA-STORY-SCENE",
+      "status": "PASS",
+      "detail": "{\"order\":\"0>1>2\",\"pinned\":\"fixed\",\"manual\":{\"pos\":\"fixed\",\"view\":\"0\",\"checked\":\"true,false,false\",\"focus\":\"1In operation\"},\"after\":{\"pos\":\"static\",\"view\":\"2\"}}"
+    },
+    {
+      "id": "QA-STORY-FILM",
+      "status": "PASS",
+      "detail": "/media/video/support-clean-station-excerpt.mp4"
+    },
+    {
+      "id": "QA-SUPPORT-SELECT",
+      "status": "PASS",
+      "detail": "{\"checked\":\"Training\",\"active\":[\"false\",\"true\",\"false\"],\"visible\":true,\"playable\":true,\"others\":2}"
+    },
+    {
+      "id": "QA-SUPPORT-KEYBOARD",
+      "status": "PASS",
+      "detail": "{\"checked\":\"Enhanced warranty option\",\"focus\":\"Enhanced warranty option\",\"active\":[\"false\",\"false\",\"true\"]}"
+    },
+    {
+      "id": "QA-SUPPORT-HOME",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "QA-AUTHORISATION-LINK",
+      "status": "PASS",
+      "detail": "{\"checked\":\"Operational Authorisation support\",\"hash\":\"#support\"}"
+    },
+    {
+      "id": "QA-FORM-FIELDS",
+      "status": "PASS",
+      "detail": "Name | Company | Email | Telephone | Sites or work involved"
+    },
+    {
+      "id": "QA-FORM-SUBMIT-LABEL",
+      "status": "PASS",
+      "detail": "Discuss a requirement"
+    },
+    {
+      "id": "QA-FORM-CONTROL-HEIGHT",
+      "status": "PASS",
+      "detail": "54, 54, 54, 54, 152"
+    },
+    {
+      "id": "QA-FORM-REQUIRED",
+      "status": "PASS",
+      "detail": "{\"summaryFocused\":true,\"invalid\":[\"name\",\"email\"]}"
+    },
+    {
+      "id": "QA-FORM-EMAIL-FORMAT",
+      "status": "PASS",
+      "detail": "email"
+    },
+    {
+      "id": "QA-FORM-NO-FAKE-SUCCESS",
+      "status": "PASS",
+      "detail": "This preview is not connected to a form handler, so nothing has been sent. Please use the telephone number or email address instead."
+    },
+    {
+      "id": "QA-FORM-NOTHING-SENT",
+      "status": "PASS",
+      "detail": "no non-GET requests"
+    },
+    {
+      "id": "QA-NO-CONSOLE-ERRORS",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "QA-AXE-1440",
+      "status": "PASS",
+      "detail": "0 violations"
+    },
+    {
+      "id": "QA-MOBILE-HERO-ORDER",
+      "status": "PASS",
+      "detail": "{\"h1\":100,\"media\":288,\"intro\":608,\"cta\":928}"
+    },
+    {
+      "id": "QA-MOBILE-CTA-FULL-WIDTH",
+      "status": "PASS",
+      "detail": "{\"w\":350,\"h\":56}"
+    },
+    {
+      "id": "QA-MOBILE-SYSTEM-ORDER",
+      "status": "PASS",
+      "detail": "{\"lede\":3815,\"stage\":4146,\"specs\":4779,\"story\":5575,\"controls\":0,\"station\":\"1\"}"
+    },
+    {
+      "id": "QA-MENU-OPEN",
+      "status": "PASS",
+      "detail": "{\"expanded\":\"true\",\"dialog\":true,\"focusInside\":true,\"labels\":[\"Solutions\",\"Support\",\"Regulation\",\"Sectors\",\"About Us\",\"Contact\",\"Shop\"]}"
+    },
+    {
+      "id": "QA-MENU-ESCAPE",
+      "status": "PASS",
+      "detail": "{\"gone\":true,\"focusBack\":true,\"expanded\":\"false\"}"
+    },
+    {
+      "id": "QA-MENU-NAVIGATES",
+      "status": "PASS",
+      "detail": "{\"headerBottom\":68,\"targetTop\":68}"
+    },
+    {
+      "id": "QA-MOBILE-TARGETS-44",
+      "status": "PASS",
+      "detail": "all ≥ 44 × 44 (inline text links excluded)"
+    },
+    {
+      "id": "QA-MOBILE-SELECTOR-TAP",
+      "status": "PASS",
+      "detail": "{\"checked\":\"Servicing\",\"active\":\"false,false,true\"}"
+    },
+    {
+      "id": "QA-MOBILE-VIDEO-TAP",
+      "status": "PASS",
+      "detail": "native controls shown"
+    },
+    {
+      "id": "QA-AXE-390",
+      "status": "PASS",
+      "detail": "0 violations"
+    },
+    {
+      "id": "QA-REDUCED-MOTION",
+      "status": "PASS",
+      "detail": "{\"pending\":0,\"scene\":0,\"videoPaused\":true,\"videoNetwork\":1,\"smooth\":\"auto\"}"
+    },
+    {
+      "id": "QA-CAPTURE-STATE",
+      "status": "PASS",
+      "detail": "{\"flag\":\"1\",\"pending\":0,\"header\":\"relative\",\"scene\":0,\"details\":2,\"heroVideo\":\"none\",\"specs\":5}"
+    },
+    {
+      "id": "QA-NO-JS-CONTENT-VISIBLE",
+      "status": "PASS",
+      "detail": "{\"hidden\":0,\"specs\":5,\"paragraphs\":3}"
+    },
+    {
+      "id": "QA-NO-OVERFLOW-1440",
+      "status": "PASS",
+      "detail": "1440 / 1440"
+    },
+    {
+      "id": "QA-NO-OVERFLOW-1280",
+      "status": "PASS",
+      "detail": "1280 / 1280"
+    },
+    {
+      "id": "QA-NO-OVERFLOW-1024",
+      "status": "PASS",
+      "detail": "1024 / 1024"
+    },
+    {
+      "id": "QA-NO-OVERFLOW-768",
+      "status": "PASS",
+      "detail": "768 / 768"
+    },
+    {
+      "id": "QA-NO-OVERFLOW-720",
+      "status": "PASS",
+      "detail": "720 / 720"
+    },
+    {
+      "id": "QA-NO-OVERFLOW-640",
+      "status": "PASS",
+      "detail": "640 / 640"
+    },
+    {
+      "id": "QA-NO-OVERFLOW-390",
+      "status": "PASS",
+      "detail": "390 / 390"
+    },
+    {
+      "id": "QA-NO-OVERFLOW-360",
+      "status": "PASS",
+      "detail": "360 / 360"
+    }
+  ]
+}
