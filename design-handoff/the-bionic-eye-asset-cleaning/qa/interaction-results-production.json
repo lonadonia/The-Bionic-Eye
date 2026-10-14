@@ -1,6 +1,6 @@
 {
   "url": "https://the-bionic-eye.vercel.app/",
-  "ranAt": "2026-10-14T04:30:53.932Z",
+  "ranAt": "2026-10-14T06:24:09.277Z",
   "totals": {
     "PASS": 63
   },
@@ -218,7 +218,7 @@
     {
       "id": "QA-MOBILE-HERO-ORDER",
       "status": "PASS",
-      "detail": "{\"h1\":100,\"media\":288,\"intro\":608,\"cta\":928}"
+      "detail": "{\"h1\":123,\"media\":311,\"intro\":631,\"cta\":951}"
     },
     {
       "id": "QA-MOBILE-CTA-FULL-WIDTH",
@@ -228,7 +228,7 @@
     {
       "id": "QA-MOBILE-SYSTEM-ORDER",
       "status": "PASS",
-      "detail": "{\"lede\":3945,\"stage\":4276,\"specs\":4909,\"story\":5769,\"controls\":0,\"station\":\"1\"}"
+      "detail": "{\"lede\":3946,\"stage\":4277,\"specs\":4911,\"story\":5771,\"controls\":0,\"station\":\"1\"}"
     },
     {
       "id": "QA-MENU-OPEN",

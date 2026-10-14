@@ -7,7 +7,11 @@ Implementation:     BUILT — hero and Applications polish (curved wing edge, vi
                     stacking fix, caption cards, film band). See docs/ASSET_CLEANING_REFINEMENT_5.md
 Local build:        PASS — lint, typecheck, build
 QA:                 63/63 interaction + axe checks PASS; hero contrast PASS (lowest 4.92:1); copy audit 0 unverified
-GitHub:             branch refinement-5-hero-applications-aesthetics; main not changed by this round yet
+GitHub:             branch refinement-5-hero-applications-aesthetics (c927946), then main fast-forwarded
+                    bc8a45c → c927946 at the owner's request; normal push, no force, no merge commit
+Vercel:             production deployment of c927946: state "success". https://the-bionic-eye.vercel.app serves
+                    refinement 5 (hero wave, caption cards and film band in the markup and CSS; films return 206);
+                    qa/interaction.mjs against it: 63/63 PASS (qa/interaction-results-production.json)
 Environment keys:   none
 ```
 
