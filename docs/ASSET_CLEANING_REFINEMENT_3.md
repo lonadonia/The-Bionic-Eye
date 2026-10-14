@@ -135,4 +135,4 @@ No measurements, coordinates, tracking markers, telemetry, counters or badges ar
 
 1. **Contest rules.** A genuine Figma view link and the entrant's own-voice walkthrough are separate deliverables. This prototype is not an entry.
 2. The destination for `How authorisation works`, real pages for Solutions and About Us, a form handler and privacy notice, and captions or transcripts for films with speech (WCAG 1.2.2). All are carried over from refinement 2.
-3. The **Vercel** deployment of this branch could not be checked from here (no Vercel tool authorised in this session). See `05_GITHUB_VERCEL_HANDOFF.md`.
+3. **Vercel.** The branch built successfully as a preview deployment, but the preview is behind Vercel Authentication, so it was not opened from here. Production still serves `main` (refinement 2) until the branch is merged. See `05_GITHUB_VERCEL_HANDOFF.md`.

@@ -10,12 +10,16 @@ Local build:        PASS — npm run lint, npm run typecheck, npm run build (sta
 QA:                 60/60 interaction + axe checks PASS (Chrome 155, real H.264); copy audit 0 unverified;
                     hero contrast PASS at 1440/1280/1024; no overflow at 1440/1280/1024/768/720/640/390/360
 Dependencies:       + gsap 3.15.0, + @gsap/react 2.1.2 (package.json and package-lock.json)
-GitHub:             pushed normally (no force) to branch refinement-3-product-presentation; main left at c6d4f45
+GitHub:             pushed normally (no force) to branch refinement-3-product-presentation in three commits
+                    (7fe2382 code, f9155e4 films, 8f7d1f6 exports; one 66 MB push timed out with HTTP 408);
+                    main left at c6d4f45. Verified with the GitHub API.
 Pull request:       none opened from this environment (no GitHub CLI); compare link:
                     https://github.com/lonadonia/The-Bionic-Eye/compare/main...refinement-3-product-presentation
-Vercel:             NOT VERIFIED. If the repository is Git-linked (the brief names the-bionic-eye.vercel.app), a push to a
-                    branch creates a preview deployment, and only a merge into main updates production. No Vercel tool
-                    was authorised in this session, so no deployment URL is claimed.
+Vercel:             Git-linked project hakims-projects-8cc34b62/the-bionic-eye. Preview deployment for 8f7d1f6: state
+                    "success" (GitHub deployments API), https://the-bionic-o4cixay8a-hakims-projects-8cc34b62.vercel.app
+                    It is behind Vercel Authentication (HTTP 302 to the Vercel login from here), so its pages were NOT
+                    opened from this environment; open it while signed in to Vercel. Production
+                    (https://the-bionic-eye.vercel.app, HTTP 200) still serves main c6d4f45 (refinement 2).
 Environment keys:   none
 ```
 
