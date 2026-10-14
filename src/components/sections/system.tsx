@@ -4,6 +4,7 @@ import { photos, productViews } from "@/content/media";
 import { ui } from "@/content/ui";
 import { Callout } from "../callout";
 import { CleaningSystemStory } from "../cleaning-system-story";
+import { DotField, IrisRings, WingCurve } from "../decor";
 import { ProductExplorer } from "../product-explorer";
 import { SectionIntro } from "../section-intro";
 
@@ -48,6 +49,7 @@ export function System() {
         </div>
 
         <div className="system__visual">
+          <IrisRings className="system__iris" />
           <ProductExplorer views={productViews} product={system.product} />
 
           <div className="details">
@@ -87,6 +89,8 @@ export function System() {
         </div>
       </div>
 
+      <WingCurve className="system__wing" />
+      <DotField className="system__dots" />
       <div className="shell system__story">
         <CleaningSystemStory />
       </div>

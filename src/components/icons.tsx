@@ -149,3 +149,9 @@ export const ArrowUpRight = (p: IconProps) => (
     <path d="M6 14 14 6M7.5 6H14v6.5" />
   </Svg>
 );
+
+export const Expand = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 3.5h4.5V8M8 16.5H3.5V12M16.5 3.5l-5 5M3.5 16.5l5-5" />
+  </Svg>
+);

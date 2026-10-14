@@ -21,6 +21,11 @@ export type Film = {
   hasAudio: boolean;
   orientation: "landscape" | "portrait";
   description: string;
+  /**
+   * Short silent loop that plays in place (muted, only while on screen). Cut from operational
+   * footage of the same film, clear of title cards and on-screen text; its first frame is the poster.
+   */
+  loop?: { src: string; poster: string; from: string; duration: number };
 };
 
 export const films = {
@@ -70,6 +75,12 @@ export const films = {
     hasAudio: true,
     orientation: "landscape",
     description: "Montage of the C10 washing building façades, glazing, metal cladding and rooftop solar arrays.",
+    loop: {
+      src: "/media/video/applications-c10-short-loop.mp4",
+      poster: "/media/poster/applications-c10-short-loop.jpg",
+      from: "film 00:09–00:23: rooftop solar, glass curtain walling, metal cladding, solar array, stone facade",
+      duration: 14,
+    },
   },
   claddingPortrait: {
     id: "cladding-portrait",
@@ -83,6 +94,12 @@ export const films = {
     orientation: "portrait",
     description:
       "Phone footage looking up at the C10 as it washes a tall wall of white composite cladding panels, its blue supply hose running down to the ground.",
+    loop: {
+      src: "/media/video/applications-cladding-portrait-loop.mp4",
+      poster: "/media/poster/applications-cladding-portrait-loop.jpg",
+      from: "film 00:02–00:14",
+      duration: 12,
+    },
   },
   fieldCladding: {
     id: "field-cladding",
@@ -96,6 +113,12 @@ export const films = {
     hasAudio: false,
     orientation: "landscape",
     description: "The C10 washing the green corrugated steel cladding of a large industrial building under a clear sky.",
+    loop: {
+      src: "/media/video/enquiry-uk-demonstration-loop.mp4",
+      poster: "/media/poster/enquiry-uk-demonstration.jpg",
+      from: "IMG_2236.MOV 00:04–00:28 (the served clip itself)",
+      duration: 24,
+    },
   },
   systemIntroduction: {
     id: "c10-introduction",
@@ -108,6 +131,12 @@ export const films = {
     hasAudio: true,
     orientation: "landscape",
     description: "The Bionic Eye introduction to the C10: the drone in flight and cleaning façades, glazing and roofs.",
+    loop: {
+      src: "/media/video/applications-c10-introduction-loop-0155.mp4",
+      poster: "/media/poster/applications-c10-introduction-loop-0155.jpg",
+      from: "film 01:55.3–02:11.7: close flight and jets on stone, render and metal cladding (no on-screen text or third-party signage)",
+      duration: 16.4,
+    },
   },
   academy: {
     id: "c10-academy",

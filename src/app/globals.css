@@ -215,10 +215,24 @@
   }
 
   .accent-rule {
+    position: relative;
     display: block;
     width: 2.5rem;
     height: 3px;
     background: var(--color-cyan);
+  }
+
+  /* The rule ends in a small lens ring: one brand detail repeated on every section. */
+  .accent-rule::after {
+    content: "";
+    position: absolute;
+    left: calc(100% + 5px);
+    top: 50%;
+    width: 11px;
+    height: 11px;
+    margin-top: -5.5px;
+    border-radius: 999px;
+    border: 2px solid var(--color-cyan);
   }
 
   /* ---------- Technical layer: corner framing marks ---------- */
@@ -669,6 +683,18 @@
     border-bottom: 1px solid var(--color-deep-line);
   }
 
+  /* A cyan brand thread along the header's lower edge, fading out towards the right. */
+  .site-header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-cyan) 0%, var(--color-cyan) 14%, rgb(0 191 243 / 0) 52%);
+    pointer-events: none;
+  }
+
   @supports (backdrop-filter: blur(1px)) {
     .site-header {
       background: rgb(17 25 29 / 0.9);
@@ -936,11 +962,18 @@
     height: 2.25rem;
   }
 
-  .hero__control-sep {
+  /* Play/Pause has no visible button (owner's request); it appears on keyboard focus only, so the
+     moving background can still be stopped (WCAG 2.2.2). */
+  .hero__control--toggle:not(:focus-visible) {
+    position: absolute;
     width: 1px;
-    height: 1.5rem;
-    margin-inline: 0.125rem;
-    background: rgb(255 255 255 / 0.2);
+    height: 1px;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   /* Phones: Play/Pause is an icon with its label kept for assistive technology. */
@@ -1084,11 +1117,30 @@
 
   /* ---------- Applications ---------- */
   .apps {
+    position: relative;
+    isolation: isolate;
     overflow-x: clip;
   }
 
-  .apps .shell {
-    container-type: inline-size;
+  .apps__shell {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Brand ornaments: lens rings cropped at the right edge beside the heading, a dot field behind the films. */
+  .apps__iris {
+    top: calc(var(--section-y) - 7rem);
+    right: -7rem;
+    width: 22rem;
+    color: var(--color-cyan);
+    opacity: 0.55;
+  }
+
+  .apps__dots {
+    left: 0;
+    bottom: calc(var(--section-y) + 4rem);
+    width: min(34vw, 26rem);
+    height: 15rem;
   }
 
   .apps__grid {
@@ -1100,6 +1152,7 @@
 
   .app__frame {
     aspect-ratio: 4 / 3;
+    border-radius: var(--radius-panel);
     box-shadow: var(--shadow-media);
   }
 
@@ -1117,19 +1170,13 @@
     color: var(--color-secondary);
   }
 
-  /* Phones: the featured facade runs edge to edge. */
-  .app--facades .app__media {
-    margin-inline: calc(-1 * var(--gutter));
-  }
-
-  .app--facades .app__frame {
-    border-radius: 0;
-  }
-
-  /* Text-led entries: consecutive items form one framed panel. */
+  /* Text-led entries: consecutive items form one framed panel (marks drawn inside its edges). */
   .apps__grid > .app--text {
     order: 2;
     position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     padding: 1.125rem 1.5rem;
     background: var(--color-soft);
   }
@@ -1144,6 +1191,16 @@
 
   .app--text .app__caption {
     margin: 0;
+  }
+
+  /* A small lens mark before each text-led entry (brand detail, no meaning beyond the list). */
+  .app__marker {
+    flex-shrink: 0;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 999px;
+    border: 2px solid var(--color-cyan);
+    box-shadow: 0 0 0 3px rgb(0 191 243 / 0.14);
   }
 
   .app--text-first {
@@ -1175,28 +1232,28 @@
     pointer-events: none;
   }
 
-  /* Framing marks at the panel's outer corners. */
+  /* Framing marks inside the panel's outer corners. */
   .app--text-first::before,
   .app--text-last::before {
     content: "";
     position: absolute;
     width: 14px;
     height: 14px;
-    border-color: var(--color-ink);
+    border-color: var(--color-cyan);
     border-style: solid;
     pointer-events: none;
   }
 
   .app--text-first::before {
-    left: -7px;
-    top: -7px;
-    border-width: 1px 0 0 1px;
+    left: 10px;
+    top: 10px;
+    border-width: 2px 0 0 2px;
   }
 
   .app--text-last::before {
-    right: -7px;
-    bottom: -7px;
-    border-width: 0 1px 1px 0;
+    right: 10px;
+    bottom: 10px;
+    border-width: 0 2px 2px 0;
   }
 
   @media (width >= 48rem) and (width < 64rem) {
@@ -1211,21 +1268,17 @@
       grid-column: 1 / -1;
     }
 
-    .app--facades .app__media {
-      margin-inline: calc((100cqw - 100vw) / 2);
-    }
-
     .app--facades .app__frame,
     .app--industrial .app__frame {
       aspect-ratio: 16 / 9;
     }
   }
 
-  /* Desktop: 7/5 then 5/7. The featured facade frame runs out to the page edge; captions stay on the grid. */
+  /* Desktop: 7/5 then 6/6, rows of equal height, everything inside the 12-column frame. */
   @media (width >= 64rem) {
     .apps__grid {
       grid-template-columns: repeat(12, minmax(0, 1fr));
-      grid-template-rows: auto 4.5rem repeat(4, minmax(6.25rem, auto));
+      grid-template-rows: auto 4rem repeat(4, minmax(5.75rem, auto));
       column-gap: var(--gap);
       row-gap: 0;
     }
@@ -1233,9 +1286,7 @@
     .apps__grid > .app--text {
       order: 0;
       grid-column: 7 / 13;
-      display: flex;
-      align-items: center;
-      padding-inline: 2.5rem 2rem;
+      padding-inline: 2.75rem 2rem;
     }
 
     .apps__grid > .app--text-first ~ .app--text {
@@ -1247,24 +1298,15 @@
       grid-row: 1;
     }
 
-    .app--facades .app__media {
-      margin-inline: calc((100cqw - 100vw) / 2) 0;
-    }
-
-    .app--facades .app__frame {
-      aspect-ratio: auto;
-      height: clamp(26rem, 34vw + 2rem, 36rem);
-      border-radius: 0 var(--radius-media) var(--radius-media) 0;
-    }
-
     .app--solar {
       grid-column: 8 / 13;
       grid-row: 1;
     }
 
+    .app--facades .app__frame,
     .app--solar .app__frame {
       aspect-ratio: auto;
-      height: clamp(26rem, 34vw + 2rem, 36rem);
+      height: clamp(24rem, 22vw + 8rem, 30rem); /* 480 at 1440 */
     }
 
     .app--industrial {
@@ -1280,14 +1322,10 @@
       flex-direction: column;
     }
 
-    .app--industrial .app__media > div,
     .app--industrial .app__frame {
       flex: 1 1 auto;
-    }
-
-    .app--industrial .app__frame {
       aspect-ratio: auto;
-      min-height: 22rem;
+      min-height: 20rem;
     }
 
     .app--wind {
@@ -1307,35 +1345,128 @@
     }
   }
 
-  /* Supporting application films: equal frame heights across landscape and portrait clips. */
+  /* Supporting application films: one shared frame height; widths 5 / 4 / 3 of the grid. */
   .film-strip {
+    position: relative;
     display: grid;
     gap: 2rem;
-    margin-top: clamp(3.5rem, 6vw, 5.5rem);
+    margin-top: clamp(3.5rem, 6vw, 5rem);
+  }
+
+  .film-strip__frame {
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-panel);
+    box-shadow: var(--shadow-media);
+  }
+
+  .film-strip__item--narrow .film-strip__frame {
+    aspect-ratio: 4 / 5;
+  }
+
+  .film-strip .media-caption {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.125rem;
   }
 
   @media (width >= 48rem) {
     .film-strip {
-      display: flex;
-      align-items: flex-start;
+      grid-template-columns: 5fr 4fr 3fr;
       gap: var(--gap);
+      align-items: start;
     }
 
-    .film-strip__item--landscape {
-      flex: 1.7778 1 0;
-      min-width: 0;
-    }
-
-    .film-strip__item--portrait {
-      flex: 0.5625 1 0;
-      min-width: 0;
-    }
-
-    .film-strip__item--portrait .media-caption {
-      flex-direction: column;
-      gap: 0.125rem;
+    .film-strip__frame,
+    .film-strip__item--narrow .film-strip__frame {
+      aspect-ratio: auto;
+      height: clamp(14rem, 12vw + 6rem, 18rem); /* 269 at 1440 */
     }
   }
+
+  /* ---------- Films that play in place (AmbientFilm) ---------- */
+  .ambient__frame {
+    isolation: isolate;
+  }
+
+  .ambient__poster,
+  .ambient__video {
+    object-fit: cover;
+  }
+
+  .ambient__video {
+    opacity: 0;
+    transition: opacity 500ms ease;
+  }
+
+  .ambient__video[data-started="true"] {
+    opacity: 1;
+  }
+
+  /* The whole frame opens the full film; its icon shows only on hover or keyboard focus. */
+  .ambient__open {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .ambient__icon {
+    position: absolute;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 999px;
+    background: rgb(17 25 29 / 0.72);
+    color: #fff;
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    transition:
+      opacity 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .ambient__icon--open {
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+
+  .ambient__toggle {
+    right: 0.75rem;
+    bottom: 0.75rem;
+  }
+
+  .ambient__toggle svg {
+    margin-left: 1px;
+  }
+
+  .ambient__frame:hover .ambient__icon,
+  .ambient__frame:focus-within .ambient__icon {
+    opacity: 1;
+  }
+
+  /* Touch screens cannot hover: the small pause control stays in view so motion can be stopped. */
+  @media (hover: none) {
+    .ambient__toggle {
+      opacity: 0.85;
+    }
+  }
+
+  .ambient__toggle:hover,
+  .ambient__open:hover .ambient__icon--open {
+    background: rgb(17 25 29 / 0.92);
+  }
+
+  /* Keyboard focus is drawn on the frame edge, not on the invisible cover button. */
+  .ambient__open:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 3px var(--color-cyan);
+    border-radius: inherit;
+  }
+
 
   /* ---------- The system ---------- */
   .system {
@@ -1686,7 +1817,9 @@
 
   /* Cleaning system: the operation/Clean Station pair (and, on desktop with motion, the scene). */
   .system__story {
-    margin-top: clamp(5rem, 9vw, 8.5rem);
+    position: relative;
+    z-index: 1;
+    margin-top: 0;
   }
 
   .story__controls {
@@ -1856,7 +1989,13 @@
   /* ---------- Support ---------- */
   .support {
     position: relative;
+    isolation: isolate;
     overflow-x: clip;
+  }
+
+  .support > .shell {
+    position: relative;
+    z-index: 1;
   }
 
   .support__grid {
@@ -2149,6 +2288,232 @@
     .evidence__cases {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: var(--gap);
+    }
+  }
+
+  /* ---------- Brand ornaments (src/components/decor.tsx) ---------- */
+  .decor {
+    position: absolute;
+    z-index: 0;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .decor-iris {
+    aspect-ratio: 1;
+    height: auto;
+    overflow: visible;
+  }
+
+  .decor-wing {
+    left: 0;
+    width: 100%;
+    height: 7rem;
+    overflow: visible;
+  }
+
+  /* Fine technical dot matrix, faded towards its edges. */
+  .decor-dots {
+    background-image: radial-gradient(circle, rgb(17 38 52 / 0.2) 1.2px, transparent 1.6px);
+    background-size: 18px 18px;
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 20%, transparent 75%);
+  }
+
+  .on-deep .decor-dots,
+  .decor-dots--light {
+    background-image: radial-gradient(circle, rgb(255 255 255 / 0.22) 1.2px, transparent 1.6px);
+  }
+
+  /* Curved edge between a light section and a dark chapter (the wing sweep). */
+  .wave-edge {
+    --above: var(--color-paper);
+    --below: var(--color-deep);
+    position: relative;
+    z-index: 1;
+    height: clamp(2.75rem, 4.5vw, 4.75rem);
+    margin-bottom: -1px;
+    /* The last 2px take the colour below, so no anti-aliased seam shows under the curve. */
+    background: linear-gradient(to bottom, var(--above) calc(100% - 2px), var(--below) calc(100% - 2px));
+    line-height: 0;
+  }
+
+  .wave-edge svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .wave-edge__fill {
+    fill: var(--below);
+  }
+
+  .wave-edge__line {
+    stroke: var(--color-cyan);
+    stroke-width: 2.5px;
+  }
+
+  .wave-edge--out-of-deep {
+    --above: var(--color-deep);
+    --below: var(--color-paper);
+    margin-top: -1px;
+    margin-bottom: 0;
+  }
+
+  .wave-edge--flip svg {
+    transform: scaleX(-1);
+  }
+
+  /* System chapter ornaments: lens rings behind the stage on the cyan plane, a wing sweep and
+     a dot field announcing the cleaning-system pair. */
+  .system__iris {
+    top: -2rem;
+    right: -6rem;
+    width: 28rem;
+    color: #fff;
+    opacity: 0.5;
+  }
+
+  .system__wing {
+    position: relative;
+    display: block;
+    height: 5rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
+    margin-bottom: clamp(1rem, 2vw, 2rem);
+    color: var(--color-cyan);
+    opacity: 0.75;
+  }
+
+  .system__dots {
+    right: 0;
+    width: 22rem;
+    height: 14rem;
+    margin-top: -4rem;
+  }
+
+  /* Support: lens rings on the soft grid plane, dots beside the van film. */
+  .support__iris {
+    display: none;
+  }
+
+  .support__dots {
+    display: none;
+  }
+
+  /* Operating legally: a faint wing sweep across the soft band; lens rings under the heading. */
+  .legal {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+  }
+
+  .legal .shell {
+    position: relative;
+    z-index: 1;
+  }
+
+  .legal__wing {
+    top: 38%;
+    height: 9rem;
+    color: var(--color-cyan);
+    opacity: 0.45;
+  }
+
+  .legal__iris {
+    position: relative;
+    display: none;
+    width: 13rem;
+    margin-top: 3rem;
+    color: var(--color-cyan);
+    opacity: 0.7;
+  }
+
+  /* Proven in the field: a dot field under the heading, lens rings cropped at the right edge. */
+  .evidence {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+  }
+
+  .evidence .shell {
+    position: relative;
+    z-index: 1;
+  }
+
+  .evidence__dots {
+    position: relative;
+    display: none;
+    width: 13rem;
+    height: 8rem;
+    margin-top: 2.5rem;
+    mask-image: linear-gradient(to right, #000 40%, transparent);
+  }
+
+  .evidence__iris {
+    right: -12rem;
+    bottom: -13rem;
+    width: 24rem;
+    color: var(--color-cyan);
+    opacity: 0.35;
+  }
+
+  /* Enquiry: lens rings around the cyan plane behind the form card. */
+  .form-wrap__iris {
+    top: -6.5rem;
+    right: -6rem;
+    width: 15rem;
+    color: var(--color-cyan);
+    opacity: 0.6;
+  }
+
+  .form-wrap__dots {
+    left: -2.5rem;
+    bottom: -2.5rem;
+    width: 10rem;
+    height: 10rem;
+  }
+
+  /* Footer: a faint wing sweep along its top edge. */
+  .site-footer {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+  }
+
+  .site-footer > .shell,
+  .site-footer > div {
+    position: relative;
+    z-index: 1;
+  }
+
+  .site-footer__wing {
+    top: -1.5rem;
+    height: 6rem;
+    color: var(--color-cyan);
+    opacity: 0.35;
+  }
+
+  @media (width >= 64rem) {
+    .support__iris {
+      display: block;
+      top: calc(var(--section-y) + 2rem);
+      right: -8rem;
+      width: 26rem;
+      color: var(--color-cyan);
+      opacity: 0.4;
+    }
+
+    .support__dots {
+      display: block;
+      left: -1rem;
+      bottom: calc(var(--section-y) + 9rem);
+      width: 18rem;
+      height: 12rem;
+    }
+
+    .legal__iris,
+    .evidence__dots {
+      display: block;
     }
   }
 

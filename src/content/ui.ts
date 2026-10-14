@@ -19,6 +19,7 @@ export const ui = {
     pause: "Pause film",
     heroName: "background film",
     watchFull: "Watch the full film",
+    watchWithSound: "Watch with sound",
     close: "Close film",
     withSound: "with sound",
     excerpt: (part: string, whole: string) => `Excerpt, ${part} of ${whole}`,

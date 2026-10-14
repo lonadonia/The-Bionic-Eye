@@ -1,16 +1,18 @@
 import Image from "next/image";
 import { applications, type ApplicationItem } from "@/content/copy";
 import { films, photos } from "@/content/media";
+import { DotField, IrisRings } from "../decor";
 import { SectionIntro } from "../section-intro";
-import { WatchVideo } from "../video/watch-video";
+import { AmbientFilm } from "../video/ambient-film";
 
 /**
- * Applications gallery. One list in the supplied order, placed as an editorial 7/5 then 5/7 grid:
- * a featured facade frame that runs out to the page edge, the solar array still, and a playable
- * field clip of industrial cladding. Only those three entries have credible supplied imagery; the
- * other four share a text-led panel, because no photograph in the pack shows wind turbine towers,
- * heritage work, graffiti removal or surface coating, and a nearby image must not be relabelled
- * as evidence for them. The remaining application films follow as a strip of real viewers.
+ * Applications. One list in the supplied order, set as a balanced grid that stays inside the
+ * page frame: row one pairs the facade photograph (7 columns) with the solar array (5), row two
+ * pairs the industrial cladding film (6) with a text-led panel (6) of equal height. Only those
+ * three entries have credible supplied imagery; the other four share the panel, because no
+ * photograph in the pack shows wind turbine towers, heritage work, graffiti removal or surface
+ * coating, and a nearby image must not be relabelled as evidence for them. A strip of three films
+ * at one shared height closes the section. Every film plays in place as a short silent loop.
  */
 const visual: Record<string, "facades" | "solar" | "industrial"> = {
   facades: "facades",
@@ -34,7 +36,9 @@ export function Applications() {
   const textItems = applications.items.filter((i) => !visual[i.id]);
   return (
     <section id="applications" aria-labelledby="applications-heading" className="section apps">
-      <div className="shell">
+      <IrisRings className="apps__iris" />
+      <DotField className="apps__dots" />
+      <div className="shell apps__shell">
         <SectionIntro id="applications-heading" heading={applications.heading} />
 
         <ul className="apps__grid" aria-labelledby="applications-heading">
@@ -45,6 +49,7 @@ export function Applications() {
               const last = textItems[textItems.length - 1].id === item.id;
               return (
                 <li key={item.id} className={`app app--text app--${item.id} ${first ? "app--text-first" : ""} ${last ? "app--text-last" : ""}`}>
+                  <span className="app__marker" aria-hidden="true" />
                   <Caption item={item} />
                 </li>
               );
@@ -52,13 +57,14 @@ export function Applications() {
             return (
               <li key={item.id} className={`app app--media app--${item.id}`} data-motion="stagger">
                 {kind === "industrial" ? (
-                  <WatchVideo
+                  <AmbientFilm
                     film={films.fieldCladding}
                     className="app__media"
                     frameClass="app__frame"
                     focus="60% 40%"
                     caption={false}
-                    sizes="(min-width: 80rem) 520px, (min-width: 64rem) 40vw, 100vw"
+                    full={false}
+                    sizes="(min-width: 80rem) 630px, (min-width: 64rem) 48vw, 100vw"
                   />
                 ) : (
                   <div className="app__media">
@@ -69,11 +75,11 @@ export function Applications() {
                         fill
                         sizes={
                           kind === "facades"
-                            ? "(min-width: 80rem) 820px, (min-width: 64rem) 62vw, 100vw"
+                            ? "(min-width: 80rem) 740px, (min-width: 64rem) 58vw, 100vw"
                             : "(min-width: 80rem) 520px, (min-width: 64rem) 40vw, (min-width: 48rem) 50vw, 100vw"
                         }
                         className="object-cover"
-                        style={{ objectPosition: kind === "facades" ? "56% 40%" : "50% 40%" }}
+                        style={{ objectPosition: kind === "facades" ? "62% 42%" : "50% 40%" }}
                       />
                     </div>
                   </div>
@@ -84,20 +90,20 @@ export function Applications() {
           })}
         </ul>
 
-        {/* Supporting application films: one shared frame height across landscape and portrait. */}
+        {/* Supporting application films: one shared height, widths 5 / 4 / 3 columns. */}
         <div className="film-strip">
-          <div className="film-strip__item film-strip__item--landscape" data-motion="stagger">
-            <WatchVideo film={films.montage} focus="40% 50%" sizes="(min-width: 80rem) 500px, (min-width: 48rem) 40vw, 100vw" />
+          <div className="film-strip__item film-strip__item--wide" data-motion="stagger">
+            <AmbientFilm film={films.montage} frameClass="film-strip__frame" sizes="(min-width: 80rem) 520px, (min-width: 48rem) 42vw, 100vw" />
           </div>
-          <div className="film-strip__item film-strip__item--landscape" data-motion="stagger">
-            <WatchVideo film={films.systemIntroduction} sizes="(min-width: 80rem) 500px, (min-width: 48rem) 40vw, 100vw" />
+          <div className="film-strip__item film-strip__item--mid" data-motion="stagger">
+            <AmbientFilm film={films.systemIntroduction} frameClass="film-strip__frame" sizes="(min-width: 80rem) 410px, (min-width: 48rem) 33vw, 100vw" />
           </div>
-          <div className="film-strip__item film-strip__item--portrait" data-motion="stagger">
-            <WatchVideo
+          <div className="film-strip__item film-strip__item--narrow" data-motion="stagger">
+            <AmbientFilm
               film={films.claddingPortrait}
-              frameClass="aspect-[4/5] md:aspect-[9/16]"
-              focus="50% 26%"
-              sizes="(min-width: 80rem) 170px, (min-width: 48rem) 14vw, 100vw"
+              frameClass="film-strip__frame"
+              focus="50% 8%"
+              sizes="(min-width: 80rem) 300px, (min-width: 48rem) 25vw, 100vw"
             />
           </div>
         </div>

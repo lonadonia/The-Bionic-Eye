@@ -131,16 +131,27 @@ const useWebm = async (ctx) => {
   if (h264) {
     await page.waitForFunction(() => !document.querySelector("#top video").paused, null, { timeout: 8000 }).catch(() => undefined);
     const playing = await page.evaluate(() => !document.querySelector("#top video").paused);
-    await page.click("#top .hero__control--toggle");
+    const hidden = await page.evaluate(() => {
+      const r = document.querySelector("#top .hero__control--toggle").getBoundingClientRect();
+      return r.width <= 1 && r.height <= 1;
+    });
+    await page.focus("#top .hero__control--full");
+    await page.keyboard.press("Shift+Tab"); // keyboard focus, as a visitor would reach it
+    const shown = await page.evaluate(() => {
+      const r = document.querySelector("#top .hero__control--toggle").getBoundingClientRect();
+      return r.width >= 44 && r.height >= 44;
+    });
+    await page.keyboard.press("Enter");
     await sleep(200);
     const paused = await page.evaluate(() => document.querySelector("#top video").paused);
     const label = (await page.textContent("#top .hero__control--toggle")).trim();
     check(
       "QA-HERO-AUTOPLAY-AND-PAUSE",
-      playing && paused && label.startsWith("Play film"),
-      `playing=${playing} paused=${paused} label=${label}${heroWebm ? " (VP9 stand-in for the MP4)" : ""}`,
+      playing && paused && label.startsWith("Play film") && hidden && shown,
+      `playing=${playing} paused=${paused} label=${label} hiddenUntilFocus=${hidden && shown}${heroWebm ? " (VP9 stand-in for the MP4)" : ""}`,
     );
-    await page.click("#top .hero__control--toggle"); // resume for the remaining checks
+    await page.keyboard.press("Enter"); // resume for the remaining checks
+    await page.evaluate(() => document.activeElement?.blur());
   } else {
     check("QA-HERO-AUTOPLAY-AND-PAUSE", null, "browser cannot decode H.264, not tested here");
   }
@@ -214,22 +225,56 @@ const useWebm = async (ctx) => {
   check("QA-CTA-REACHES-FORM", cta.targetTop >= cta.headerBottom && cta.targetTop < 900, JSON.stringify(cta));
 
   // Supporting films: click-to-watch swaps to native controls; nothing loads before
-  const before = await page.evaluate(() => document.querySelectorAll("main video:not(#top video)").length);
-  await page.locator(".film-strip figure button").nth(1).scrollIntoViewIfNeeded();
-  await page.locator(".film-strip figure button").nth(1).click();
-  await sleep(400);
-  const watch = await page.evaluate(() => {
-    const v = document.querySelector(".film-strip video");
-    return v ? { controls: v.controls, focused: document.activeElement === v, src: v.getAttribute("src") } : null;
+  const before = await page.evaluate(() => document.querySelectorAll("main dialog video").length);
+  await page.locator(".film-strip__item--mid .ambient__frame").scrollIntoViewIfNeeded();
+  await sleep(2500);
+  const apps = await page.evaluate(() => {
+    const shell = document.querySelector("#applications .shell").getBoundingClientRect();
+    const frames = Array.from(document.querySelectorAll("#applications .media-frame")).map((f) => f.getBoundingClientRect());
+    return {
+      playing: Array.from(document.querySelectorAll("#applications .ambient__video")).map((v) => !v.paused).join(),
+      chips: document.querySelectorAll("#applications .play-chip").length,
+      // visible words over the pictures (screen-reader-only text excluded)
+      labels: Array.from(document.querySelectorAll("#applications .ambient__frame *")).filter(
+        (el) => !el.closest(".sr-only, dialog") && !el.children.length && el.textContent.trim() && el.getBoundingClientRect().width > 1,
+      ).length,
+      inFrame: frames.every((r) => r.left >= shell.left - 1 && r.right <= shell.right + 1),
+    };
   });
-  check("QA-WATCH-VIDEO", before === 0 && watch?.controls && watch.focused && /system-c10-introduction-720/.test(watch.src), JSON.stringify({ before, watch }));
+  check(
+    "QA-APPS-FILMS-PLAY",
+    (h264 ? apps.playing === "true,true,true,true" : true) && apps.chips === 0 && apps.labels === 0,
+    JSON.stringify(apps) + (h264 ? "" : " (playback not checked: no H.264)"),
+  );
+  check("QA-APPS-IN-FRAME", apps.inFrame, apps.inFrame ? "every Applications frame inside the 12-column frame" : "a frame crosses the page frame");
+  await page.click(".film-strip__item--mid .ambient__open");
+  await sleep(500);
+  const watch = await page.evaluate(() => {
+    const d = document.querySelector("#applications dialog[open]");
+    const v = d?.querySelector("video");
+    return v ? { controls: v.controls, focusInside: d.contains(document.activeElement), src: v.getAttribute("src") } : null;
+  });
+  await page.keyboard.press("Escape");
+  await sleep(300);
+  check("QA-WATCH-VIDEO", before === 0 && watch?.controls && watch.focusInside && /system-c10-introduction-720/.test(watch.src), JSON.stringify({ before, watch }));
+  await page.hover(".film-strip__item--wide .ambient__frame");
+  await page.click(".film-strip__item--wide .ambient__toggle");
+  await sleep(300);
+  const userPause = await page.evaluate(() => document.querySelector(".film-strip__item--wide .ambient__video").paused);
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await sleep(900);
+  const offscreen = await page.evaluate(() => Array.from(document.querySelectorAll("#applications .ambient__video")).every((v) => v.paused));
+  check("QA-APPS-FILM-PAUSE", userPause && offscreen, JSON.stringify({ userPause, offscreen }));
 
   // Every supplied film is reachable: six inline viewers and three media-viewer buttons (plus the hero loop)
+  // Hero loop + full film; 4 loops in Applications (3 open their full film); 2 click-to-watch films in
+  // Support; 2 guide excerpts in the cleaning-system pair.
   const reach = await page.evaluate(() => ({
-    inline: document.querySelectorAll("main .is-playable, main figure video").length,
-    dialogs: Array.from(document.querySelectorAll("main button[aria-haspopup=dialog]")).map((b) => b.textContent.trim().replace(/\s+/g, " ").slice(0, 40)),
+    loops: document.querySelectorAll("main .ambient__video").length,
+    inline: document.querySelectorAll("main .is-playable").length,
+    dialogs: document.querySelectorAll("main button[aria-haspopup=dialog]").length,
   }));
-  check("QA-ALL-FILMS-REACHABLE", reach.inline === 6 && reach.dialogs.length === 3, JSON.stringify(reach));
+  check("QA-ALL-FILMS-REACHABLE", reach.loops === 4 && reach.inline === 2 && reach.dialogs === 6, JSON.stringify(reach));
 
   // Product explorer: three real views on one fixed stage, radio semantics, nozzle callout only where visible
   await page.locator(".explorer").scrollIntoViewIfNeeded();
@@ -471,6 +516,7 @@ const useWebm = async (ctx) => {
     Array.from(document.querySelectorAll("main a, main button, header a, header button, main input, main textarea"))
       .filter((el) => el.getBoundingClientRect().width > 0)
       .filter((el) => !el.closest("p") || el.classList.contains("btn"))
+      .filter((el) => !el.classList.contains("hero__control--toggle")) // keyboard-revealed; 44px when focused (QA-HERO-AUTOPLAY-AND-PAUSE)
       .map((el) => ({ el: el.className || el.tagName, w: Math.round(el.getBoundingClientRect().width), h: Math.round(el.getBoundingClientRect().height) }))
       .filter((r) => r.w < 44 || r.h < 44),
   );
@@ -508,14 +554,15 @@ const useWebm = async (ctx) => {
   await sleep(600);
   const rm = await page.evaluate(() => ({
     pending: Array.from(document.querySelectorAll("[data-motion], .story__frame, .story__caption"))
-      .filter((el) => !el.closest('[data-hidden], .support__layer:not([data-active="true"]), .support__caption:not([data-active="true"])'))
+      .filter((el) => !el.closest('[data-hidden], .support__layer:not([data-active="true"]), .support__caption:not([data-active="true"]), .ambient__icon, .ambient__video'))
       .filter((el) => getComputedStyle(el).opacity !== "1" || el.style.transform).length,
     scene: document.querySelectorAll(".story__control").length,
     videoPaused: document.querySelector("#top video").paused,
+    loopsPaused: Array.from(document.querySelectorAll("main .ambient__video")).every((v) => v.paused),
     videoNetwork: document.querySelector("#top video").networkState,
     smooth: getComputedStyle(document.documentElement).scrollBehavior,
   }));
-  check("QA-REDUCED-MOTION", rm.pending === 0 && rm.scene === 0 && rm.videoPaused && rm.smooth === "auto", JSON.stringify(rm));
+  check("QA-REDUCED-MOTION", rm.pending === 0 && rm.scene === 0 && rm.videoPaused && rm.loopsPaused && rm.smooth === "auto", JSON.stringify(rm));
   await ctx.close();
 }
 
@@ -529,15 +576,20 @@ const useWebm = async (ctx) => {
   const cap = await page.evaluate(() => ({
     flag: document.documentElement.dataset.capture,
     pending: Array.from(document.querySelectorAll("[data-motion], .story__frame, .story__caption"))
-      .filter((el) => !el.closest('[data-hidden], .support__layer:not([data-active="true"]), .support__caption:not([data-active="true"])'))
+      .filter((el) => !el.closest('[data-hidden], .support__layer:not([data-active="true"]), .support__caption:not([data-active="true"]), .ambient__icon, .ambient__video'))
       .filter((el) => getComputedStyle(el).opacity !== "1" || el.style.transform).length,
     header: getComputedStyle(document.querySelector(".site-header")).position,
     scene: document.querySelectorAll(".story__control").length,
     details: document.querySelectorAll(".detail img").length,
     heroVideo: getComputedStyle(document.querySelector("#top video")).display,
+    loopsPaused: Array.from(document.querySelectorAll("main .ambient__video")).every((v) => v.paused),
     specs: document.querySelectorAll("#system dl > div").length,
   }));
-  check("QA-CAPTURE-STATE", cap.flag === "1" && cap.pending === 0 && cap.header === "relative" && cap.scene === 0 && cap.details === 2 && cap.heroVideo === "none" && cap.specs === 5, JSON.stringify(cap));
+  check(
+    "QA-CAPTURE-STATE",
+    cap.flag === "1" && cap.pending === 0 && cap.header === "relative" && cap.scene === 0 && cap.details === 2 && cap.heroVideo === "none" && cap.loopsPaused && cap.specs === 5,
+    JSON.stringify(cap),
+  );
   await ctx.close();
 
   const noJs = await browser.newContext({ viewport: { width: 1440, height: 900 }, javaScriptEnabled: false });
@@ -546,7 +598,7 @@ const useWebm = async (ctx) => {
   await sleep(1200); // let the CSS-only hero entrance finish
   const nj = await p2.evaluate(() => ({
     hidden: Array.from(document.querySelectorAll("main *"))
-      .filter((el) => !el.closest('[data-hidden], .support__layer:not([data-active="true"]), .support__caption:not([data-active="true"])'))
+      .filter((el) => !el.closest('[data-hidden], .support__layer:not([data-active="true"]), .support__caption:not([data-active="true"]), .ambient__icon, .ambient__video'))
       .filter((el) => getComputedStyle(el).opacity === "0" && el.textContent.trim()).length,
     specs: document.querySelectorAll("#system dl > div").length,
     paragraphs: document.querySelectorAll("#support .supply__para").length,

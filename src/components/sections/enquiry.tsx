@@ -1,5 +1,6 @@
 import { enquiry, footer } from "@/content/copy";
 import { BrandMark } from "../brand-mark";
+import { DotField, IrisRings } from "../decor";
 import { EnquiryForm } from "../enquiry-form";
 import { SectionIntro } from "../section-intro";
 
@@ -37,6 +38,8 @@ export function Enquiry() {
         <div className="col-span-4 md:col-span-8 lg:col-span-7">
           <div className="form-wrap">
             <span className="form-wrap__plane" aria-hidden="true" />
+            <IrisRings className="form-wrap__iris" />
+            <DotField className="form-wrap__dots" />
             <div className="form-card">
               <EnquiryForm />
             </div>

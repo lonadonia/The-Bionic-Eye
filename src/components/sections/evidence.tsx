@@ -1,4 +1,5 @@
 import { evidence } from "@/content/copy";
+import { DotField, IrisRings } from "../decor";
 import { RichText } from "../rich-text";
 import { SectionIntro } from "../section-intro";
 
@@ -11,9 +12,11 @@ import { SectionIntro } from "../section-intro";
 export function Evidence() {
   return (
     <section id="evidence" aria-labelledby="evidence-heading" className="section evidence">
+      <IrisRings className="evidence__iris" />
       <div className="shell grid-12 gap-y-[var(--intro-gap)]">
         <div className="col-span-4 md:col-span-8 lg:col-span-4">
           <SectionIntro id="evidence-heading" heading={evidence.heading} />
+          <DotField className="evidence__dots" />
         </div>
         <div className="col-span-4 md:col-span-8 lg:col-span-8">
           <p className="t-lede evidence__intro">{evidence.intro}</p>

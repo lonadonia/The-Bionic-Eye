@@ -13,9 +13,10 @@ type Connection = { saveData?: boolean };
  * Hero film. The optimised poster is the LCP image and always paints first; the silent loop
  * fades in over it only once it is actually playing, and only while the hero is on screen.
  * Reduced motion, Save-Data and the static capture state keep the poster (the visitor can still
- * press Play). The loop is decorative (the copy carries the content), so only the control group
- * is exposed: Play/Pause follows actual playback, and "Watch the full film" opens the complete
- * supplied film, with its sound, in the media viewer.
+ * press Play). The loop is decorative (the copy carries the content). The visible control is
+ * "Watch the full film", which opens the complete supplied film, with its sound, in the media
+ * viewer. Play/Pause has no visible button (owner's request) but stays in the tab order and appears
+ * when it receives keyboard focus, so the moving background can always be stopped (WCAG 2.2.2).
  */
 export function HeroFilm({ film, full }: { film: Film; full: Film }) {
   const video = useRef<HTMLVideoElement>(null);
@@ -98,7 +99,6 @@ export function HeroFilm({ film, full }: { film: Film; full: Film }) {
           <span className="hero__control-label">{playing ? ui.film.pause : ui.film.play}</span>
           <span className="sr-only">, {ui.film.heroName}</span>
         </button>
-        <span className="hero__control-sep" aria-hidden="true" />
         <FilmDialogButton film={full} label={ui.film.watchFull} className="hero__control hero__control--full" />
       </div>
     </div>

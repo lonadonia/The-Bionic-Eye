@@ -1,5 +1,6 @@
 import { footer } from "@/content/copy";
 import { BrandLogo } from "./brand-logo";
+import { WingCurve } from "./decor";
 
 /**
  * Footer: four readable groups of supplied information (identity and operating address, contact,
@@ -9,6 +10,7 @@ import { BrandLogo } from "./brand-logo";
 export function SiteFooter() {
   return (
     <footer className="site-footer on-deep border-t border-deep-line">
+      <WingCurve className="site-footer__wing" />
       <div className="shell grid-12 gap-y-10 py-14 lg:py-16">
         <div id="about" className="col-span-4 md:col-span-4 lg:col-span-4">
           <BrandLogo tone="white" withTagline className="h-auto w-[148px]" />

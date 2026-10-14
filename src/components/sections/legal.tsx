@@ -1,4 +1,5 @@
 import { regulation } from "@/content/copy";
+import { IrisRings, WingCurve } from "../decor";
 import { ArrowRight } from "../icons";
 import { RichText } from "../rich-text";
 import { SectionIntro } from "../section-intro";
@@ -14,9 +15,11 @@ import { SelectServiceLink } from "../select-service-link";
 export function Legal() {
   return (
     <section id="regulation" aria-labelledby="regulation-heading" className="section legal">
+      <WingCurve className="legal__wing" />
       <div className="shell grid-12 gap-y-[var(--intro-gap)]">
         <div className="col-span-4 md:col-span-8 lg:col-span-4">
           <SectionIntro id="regulation-heading" heading={regulation.heading} />
+          <IrisRings className="legal__iris" />
         </div>
         <div className="col-span-4 md:col-span-8 lg:col-span-8">
           <div className="sheet">

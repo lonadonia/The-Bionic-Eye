@@ -2,6 +2,7 @@ import Image from "next/image";
 import { support } from "@/content/copy";
 import { filmLength, films, photos } from "@/content/media";
 import { ui } from "@/content/ui";
+import { DotField, IrisRings } from "../decor";
 import { SectionIntro } from "../section-intro";
 import { SupportSelector, type SupportMedia } from "../support-selector";
 import { WatchVideo } from "../video/watch-video";
@@ -61,6 +62,8 @@ export function Support() {
   return (
     <section id="support" aria-labelledby="support-heading" className="section support">
       <div className="support__plane" aria-hidden="true" />
+      <IrisRings className="support__iris" />
+      <DotField className="support__dots" />
       <div className="shell">
         <SectionIntro id="support-heading" heading={support.heading} />
         <div className="mt-[var(--intro-gap)]">

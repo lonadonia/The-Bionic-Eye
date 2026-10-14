@@ -79,3 +79,15 @@ log "refinement 3: films opened in the media viewer"
 "$FF" -v error -y -i "$SRC/C10-Use-Case-Shorts-Final-Horizontal.mp4" -map 0:v:0 -map 0:a:0 -vf "scale=1280:-2:flags=lanczos" "${X264[@]}" -crf 28 -maxrate 1300k -bufsize 2600k -g 50 -c:a aac -b:a 96k -ac 2 -map_metadata -1 "$OUT/video/hero-c10-use-cases-full-720.mp4"
 "$FF" -v error -y -ss 310 -t 39.4 -i "$GUIDE" -map 0:v:0 -map 0:a:0 -vf "scale=1280:-2:flags=lanczos,fps=24" "${X264[@]}" -crf 26 -maxrate 1800k -bufsize 3600k -g 48 -c:a aac -b:a 96k -ac 2 -map_metadata -1 "$OUT/video/system-clean-station-operation-excerpt.mp4"
 log "done (refinement 3)"
+
+# ---------- Refinement 4: films that play in place in Applications (silent loops, no title cards) ----------
+log "refinement 4: application loops"
+LOOPX=(-c:v libx264 -preset slow -profile:v high -pix_fmt yuv420p -movflags +faststart -an -map_metadata -1)
+"$FF" -v error -y -ss 9 -t 14 -i "$SRC/C10 Short Low bitrate.mp4" -map 0:v:0 -vf "scale=960:-2:flags=lanczos,fps=25" "${LOOPX[@]}" -crf 27 -maxrate 1300k -bufsize 2600k -g 50 "$OUT/video/applications-c10-short-loop.mp4"
+"$FF" -v error -y -ss 115.3 -t 16.4 -i "$SRC/C10_Introduction_short.mp4" -map 0:v:0 -vf "scale=960:-2:flags=lanczos,fps=25" "${LOOPX[@]}" -crf 27 -maxrate 1300k -bufsize 2600k -g 50 "$OUT/video/applications-c10-introduction-loop-0155.mp4"
+"$FF" -v error -y -ss 2 -t 12 -i "$SRC/5f69a5e2-edb9-4dff-8bd8-14d3a8d570d0.MP4" -map 0:v:0 -vf "scale=540:-2:flags=lanczos,fps=30" "${LOOPX[@]}" -crf 27 -maxrate 1100k -bufsize 2200k -g 60 "$OUT/video/applications-cladding-portrait-loop.mp4"
+for n in c10-short c10-introduction-loop-0155 cladding-portrait; do
+  f="$OUT/video/applications-$n"; [ -f "$f.mp4" ] || f="$f-loop"
+  "$FF" -v error -y -i "$f.mp4" -frames:v 1 -vf "format=yuvj420p" -q:v 3 "$OUT/poster/$(basename "$f").jpg"
+done
+log "done (refinement 4)"

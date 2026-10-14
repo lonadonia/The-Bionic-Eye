@@ -24,7 +24,6 @@ const targets = {
   headline: { sel: "#hero-heading", need: 3 },
   "intro paragraph 1": { sel: "#top .hero__intro p:nth-child(1)", need: 4.5 },
   "intro paragraph 2": { sel: "#top .hero__intro p:nth-child(2)", need: 4.5 },
-  "film control": { sel: "#top .hero__control--toggle", need: 4.5 },
   "full film control": { sel: "#top .hero__control--full", need: 4.5 },
 };
 

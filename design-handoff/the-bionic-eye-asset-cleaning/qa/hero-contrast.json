@@ -1,6 +1,6 @@
 {
   "url": "http://localhost:3000/",
-  "ranAt": "2026-10-14T00:45:24.576Z",
+  "ranAt": "2026-10-14T04:22:16.020Z",
   "samples": [
     0.2,
     1.27,
@@ -50,13 +50,6 @@
         "atTime": 24.76,
         "pass": true
       },
-      "film control": {
-        "need": 4.5,
-        "minP95": 9.37,
-        "brightestPixel": 8.78,
-        "atTime": 9.81,
-        "pass": true
-      },
       "full film control": {
         "need": 4.5,
         "minP95": 9.47,
@@ -87,13 +80,6 @@
         "atTime": 4.47,
         "pass": true
       },
-      "film control": {
-        "need": 4.5,
-        "minP95": 9.35,
-        "brightestPixel": 8.78,
-        "atTime": 9.81,
-        "pass": true
-      },
       "full film control": {
         "need": 4.5,
         "minP95": 9.48,
@@ -122,13 +108,6 @@
         "minP95": 6.06,
         "brightestPixel": 3.31,
         "atTime": 23.69,
-        "pass": true
-      },
-      "film control": {
-        "need": 4.5,
-        "minP95": 9.68,
-        "brightestPixel": 9.15,
-        "atTime": 9.81,
         "pass": true
       },
       "full film control": {
