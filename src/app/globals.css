@@ -152,7 +152,7 @@
 
   /* ---------- Type ---------- */
   .t-h1 {
-    font-size: clamp(2.25rem, 1.792rem + 2.037vw, 3.625rem); /* 36 at 360 → 58 at 1440 */
+    font-size: clamp(2rem, 1.625rem + 1.667vw, 3.125rem); /* 32 at 360 → 50 at 1440 */
     line-height: 1.09;
     font-weight: 600;
     letter-spacing: -0.026em;
@@ -897,10 +897,12 @@
     background: linear-gradient(0deg, rgb(11 17 20 / 0.55) 0%, rgb(11 17 20 / 0) 38%);
   }
 
+  /* The introduction sets one step below body size, so the film keeps the lead. */
   .hero__intro {
     display: grid;
     gap: 1rem;
     margin-top: 1.75rem;
+    font-size: 1rem;
     color: rgb(255 255 255 / 0.9);
   }
 
@@ -910,15 +912,6 @@
 
   .hero__actions .btn {
     width: 100%;
-  }
-
-  /* Watermark: the supplied eye, cropped off the dark outer edge. */
-  .hero__mark {
-    z-index: 1;
-    width: 30rem;
-    right: -13rem;
-    bottom: 5rem;
-    opacity: 0.06;
   }
 
   /* Control group: Play/Pause follows playback; "Watch the full film" opens the complete film. */
@@ -997,10 +990,6 @@
     }
   }
 
-  .hero__frame {
-    display: none;
-  }
-
   /* The CTA carries a soft cyan glow and lifts slightly on hover. */
   .hero .btn-primary {
     box-shadow: 0 14px 34px -14px rgb(0 191 243 / 0.75);
@@ -1056,13 +1045,12 @@
       align-items: center;
     }
 
-    /* Reading zone: 480px at 1024 growing to 600px at 1440, so the copy never reaches the drone. */
+    /* Reading zone: 448px at 1024 growing to 528px at 1440, so the copy never reaches the drone. */
     .hero__grid {
-      grid-template-columns: minmax(0, clamp(30rem, 28.85vw + 11.54rem, 37.5rem)) minmax(0, 1fr);
+      grid-template-columns: minmax(0, clamp(28rem, 19.23vw + 15.69rem, 33rem)) minmax(0, 1fr);
       padding-block: 6rem calc(var(--hero-wave-h) + 3.5rem);
       position: static;
-      /* As a grid item of .hero, a z-index would still create a stacking context and lift the film
-         above the watermark; auto lets the film, watermark, frame and copy layer in .hero itself. */
+      /* The film and the copy layer in .hero itself, under the wing edge. */
       z-index: auto;
     }
 
@@ -1099,23 +1087,25 @@
       object-position: 62% 50%;
     }
 
-    /* Directional: strongest behind the copy, open around the drone and its jet. */
+    /* Directional: strongest behind the copy, open around the drone and its jet. Kept light, ending
+       just past the copy, with the text contrast checked by scripts/qa/hero-contrast.mjs. Below
+       1280px the copy takes a larger share of the width, so the shade reaches a little further. */
     .hero__scrim {
       background:
         linear-gradient(
           90deg,
-          rgb(11 17 20 / 0.9) 0%,
-          rgb(11 17 20 / 0.85) 30%,
-          rgb(11 17 20 / 0.66) 44%,
-          rgb(11 17 20 / 0.22) 60%,
-          rgb(11 17 20 / 0) 72%
+          rgb(11 17 20 / 0.8) 0%,
+          rgb(11 17 20 / 0.72) 34%,
+          rgb(11 17 20 / 0.5) 48%,
+          rgb(11 17 20 / 0.14) 62%,
+          rgb(11 17 20 / 0) 74%
         ),
-        linear-gradient(0deg, rgb(11 17 20 / 0.5) 0%, rgb(11 17 20 / 0) 28%);
+        linear-gradient(0deg, rgb(11 17 20 / 0.45) 0%, rgb(11 17 20 / 0) 26%);
     }
 
     .hero__intro {
-      margin-top: 1.75rem;
-      max-width: 35rem;
+      margin-top: 1.5rem;
+      max-width: 32rem;
     }
 
     .hero__actions {
@@ -1126,45 +1116,25 @@
       width: auto;
     }
 
-    /* The eye symbol, large, behind the reading zone, fading out before the drone. */
-    .hero__mark {
-      z-index: 1;
-      width: clamp(46rem, 68vw, 64rem);
-      left: calc(-0.3 * clamp(46rem, 68vw, 64rem));
-      right: auto;
-      top: 50%;
-      bottom: auto;
-      transform: translateY(-46%);
-      opacity: 0.085;
-      mask-image: linear-gradient(to right, #000 38%, transparent 80%);
-    }
-
-    /* Fine frame boundary at the content edges, with framing marks at its corners. */
-    .hero__frame {
-      --m: 14px;
-      --c: rgb(255 255 255 / 0.85);
-      --x: max(calc(var(--gutter) - 1.5rem), calc((100% - var(--content-max)) / 2 - 1.5rem));
-      display: block;
-      position: absolute;
-      z-index: 1;
-      inset: 1.75rem var(--x) calc(var(--hero-wave-h) + 0.75rem) var(--x);
-      pointer-events: none;
-      border: 1px solid rgb(255 255 255 / 0.16);
-      background:
-        linear-gradient(var(--c), var(--c)) top left / var(--m) 1px,
-        linear-gradient(var(--c), var(--c)) top left / 1px var(--m),
-        linear-gradient(var(--c), var(--c)) top right / var(--m) 1px,
-        linear-gradient(var(--c), var(--c)) top right / 1px var(--m),
-        linear-gradient(var(--c), var(--c)) bottom left / var(--m) 1px,
-        linear-gradient(var(--c), var(--c)) bottom left / 1px var(--m),
-        linear-gradient(var(--c), var(--c)) bottom right / var(--m) 1px,
-        linear-gradient(var(--c), var(--c)) bottom right / 1px var(--m);
-      background-repeat: no-repeat;
-    }
-
     .hero__controls {
       right: max(var(--gutter), calc((100% - var(--content-max)) / 2));
       bottom: calc(var(--hero-wave-h) + 1.25rem);
+    }
+  }
+
+  /* From 1280px the copy ends near 44% of the width, so the shade can end earlier too. */
+  @media (width >= 80rem) {
+    .hero__scrim {
+      background:
+        linear-gradient(
+          90deg,
+          rgb(11 17 20 / 0.8) 0%,
+          rgb(11 17 20 / 0.72) 28%,
+          rgb(11 17 20 / 0.5) 42%,
+          rgb(11 17 20 / 0.14) 58%,
+          rgb(11 17 20 / 0) 70%
+        ),
+        linear-gradient(0deg, rgb(11 17 20 / 0.45) 0%, rgb(11 17 20 / 0) 26%);
     }
   }
 

@@ -4,8 +4,9 @@
 // computed scrim). Frames come from the served loop itself (ffmpeg, evenly spaced across the loop),
 // cropped exactly as `object-fit: cover; object-position` does, then composited under the scrim
 // gradients. This avoids depending on the browser's H.264 support. P95 ignores the brightest 5% of
-// pixels under a line (spray highlights); "brightest" is the single worst pixel. The eye watermark
-// is counted conservatively: a flat layer of its white at its opacity over its whole bounding box.
+// pixels under a line (spray highlights); "brightest" is the single worst pixel. An eye watermark
+// (.hero__mark), when present, is counted conservatively: a flat layer of its white at its opacity
+// over its whole bounding box. The text shadow is ignored, which is also conservative.
 //
 // Usage: node scripts/qa/hero-contrast.mjs http://localhost:3000/ [out.json]
 // Needs: npm i --no-save playwright-core pngjs; ffmpeg on PATH; CHROME_PATH or Google Chrome.
@@ -18,7 +19,7 @@ import path from "node:path";
 
 const [, , url, outFile] = process.argv;
 const SAMPLES = 24;
-const WIDTHS = [1440, 1280, 1024];
+const WIDTHS = [1920, 1440, 1280, 1024];
 const LOOP = "public/media/video/hero-background-loop-1080.mp4";
 const targets = {
   headline: { sel: "#hero-heading", need: 3 },

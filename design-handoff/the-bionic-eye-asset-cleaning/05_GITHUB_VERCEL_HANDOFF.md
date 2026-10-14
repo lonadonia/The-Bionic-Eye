@@ -1,5 +1,17 @@
 # 05 · GitHub and Vercel handoff
 
+## Refinement 6 (14 October 2026)
+
+```
+Implementation:     BUILT — lighter hero at the owner's request: smaller headline and introduction, lighter
+                    left shade, eye watermark and frame boundary removed. See docs/ASSET_CLEANING_REFINEMENT_6.md
+Local build:        PASS — lint, typecheck, build
+QA:                 63/63 interaction + axe checks PASS; hero contrast PASS at 1920/1440/1280/1024 (lowest
+                    5.88:1); copy audit 0 unverified; design note 93 words
+GitHub:             branch refinement-6-hero-lighter; main to be fast-forwarded once QA passes (owner's request)
+Environment keys:   none
+```
+
 ## Refinement 5 (14 October 2026)
 
 ```

@@ -1,5 +1,13 @@
 # 06 · Figma build specification
 
+> **Refinement 6 (14 October 2026).** Hero only:
+> - H1 is 50 px at 1440 and 32 px at 390 (was 58 / 36).
+> - The hero introduction is 16 px.
+> - The hero scrim is lighter (values in `src/app/globals.css`, `.hero__scrim`).
+> - There is no eye watermark and no frame boundary in the hero.
+>
+> See `docs/ASSET_CLEANING_REFINEMENT_6.md` and the refreshed exports.
+>
 > **Refinement 3 (14 October 2026).** New components to build: `Product stage` (View = Side / Three-quarter / Front, with a nozzle callout on Side and Front), `View option` (State = Default / Selected), `Callout` (Direction = Up-right / Down-left / Right), `Detail frame`, `Cleaning-system pair` (State = Operation / Nozzle / Pair), `Media viewer` and `Hero control group`. Use the current exports, which show the static pair. No Figma file was created in this session.
 >
 > **Superseded in part (13 October 2026).** Use the current exports in `exports/` and the tokens and type scale in `docs/ASSET_CLEANING_REFINEMENT_2.md` §4. A Figma connector is now attached to the Claude session; no Figma file has been created yet. Because the contest currently prohibits AI-generated layouts, any Figma file made from this Claude-assisted prototype is for internal handover only.
