@@ -8,7 +8,13 @@ Implementation:     BUILT — lighter hero at the owner's request: smaller headl
 Local build:        PASS — lint, typecheck, build
 QA:                 63/63 interaction + axe checks PASS; hero contrast PASS at 1920/1440/1280/1024 (lowest
                     5.88:1); copy audit 0 unverified; design note 93 words
-GitHub:             branch refinement-6-hero-lighter; main to be fast-forwarded once QA passes (owner's request)
+GitHub:             branch refinement-6-hero-lighter (481cb1b code and docs, 5addf1b and b5a4a21 exports), then
+                    main fast-forwarded 82c39f4 → b5a4a21 at the owner's request ("push to main when finished");
+                    normal pushes, no force, no merge commit
+Vercel:             production deployment of b5a4a21: state "success". https://the-bionic-eye.vercel.app serves
+                    refinement 6 (no hero watermark or frame in the markup or CSS; H1 capped at 50 px; intro 1rem;
+                    1280px scrim variant); qa/interaction.mjs against it: 63/63 PASS
+                    (qa/interaction-results-production.json)
 Environment keys:   none
 ```
 
