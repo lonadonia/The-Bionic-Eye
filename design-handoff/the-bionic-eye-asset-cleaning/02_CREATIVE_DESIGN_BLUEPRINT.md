@@ -1,5 +1,7 @@
 # 02 · Creative design blueprint — "Field Manual"
 
+> **Superseded (14 October 2026).** The current direction is the product presentation in `docs/ASSET_CLEANING_REFINEMENT_3.md`: product explorer, cleaning-system scene and three decoration layers. The WordPress mapping in §9 still applies; the explorer is a gallery block with three images, and the scene is one small script progressively enhancing a static pair.
+>
 > **Superseded (13 October 2026).** The page now follows the refined industrial editorial direction in `docs/ASSET_CLEANING_REFINEMENT_2.md` (Manrope only, cyan/graphite interface tokens, three decoration motifs). The WordPress mapping in §9 still applies section by section.
 
 

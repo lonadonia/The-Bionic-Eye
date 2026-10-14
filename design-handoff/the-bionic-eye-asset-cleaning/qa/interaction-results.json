@@ -1,8 +1,8 @@
 {
-  "url": "http://localhost:3200/",
-  "ranAt": "2026-10-13T22:37:44.568Z",
+  "url": "http://localhost:3000/",
+  "ranAt": "2026-10-14T00:46:54.167Z",
   "totals": {
-    "PASS": 52
+    "PASS": 60
   },
   "results": [
     {
@@ -43,12 +43,17 @@
     {
       "id": "QA-HERO-AUTOPLAY-AND-PAUSE",
       "status": "PASS",
-      "detail": "playing=true paused=true label=Play film, background film (VP9 stand-in for the MP4)"
+      "detail": "playing=true paused=true label=Play film, background film"
     },
     {
       "id": "QA-HERO-CONTROL-HONEST",
       "status": "PASS",
       "detail": "Pause film, background film"
+    },
+    {
+      "id": "QA-HERO-FULL-FILM",
+      "status": "PASS",
+      "detail": "{\"open\":true,\"modal\":true,\"src\":\"/media/video/hero-c10-use-cases-full-720.mp4\",\"controls\":true,\"focusInside\":true,\"closed\":true,\"videoGone\":true,\"focusBack\":true}"
     },
     {
       "id": "QA-NAV-LABELS",
@@ -93,7 +98,7 @@
     {
       "id": "QA-CTA-REACHES-FORM",
       "status": "PASS",
-      "detail": "{\"headerBottom\":84,\"targetTop\":204}"
+      "detail": "{\"headerBottom\":84,\"targetTop\":232}"
     },
     {
       "id": "QA-WATCH-VIDEO",
@@ -101,9 +106,39 @@
       "detail": "{\"before\":0,\"watch\":{\"controls\":true,\"focused\":true,\"src\":\"/media/video/system-c10-introduction-720.mp4\"}}"
     },
     {
+      "id": "QA-ALL-FILMS-REACHABLE",
+      "status": "PASS",
+      "detail": "{\"inline\":6,\"dialogs\":[\"Watch the full film01:23 — C10 Use Case \",\"Play film00:39 — ABZ Clean Station, setu\",\"Play film01:15 — ABZ Clean Station, setu\"]}"
+    },
+    {
+      "id": "QA-EXPLORER-VIEWS",
+      "status": "PASS",
+      "detail": "{\"radios\":3,\"checked\":\"Front\",\"active\":\"false,false,true\",\"alt\":\"Studio front view of the\",\"callouts\":\"hidden,shown\",\"stageH\":460}"
+    },
+    {
+      "id": "QA-EXPLORER-KEYBOARD",
+      "status": "PASS",
+      "detail": "{\"focus\":\"Three-quarter\",\"view\":\"Three-quarter\",\"callouts\":\"hidden,hidden\"}"
+    },
+    {
+      "id": "QA-SPECS-EXACT",
+      "status": "PASS",
+      "detail": "Working height: Over 60 metres | Flow rate: Up to 15 litres per minute | Working pressure: Around 170 bar at the nozzle, up to 255 bar at peak | Collision avoidance: Radar, with standoff control | Maximum take-off mass: 29 kg"
+    },
+    {
+      "id": "QA-STORY-SCENE",
+      "status": "PASS",
+      "detail": "{\"order\":\"0>1>2\",\"pinned\":\"fixed\",\"manual\":{\"pos\":\"fixed\",\"view\":\"0\",\"checked\":\"true,false,false\",\"focus\":\"1In operation\"},\"after\":{\"pos\":\"static\",\"view\":\"2\"}}"
+    },
+    {
+      "id": "QA-STORY-FILM",
+      "status": "PASS",
+      "detail": "/media/video/support-clean-station-excerpt.mp4"
+    },
+    {
       "id": "QA-SUPPORT-SELECT",
       "status": "PASS",
-      "detail": "{\"checked\":\"Training\",\"active\":[\"false\",\"true\",\"false\"],\"visible\":true}"
+      "detail": "{\"checked\":\"Training\",\"active\":[\"false\",\"true\",\"false\"],\"visible\":true,\"playable\":true,\"others\":2}"
     },
     {
       "id": "QA-SUPPORT-KEYBOARD",
@@ -168,12 +203,17 @@
     {
       "id": "QA-MOBILE-HERO-ORDER",
       "status": "PASS",
-      "detail": "{\"h1\":100,\"media\":288,\"intro\":608,\"cta\":924}"
+      "detail": "{\"h1\":100,\"media\":288,\"intro\":608,\"cta\":928}"
     },
     {
       "id": "QA-MOBILE-CTA-FULL-WIDTH",
       "status": "PASS",
-      "detail": "{\"w\":350,\"h\":54}"
+      "detail": "{\"w\":350,\"h\":56}"
+    },
+    {
+      "id": "QA-MOBILE-SYSTEM-ORDER",
+      "status": "PASS",
+      "detail": "{\"lede\":3815,\"stage\":4146,\"specs\":4779,\"story\":5575,\"controls\":0,\"station\":\"1\"}"
     },
     {
       "id": "QA-MENU-OPEN",
@@ -213,12 +253,12 @@
     {
       "id": "QA-REDUCED-MOTION",
       "status": "PASS",
-      "detail": "{\"pending\":0,\"videoPaused\":true,\"videoNetwork\":1,\"smooth\":\"auto\"}"
+      "detail": "{\"pending\":0,\"scene\":0,\"videoPaused\":true,\"videoNetwork\":1,\"smooth\":\"auto\"}"
     },
     {
       "id": "QA-CAPTURE-STATE",
       "status": "PASS",
-      "detail": "{\"flag\":\"1\",\"pending\":0,\"header\":\"relative\",\"stickySelector\":\"static\",\"heroVideo\":\"none\",\"specs\":5}"
+      "detail": "{\"flag\":\"1\",\"pending\":0,\"header\":\"relative\",\"scene\":0,\"details\":2,\"heroVideo\":\"none\",\"specs\":5}"
     },
     {
       "id": "QA-NO-JS-CONTENT-VISIBLE",

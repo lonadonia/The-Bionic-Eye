@@ -8,9 +8,9 @@
 import * as mupdf from "mupdf";
 import fs from "node:fs";
 import path from "node:path";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
-const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "../..");
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const pdfFile = path.join(root, "design-handoff/the-bionic-eye-asset-cleaning/source-reference/Asset_Cleaning_Contest_Copy.pdf");
 const outFile = process.argv[2];
 

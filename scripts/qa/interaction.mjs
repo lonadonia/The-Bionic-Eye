@@ -39,6 +39,22 @@ const scrollThrough = (page) =>
       await new Promise((r) => setTimeout(r, 60));
     }
   });
+const settle = (page) =>
+  page.evaluate(
+    () =>
+      new Promise((resolve) => {
+        let last = -1;
+        let still = 0;
+        const t0 = performance.now();
+        const tick = () => {
+          still = scrollY === last ? still + 1 : 0;
+          last = scrollY;
+          if (still >= 12 || performance.now() - t0 > 6000) resolve(scrollY);
+          else requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }),
+  );
 const headerOverlap = (page, sel) =>
   page.evaluate((sel) => {
     const header = document.querySelector(".site-header").getBoundingClientRect();
@@ -103,7 +119,7 @@ const useWebm = async (ctx) => {
       muted: v.muted,
       inline: v.playsInline,
       sources: Array.from(v.querySelectorAll("source")).map((s) => s.getAttribute("src")),
-      control: document.querySelector("#top .film-control")?.textContent.trim(),
+      control: document.querySelector("#top .hero__control--toggle")?.textContent.trim(),
       ctas: Array.from(document.querySelectorAll("#top a.btn")).map((a) => [a.textContent.trim(), a.getAttribute("href")]),
       paragraphs: document.querySelectorAll("#top .hero__intro p").length,
     };
@@ -115,21 +131,42 @@ const useWebm = async (ctx) => {
   if (h264) {
     await page.waitForFunction(() => !document.querySelector("#top video").paused, null, { timeout: 8000 }).catch(() => undefined);
     const playing = await page.evaluate(() => !document.querySelector("#top video").paused);
-    await page.click("#top .film-control");
+    await page.click("#top .hero__control--toggle");
     await sleep(200);
     const paused = await page.evaluate(() => document.querySelector("#top video").paused);
-    const label = (await page.textContent("#top .film-control")).trim();
+    const label = (await page.textContent("#top .hero__control--toggle")).trim();
     check(
       "QA-HERO-AUTOPLAY-AND-PAUSE",
       playing && paused && label.startsWith("Play film"),
       `playing=${playing} paused=${paused} label=${label}${heroWebm ? " (VP9 stand-in for the MP4)" : ""}`,
     );
-    await page.click("#top .film-control"); // resume for the remaining checks
+    await page.click("#top .hero__control--toggle"); // resume for the remaining checks
   } else {
     check("QA-HERO-AUTOPLAY-AND-PAUSE", null, "browser cannot decode H.264, not tested here");
   }
   // Without decodable video the control must not claim playback.
   check("QA-HERO-CONTROL-HONEST", heroWebm || h264 ? Boolean(hero.control) : hero.control?.startsWith("Play film"), hero.control);
+
+  // Media viewer: "Watch the full film" opens the complete supplied film in a modal dialog
+  await page.click("#top .hero__control--full");
+  await sleep(500);
+  const dlg = await page.evaluate(() => {
+    const d = document.querySelector("#top dialog[open]");
+    const v = d?.querySelector("video");
+    return { open: Boolean(d), modal: d?.matches(":modal"), src: v?.getAttribute("src"), controls: v?.controls, focusInside: Boolean(d?.contains(document.activeElement)) };
+  });
+  await page.keyboard.press("Escape");
+  await sleep(300);
+  const dlgClosed = await page.evaluate(() => ({
+    closed: !document.querySelector("#top dialog[open]"),
+    videoGone: !document.querySelector("#top dialog video"),
+    focusBack: document.activeElement?.classList.contains("hero__control--full"),
+  }));
+  check(
+    "QA-HERO-FULL-FILM",
+    dlg.open && dlg.modal && /hero-c10-use-cases-full-720\.mp4$/.test(dlg.src ?? "") && dlg.controls && dlg.focusInside && dlgClosed.closed && dlgClosed.videoGone && dlgClosed.focusBack,
+    JSON.stringify({ ...dlg, ...dlgClosed }),
+  );
 
   // Header and navigation
   const navInfo = await page.evaluate(() => ({
@@ -161,7 +198,8 @@ const useWebm = async (ctx) => {
   ]) {
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.click(`.site-nav a:has-text("${label}")`);
-    await sleep(1200);
+    await sleep(200);
+    await settle(page);
     const o = await headerOverlap(page, target);
     check(`QA-NAV-${label.toUpperCase()}`, Math.abs(o.targetTop - o.headerBottom) <= 2, JSON.stringify(o));
   }
@@ -170,20 +208,117 @@ const useWebm = async (ctx) => {
   await page.evaluate(() => window.scrollTo(0, 0));
   await sleep(200);
   await page.click("#top a.btn-primary");
-  await sleep(1200);
+  await sleep(200);
+  await settle(page);
   const cta = await headerOverlap(page, "#enquiry form");
   check("QA-CTA-REACHES-FORM", cta.targetTop >= cta.headerBottom && cta.targetTop < 900, JSON.stringify(cta));
 
   // Supporting films: click-to-watch swaps to native controls; nothing loads before
   const before = await page.evaluate(() => document.querySelectorAll("main video:not(#top video)").length);
-  await page.locator("#system figure button").scrollIntoViewIfNeeded();
-  await page.click("#system figure button");
+  await page.locator(".film-strip figure button").nth(1).scrollIntoViewIfNeeded();
+  await page.locator(".film-strip figure button").nth(1).click();
   await sleep(400);
   const watch = await page.evaluate(() => {
-    const v = document.querySelector("#system video");
+    const v = document.querySelector(".film-strip video");
     return v ? { controls: v.controls, focused: document.activeElement === v, src: v.getAttribute("src") } : null;
   });
   check("QA-WATCH-VIDEO", before === 0 && watch?.controls && watch.focused && /system-c10-introduction-720/.test(watch.src), JSON.stringify({ before, watch }));
+
+  // Every supplied film is reachable: six inline viewers and three media-viewer buttons (plus the hero loop)
+  const reach = await page.evaluate(() => ({
+    inline: document.querySelectorAll("main .is-playable, main figure video").length,
+    dialogs: Array.from(document.querySelectorAll("main button[aria-haspopup=dialog]")).map((b) => b.textContent.trim().replace(/\s+/g, " ").slice(0, 40)),
+  }));
+  check("QA-ALL-FILMS-REACHABLE", reach.inline === 6 && reach.dialogs.length === 3, JSON.stringify(reach));
+
+  // Product explorer: three real views on one fixed stage, radio semantics, nozzle callout only where visible
+  await page.locator(".explorer").scrollIntoViewIfNeeded();
+  await sleep(1200);
+  const stageH0 = await page.evaluate(() => Math.round(document.querySelector(".stage__canvas").getBoundingClientRect().height));
+  await page.click(".views__option >> nth=2");
+  await sleep(400);
+  const ex1 = await page.evaluate(() => ({
+    radios: document.querySelectorAll('.views [role="radio"]').length,
+    checked: document.querySelector('.views [aria-checked="true"]')?.textContent.trim(),
+    active: Array.from(document.querySelectorAll(".stage__img")).map((i) => i.dataset.active).join(),
+    alt: document.querySelector('.stage__img[data-active="true"]')?.getAttribute("alt")?.slice(0, 24),
+    callouts: Array.from(document.querySelectorAll(".stage .callout")).map((c) => (c.hasAttribute("data-hidden") ? "hidden" : "shown")).join(),
+    stageH: Math.round(document.querySelector(".stage__canvas").getBoundingClientRect().height),
+  }));
+  check(
+    "QA-EXPLORER-VIEWS",
+    ex1.radios === 3 && ex1.checked === "Front" && ex1.active === "false,false,true" && /front view/.test(ex1.alt) && ex1.callouts === "hidden,shown" && ex1.stageH === stageH0,
+    JSON.stringify(ex1),
+  );
+  await page.keyboard.press("ArrowLeft");
+  await sleep(350);
+  const ex2 = await page.evaluate(() => ({
+    focus: document.activeElement.textContent.trim(),
+    view: document.querySelector(".stage__view").textContent,
+    callouts: Array.from(document.querySelectorAll(".stage .callout")).map((c) => (c.hasAttribute("data-hidden") ? "hidden" : "shown")).join(),
+  }));
+  check("QA-EXPLORER-KEYBOARD", ex2.focus === "Three-quarter" && ex2.view === "Three-quarter" && ex2.callouts === "hidden,hidden", JSON.stringify(ex2));
+  const specs = await page.evaluate(() => Array.from(document.querySelectorAll("#system dl > div")).map((d) => [d.querySelector("dt").textContent, d.querySelector("dd").textContent]));
+  check(
+    "QA-SPECS-EXACT",
+    JSON.stringify(specs) ===
+      JSON.stringify([
+        ["Working height", "Over 60 metres"],
+        ["Flow rate", "Up to 15 litres per minute"],
+        ["Working pressure", "Around 170 bar at the nozzle, up to 255 bar at peak"],
+        ["Collision avoidance", "Radar, with standoff control"],
+        ["Maximum take-off mass", "29 kg"],
+      ]),
+    specs.map((x) => x.join(": ")).join(" | "),
+  );
+
+  // Cleaning-system scene: pins, steps through three views by scroll, controls work, then releases
+  const storyTop = await page.evaluate(() => document.querySelector(".story").getBoundingClientRect().top + scrollY);
+  await page.evaluate((y) => window.scrollTo(0, y - 400), storyTop);
+  await sleep(400);
+  const seen = [];
+  const positions = [];
+  for (let i = 0; i < 14; i++) {
+    await page.mouse.wheel(0, 140);
+    await sleep(160);
+    seen.push(await page.evaluate(() => document.querySelector(".story__stage").dataset.view ?? "-"));
+    positions.push(await page.evaluate(() => getComputedStyle(document.querySelector(".story")).position));
+  }
+  const pinned = positions.includes("fixed") ? "fixed" : positions.at(-1);
+  // Back to the start of the pinned range, then use the controls without scrolling.
+  await page.evaluate(() => {
+    const spacer = document.querySelector(".story").parentElement;
+    const header = document.querySelector(".site-header").offsetHeight;
+    window.scrollTo({ top: spacer.getBoundingClientRect().top + scrollY - header - 24 + 40, behavior: "instant" });
+  });
+  await sleep(900);
+  await page.click(".story__control >> nth=2");
+  await sleep(900);
+  await page.keyboard.press("ArrowLeft");
+  await page.keyboard.press("ArrowLeft");
+  await sleep(900);
+  const manual = await page.evaluate(() => ({
+    pos: getComputedStyle(document.querySelector(".story")).position,
+    view: document.querySelector(".story__stage").dataset.view,
+    checked: Array.from(document.querySelectorAll(".story__control")).map((c) => c.getAttribute("aria-checked")).join(),
+    focus: document.activeElement?.textContent.trim(),
+  }));
+  await page.mouse.wheel(0, 2000);
+  await sleep(900);
+  const after = await page.evaluate(() => ({ pos: getComputedStyle(document.querySelector(".story")).position, view: document.querySelector(".story__stage").dataset.view }));
+  const order = [...new Set(seen.filter((v) => v !== "-"))].join(">");
+  check(
+    "QA-STORY-SCENE",
+    order === "0>1>2" && pinned === "fixed" && manual.pos === "fixed" && manual.view === "0" && manual.checked === "true,false,false" && /In operation/.test(manual.focus) && after.pos !== "fixed" && after.view === "2",
+    JSON.stringify({ order, pinned, manual, after }),
+  );
+  await page.locator(".story__caption--station .film-btn").scrollIntoViewIfNeeded();
+  await page.click(".story__caption--station .film-btn");
+  await sleep(500);
+  const sdlg = await page.evaluate(() => document.querySelector(".story dialog[open] video")?.getAttribute("src"));
+  await page.click(".story dialog[open] .viewer__close");
+  await sleep(300);
+  check("QA-STORY-FILM", /support-clean-station-excerpt\.mp4$/.test(sdlg ?? "") && !(await page.evaluate(() => document.querySelector(".story dialog[open]"))), sdlg);
 
   // Support selector
   await page.locator("#support").scrollIntoViewIfNeeded();
@@ -194,7 +329,15 @@ const useWebm = async (ctx) => {
     active: Array.from(document.querySelectorAll("#support .supply__para")).map((p) => p.dataset.active),
     visible: Array.from(document.querySelectorAll("#support .supply__para")).every((p) => p.getBoundingClientRect().height > 0),
   }));
-  check("QA-SUPPORT-SELECT", sel1.checked === "Training" && sel1.active.join() === "false,true,false" && sel1.visible, JSON.stringify(sel1));
+  const media1 = await page.evaluate(() => {
+    const layer = document.querySelector('#support .support__layer[data-active="true"]');
+    return { playable: Boolean(layer?.querySelector(".is-playable")), others: document.querySelectorAll("#support .support__layer[inert]").length };
+  });
+  check(
+    "QA-SUPPORT-SELECT",
+    sel1.checked === "Training" && sel1.active.join() === "false,true,false" && sel1.visible && media1.playable && media1.others === 2,
+    JSON.stringify({ ...sel1, ...media1 }),
+  );
   await page.keyboard.press("ArrowDown");
   await page.keyboard.press("ArrowDown");
   await sleep(250);
@@ -211,7 +354,8 @@ const useWebm = async (ctx) => {
   // "How authorisation works" opens OA support
   await page.locator("#regulation a.btn").scrollIntoViewIfNeeded();
   await page.click("#regulation a.btn");
-  await sleep(1200);
+  await sleep(200);
+  await settle(page);
   const oa = await page.evaluate(() => ({
     checked: document.querySelector('#support [role="radio"][aria-checked="true"]').textContent.trim(),
     hash: location.hash,
@@ -279,6 +423,23 @@ const useWebm = async (ctx) => {
   });
   check("QA-MOBILE-CTA-FULL-WIDTH", ctaW.w === 350 && ctaW.h >= 52, JSON.stringify(ctaW));
 
+  const sys = await page.evaluate(() => {
+    const y = (s) => Math.round(document.querySelector(s).getBoundingClientRect().top + scrollY);
+    return {
+      lede: y(".system__lede"),
+      stage: y(".stage"),
+      specs: y(".system__specs"),
+      story: y(".story"),
+      controls: document.querySelectorAll(".story__control").length,
+      station: getComputedStyle(document.querySelector(".story__frame--station")).opacity,
+    };
+  });
+  check(
+    "QA-MOBILE-SYSTEM-ORDER",
+    sys.lede < sys.stage && sys.stage < sys.specs && sys.specs < sys.story && sys.controls === 0 && sys.station === "1",
+    JSON.stringify(sys),
+  );
+
   // Menu: opens, traps focus, Escape closes and returns focus
   await page.tap(".site-header__menu");
   await sleep(200);
@@ -300,7 +461,8 @@ const useWebm = async (ctx) => {
   await page.tap(".site-header__menu");
   await sleep(200);
   await page.tap('#site-drawer a:has-text("Contact")');
-  await sleep(1200);
+  await sleep(200);
+  await settle(page);
   const nav = await headerOverlap(page, "#enquiry");
   check("QA-MENU-NAVIGATES", Math.abs(nav.targetTop - nav.headerBottom) <= 2, JSON.stringify(nav));
 
@@ -323,10 +485,10 @@ const useWebm = async (ctx) => {
     active: Array.from(document.querySelectorAll("#support .supply__para")).map((p) => p.dataset.active).join(),
   }));
   check("QA-MOBILE-SELECTOR-TAP", tapSel.checked === "Servicing" && tapSel.active === "false,false,true", JSON.stringify(tapSel));
-  await page.locator("#support .clips figure button").first().scrollIntoViewIfNeeded();
-  await page.locator("#support .clips figure button").first().tap();
+  await page.locator("#support .support__van figure button").scrollIntoViewIfNeeded();
+  await page.locator("#support .support__van figure button").tap();
   await sleep(300);
-  const tapVid = await page.evaluate(() => Boolean(document.querySelector("#support .clips video[controls]")));
+  const tapVid = await page.evaluate(() => Boolean(document.querySelector("#support .support__van video[controls]")));
   check("QA-MOBILE-VIDEO-TAP", tapVid, tapVid ? "native controls shown" : "no video element");
 
   await scrollThrough(page);
@@ -342,13 +504,18 @@ const useWebm = async (ctx) => {
   const page = await ctx.newPage();
   await page.goto(url, { waitUntil: "load" });
   await sleep(1500);
+  await scrollThrough(page);
+  await sleep(600);
   const rm = await page.evaluate(() => ({
-    pending: document.querySelectorAll('[data-reveal-state="pending"]').length,
+    pending: Array.from(document.querySelectorAll("[data-motion], .story__frame, .story__caption"))
+      .filter((el) => !el.closest('[data-hidden], .support__layer:not([data-active="true"]), .support__caption:not([data-active="true"])'))
+      .filter((el) => getComputedStyle(el).opacity !== "1" || el.style.transform).length,
+    scene: document.querySelectorAll(".story__control").length,
     videoPaused: document.querySelector("#top video").paused,
     videoNetwork: document.querySelector("#top video").networkState,
     smooth: getComputedStyle(document.documentElement).scrollBehavior,
   }));
-  check("QA-REDUCED-MOTION", rm.pending === 0 && rm.videoPaused && rm.smooth === "auto", JSON.stringify(rm));
+  check("QA-REDUCED-MOTION", rm.pending === 0 && rm.scene === 0 && rm.videoPaused && rm.smooth === "auto", JSON.stringify(rm));
   await ctx.close();
 }
 
@@ -361,13 +528,16 @@ const useWebm = async (ctx) => {
   await scrollThrough(page);
   const cap = await page.evaluate(() => ({
     flag: document.documentElement.dataset.capture,
-    pending: document.querySelectorAll('[data-reveal-state="pending"]').length,
+    pending: Array.from(document.querySelectorAll("[data-motion], .story__frame, .story__caption"))
+      .filter((el) => !el.closest('[data-hidden], .support__layer:not([data-active="true"]), .support__caption:not([data-active="true"])'))
+      .filter((el) => getComputedStyle(el).opacity !== "1" || el.style.transform).length,
     header: getComputedStyle(document.querySelector(".site-header")).position,
-    stickySelector: getComputedStyle(document.querySelector("#support .selector")).position,
+    scene: document.querySelectorAll(".story__control").length,
+    details: document.querySelectorAll(".detail img").length,
     heroVideo: getComputedStyle(document.querySelector("#top video")).display,
     specs: document.querySelectorAll("#system dl > div").length,
   }));
-  check("QA-CAPTURE-STATE", cap.flag === "1" && cap.pending === 0 && cap.header === "relative" && cap.stickySelector === "static" && cap.heroVideo === "none" && cap.specs === 5, JSON.stringify(cap));
+  check("QA-CAPTURE-STATE", cap.flag === "1" && cap.pending === 0 && cap.header === "relative" && cap.scene === 0 && cap.details === 2 && cap.heroVideo === "none" && cap.specs === 5, JSON.stringify(cap));
   await ctx.close();
 
   const noJs = await browser.newContext({ viewport: { width: 1440, height: 900 }, javaScriptEnabled: false });
@@ -375,7 +545,9 @@ const useWebm = async (ctx) => {
   await p2.goto(url, { waitUntil: "load" });
   await sleep(1200); // let the CSS-only hero entrance finish
   const nj = await p2.evaluate(() => ({
-    hidden: Array.from(document.querySelectorAll("main *")).filter((el) => getComputedStyle(el).opacity === "0" && el.textContent.trim()).length,
+    hidden: Array.from(document.querySelectorAll("main *"))
+      .filter((el) => !el.closest('[data-hidden], .support__layer:not([data-active="true"]), .support__caption:not([data-active="true"])'))
+      .filter((el) => getComputedStyle(el).opacity === "0" && el.textContent.trim()).length,
     specs: document.querySelectorAll("#system dl > div").length,
     paragraphs: document.querySelectorAll("#support .supply__para").length,
   }));

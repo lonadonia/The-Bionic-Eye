@@ -4,7 +4,8 @@
 // computed scrim). Frames come from the served loop itself (ffmpeg, evenly spaced across the loop),
 // cropped exactly as `object-fit: cover; object-position` does, then composited under the scrim
 // gradients. This avoids depending on the browser's H.264 support. P95 ignores the brightest 5% of
-// pixels under a line (spray highlights); "brightest" is the single worst pixel.
+// pixels under a line (spray highlights); "brightest" is the single worst pixel. The eye watermark
+// is counted conservatively: a flat layer of its white at its opacity over its whole bounding box.
 //
 // Usage: node scripts/qa/hero-contrast.mjs http://localhost:3000/ [out.json]
 // Needs: npm i --no-save playwright-core pngjs; ffmpeg on PATH; CHROME_PATH or Google Chrome.
@@ -23,7 +24,8 @@ const targets = {
   headline: { sel: "#hero-heading", need: 3 },
   "intro paragraph 1": { sel: "#top .hero__intro p:nth-child(1)", need: 4.5 },
   "intro paragraph 2": { sel: "#top .hero__intro p:nth-child(2)", need: 4.5 },
-  "film control": { sel: "#top .film-control", need: 4.5 },
+  "film control": { sel: "#top .hero__control--toggle", need: 4.5 },
+  "full film control": { sel: "#top .hero__control--full", need: 4.5 },
 };
 
 const channel = (c) => {
@@ -65,12 +67,12 @@ for (const w of WIDTHS) {
       const el = document.querySelector(sel);
       if (!el) continue;
       const rects = [];
-      if (name === "film control") {
-        // Measure under the label text only, through the control's own translucent backing.
+      if (name.endsWith("control")) {
+        // Measure under the label text only, through the control group's translucent backing.
         const label = el.querySelector("span:nth-child(2)");
         const r = label.getBoundingClientRect();
         rects.push({ x: r.left - m.left, y: r.top - m.top, w: r.width, h: r.height });
-        const bg = getComputedStyle(el).backgroundColor.match(/[\d.]+/g).map(Number);
+        const bg = getComputedStyle(el.closest(".hero__controls") ?? el).backgroundColor.match(/[\d.]+/g).map(Number);
         out.__controlBacking = { rgb: bg.slice(0, 3), a: bg[3] ?? 1 };
       } else {
         const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
@@ -85,7 +87,10 @@ for (const w of WIDTHS) {
       }
       out[name] = rects;
     }
-    return { W: m.width, H: m.height, pos, scrim, rects: out };
+    const mark = document.querySelector("#top .hero__mark");
+    const mr = mark?.getBoundingClientRect();
+    const markBox = mr && mr.width ? { x: mr.left - m.left, y: mr.top - m.top, w: mr.width, h: mr.height, a: Number(getComputedStyle(mark).opacity) } : null;
+    return { W: m.width, H: m.height, pos, scrim, rects: out, markBox };
   }, targets);
 
   // Parse the two scrim gradients: a 90deg horizontal one and a 0deg (bottom-up) one.
@@ -140,7 +145,9 @@ for (const w of WIDTHS) {
               const s = sample(g.stops, p);
               c = c.map((v, j) => v * (1 - s.a) + s.rgb[j] * s.a);
             }
-            if (name === "film control" && backing) c = c.map((v, j) => v * (1 - backing.a) + backing.rgb[j] * backing.a);
+            const mb = geo.markBox;
+            if (mb && x >= mb.x && x < mb.x + mb.w && y >= mb.y && y < mb.y + mb.h) c = c.map((v) => v * (1 - mb.a) + 255 * mb.a);
+            if (name.endsWith("control") && backing) c = c.map((v, j) => v * (1 - backing.a) + backing.rgb[j] * backing.a);
             values.push(lum(...c));
           }
         }

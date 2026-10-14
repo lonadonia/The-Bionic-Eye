@@ -7,24 +7,31 @@ import { ChevronRight } from "./icons";
 
 export const SELECT_SERVICE_EVENT = "tbe:select-service";
 
+export type SupportMedia = { id: string; frame: ReactNode; caption?: ReactNode };
+
 type SupportSelectorProps = {
   services: readonly SupportService[];
   paragraphs: readonly SupportParagraph[];
   supplyHeading: string;
-  /** Shared operational image (server-rendered): first on phones, beneath the copy on desktop. */
-  media: ReactNode;
+  /** Real media layers (server-rendered). Several services may share one layer. */
+  media: readonly SupportMedia[];
+  /** Which media layer each service shows (service id → media id). */
+  mediaFor: Record<string, string>;
 };
 
 /**
  * Full service support. The five service areas are a single-choice selector (radio group: arrow
- * keys, Home and End). Choosing one emphasises the supplied paragraph that covers it. Every
- * paragraph stays visible and whole: two of them cover two services each, so nothing is split or
- * re-attributed. Other parts of the page can select a service via SELECT_SERVICE_EVENT.
+ * keys, Home and End). Choosing one emphasises the supplied paragraph that covers it — every
+ * paragraph stays visible and whole, because two of them cover two services each — and shows the
+ * real media associated with it in a stable frame with a brief crossfade. Services without a
+ * distinct supplied asset keep the shared field photograph rather than borrowing an unrelated one.
+ * Other parts of the page can select a service via SELECT_SERVICE_EVENT.
  */
-export function SupportSelector({ services, paragraphs, supplyHeading, media }: SupportSelectorProps) {
+export function SupportSelector({ services, paragraphs, supplyHeading, media, mediaFor }: SupportSelectorProps) {
   const [active, setActive] = useState(0);
   const options = useRef<(HTMLButtonElement | null)[]>([]);
   const activeParagraph = services[active].paragraph;
+  const activeMedia = mediaFor[services[active].id];
 
   useEffect(() => {
     const onSelect = (e: Event) => {
@@ -54,11 +61,9 @@ export function SupportSelector({ services, paragraphs, supplyHeading, media }: 
   };
 
   return (
-    <div className="grid-12 gap-y-8">
-      {/* Phones: image, then selector, then the copy it points into. Desktop: the selector sits
-          level with the paragraphs it highlights; the shared image follows beneath them. */}
-      <div className="order-2 col-span-4 md:col-span-8 lg:order-none lg:col-span-4 lg:row-span-2">
-        <div role="radiogroup" aria-label={ui.support.selectorLabel} className="selector is-sticky lg:sticky lg:top-[calc(var(--header-h)+2rem)]">
+    <div className="support__grid">
+      <div className="support__copy">
+        <div role="radiogroup" aria-label={ui.support.selectorLabel} className="selector">
           {services.map((s, i) => (
             <button
               key={s.id}
@@ -80,20 +85,37 @@ export function SupportSelector({ services, paragraphs, supplyHeading, media }: 
             </button>
           ))}
         </div>
-      </div>
 
-      <div className="order-3 col-span-4 md:col-span-8 lg:order-none lg:col-span-8">
-        <h3 className="t-h3 lg:-mt-1">{supplyHeading}</h3>
-        <div className="supply t-body measure mt-5">
-          {paragraphs.map((p) => (
-            <p key={p.id} id={`supply-${p.id}`} className="supply__para" data-active={p.id === activeParagraph}>
-              {p.text}
-            </p>
-          ))}
+        <div className="supply">
+          <h3 className="t-h3">{supplyHeading}</h3>
+          <div className="supply__list t-body">
+            {paragraphs.map((p) => (
+              <p key={p.id} id={`supply-${p.id}`} className="supply__para" data-active={p.id === activeParagraph}>
+                {p.text}
+              </p>
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="order-1 col-span-4 md:col-span-8 lg:order-none lg:col-span-8 lg:col-start-5">{media}</div>
+      <div className="support__media">
+        <div className="support__surface">
+          {media.map((m) => (
+            <div key={m.id} className="support__layer" data-active={m.id === activeMedia} inert={m.id !== activeMedia}>
+              {m.frame}
+            </div>
+          ))}
+        </div>
+        <div className="support__captions">
+          {media.map((m) =>
+            m.caption ? (
+              <div key={m.id} className="support__caption" data-active={m.id === activeMedia} aria-hidden={m.id !== activeMedia}>
+                {m.caption}
+              </div>
+            ) : null,
+          )}
+        </div>
+      </div>
     </div>
   );
 }

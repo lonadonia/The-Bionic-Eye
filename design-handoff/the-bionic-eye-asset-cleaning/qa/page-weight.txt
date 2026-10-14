@@ -1,5 +1,5 @@
-# node scripts/qa/weight.mjs, local production build, 2026-10-13. This Chromium cannot decode H.264, so it aborts MP4 downloads early: the Media figures understate what Chrome or Safari would fetch for the hero loop (540p loop 2.9 MB / 1080p 8.0 MB, fetched only while playing).
-w=1440 motion=reduce after 3s @20 Mbps: 421 KB  {"Document":"0 KB","Stylesheet":"9 KB","Image":"224 KB","Font":"24 KB","Script":"144 KB","Other":"20 KB"}
-w=390 motion=reduce after 3s @20 Mbps: 285 KB  {"Document":"0 KB","Image":"89 KB","Stylesheet":"9 KB","Font":"24 KB","Script":"144 KB","Other":"20 KB"}
-w=1440 motion=no-preference after 10s @20 Mbps: 612 KB  {"Document":"0 KB","Image":"224 KB","Stylesheet":"9 KB","Font":"24 KB","Script":"144 KB","Other":"20 KB","Media":"191 KB"}
-w=390 motion=no-preference after 10s @20 Mbps: 573 KB  {"Document":"0 KB","Image":"89 KB","Stylesheet":"9 KB","Font":"24 KB","Script":"144 KB","Other":"20 KB","Media":"288 KB"}
+# node scripts/qa/weight.mjs, local production build (Chrome 155, H.264 available), 2026-10-14. Media = the hero loop, fetched only while it plays; every other film loads only when the visitor opens it.
+w=1440 motion=reduce after 3s @20 Mbps: 438 KB  {"Document":"0 KB","Image":"191 KB","Stylesheet":"11 KB","Font":"24 KB","Script":"192 KB","Other":"20 KB"}
+w=390 motion=reduce after 3s @20 Mbps: 336 KB  {"Document":"0 KB","Image":"89 KB","Stylesheet":"11 KB","Font":"24 KB","Script":"192 KB","Other":"20 KB"}
+w=1440 motion=no-preference after 10s @20 Mbps: 8.42 MB  {"Document":"0 KB","Image":"191 KB","Font":"24 KB","Stylesheet":"11 KB","Script":"192 KB","Other":"20 KB","Media":"7.99 MB"}
+w=390 motion=no-preference after 10s @20 Mbps: 3.24 MB  {"Document":"0 KB","Stylesheet":"11 KB","Image":"89 KB","Font":"24 KB","Script":"192 KB","Other":"20 KB","Media":"2.91 MB"}

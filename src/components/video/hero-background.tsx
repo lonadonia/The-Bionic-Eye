@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Film } from "@/content/media";
 import { ui } from "@/content/ui";
 import { Pause, Play } from "../icons";
+import { FilmDialogButton } from "./film-dialog";
 
 type Connection = { saveData?: boolean };
 
@@ -12,12 +13,11 @@ type Connection = { saveData?: boolean };
  * Hero film. The optimised poster is the LCP image and always paints first; the silent loop
  * fades in over it only once it is actually playing, and only while the hero is on screen.
  * Reduced motion, Save-Data and the static capture state keep the poster (the visitor can still
- * press Play). Nothing is fetched until playback starts. The film is decorative (the copy
- * carries the content), so only its control is exposed to assistive technology. The control
- * follows actual playback (the "playing" event), so it never claims a film is running when the
- * browser cannot play it.
+ * press Play). The loop is decorative (the copy carries the content), so only the control group
+ * is exposed: Play/Pause follows actual playback, and "Watch the full film" opens the complete
+ * supplied film, with its sound, in the media viewer.
  */
-export function HeroFilm({ film }: { film: Film }) {
+export function HeroFilm({ film, full }: { film: Film; full: Film }) {
   const video = useRef<HTMLVideoElement>(null);
   const userPaused = useRef(false);
   const [playing, setPlaying] = useState(false);
@@ -89,13 +89,18 @@ export function HeroFilm({ film }: { film: Film }) {
         <source src={film.src.large} type="video/mp4" />
       </video>
       <div className="hero__scrim" aria-hidden="true" />
-      <button type="button" onClick={toggle} className="film-control">
-        <span className="film-control__icon" aria-hidden="true">
-          {playing ? <Pause size={15} /> : <Play size={15} />}
-        </span>
-        <span>{playing ? ui.film.pause : ui.film.play}</span>
-        <span className="sr-only">, {ui.film.heroName}</span>
-      </button>
+
+      <div className="hero__controls" role="group" aria-label={full.title}>
+        <button type="button" onClick={toggle} className="hero__control hero__control--toggle">
+          <span className="hero__control-icon" aria-hidden="true">
+            {playing ? <Pause size={15} /> : <Play size={15} />}
+          </span>
+          <span className="hero__control-label">{playing ? ui.film.pause : ui.film.play}</span>
+          <span className="sr-only">, {ui.film.heroName}</span>
+        </button>
+        <span className="hero__control-sep" aria-hidden="true" />
+        <FilmDialogButton film={full} label={ui.film.watchFull} className="hero__control hero__control--full" />
+      </div>
     </div>
   );
 }

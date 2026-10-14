@@ -14,9 +14,9 @@ Start the production build first: `npm run build && npm start` (default http://l
 
 | Script | What it does | Example |
 |---|---|---|
-| `interaction.mjs` | 52 functional, keyboard, touch, reduced-motion, capture-state, no-JS, overflow and axe-core (WCAG 2.2 AA) checks. Hero playback is reported SKIP where the browser lacks H.264, unless `HERO_TEST_WEBM` points to a VP9 transcode of the loop (test-only stand-in) | `HERO_TEST_WEBM=hero.webm node scripts/qa/interaction.mjs http://localhost:3000/ qa.json` |
+| `interaction.mjs` | 60 functional, keyboard, touch, reduced-motion, capture-state, no-JS, overflow and axe-core (WCAG 2.2 AA) checks, including the media viewer, product explorer and cleaning-system scene. Hero playback is reported SKIP where the browser lacks H.264, unless `HERO_TEST_WEBM` points to a VP9 transcode of the loop (test-only stand-in) | `HERO_TEST_WEBM=hero.webm node scripts/qa/interaction.mjs http://localhost:3000/ qa.json` |
 | `copy-audit.mjs` | Matches every visitor-facing string in `src/content/copy.ts` against the contest copy PDF in `design-handoff/…/source-reference/` | `node scripts/qa/copy-audit.mjs audit.json` |
-| `hero-contrast.mjs` | White-text contrast over 24 frames of the served hero loop (ffmpeg) under the page's actual scrim, at 1440/1280/1024 | `node scripts/qa/hero-contrast.mjs http://localhost:3000/ out.json` |
+| `hero-contrast.mjs` | White-text contrast over 24 frames of the served hero loop (ffmpeg and ffprobe on PATH) under the page's actual scrim, with the eye watermark counted conservatively, at 1440/1280/1024 | `node scripts/qa/hero-contrast.mjs http://localhost:3000/ out.json` |
 | `export.mjs` | Full-page exports in the static capture state (`?capture=1`), after fonts and every image have decoded; prints the real raster size | `node scripts/qa/export.mjs http://localhost:3000/ out 1440,1024 1` |
 | `capture.mjs` | Per-section screenshots + horizontal-overflow check at given widths | `node scripts/qa/capture.mjs http://localhost:3000/ out 1440,1024,768,390,360 sections` |
 | `png2pdf.mjs` | Wraps an export PNG into a single-page PDF of the same size | `node scripts/qa/png2pdf.mjs in.png out.pdf 1440` |

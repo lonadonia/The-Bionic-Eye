@@ -1,7 +1,9 @@
 /**
- * Interface labels: functional text for controls, captions that name a supplied file, form
- * validation and status messages. None of it describes the C10 or The Bionic Eye's services;
- * approved product wording lives only in copy.ts.
+ * Interface labels: functional text for controls, captions that name a supplied file or what a
+ * real photograph shows, form validation and status messages. None of it describes the C10's
+ * performance or The Bionic Eye's services; approved product wording lives only in copy.ts.
+ * Part names used on images ("Nozzle", "ABZ Clean Station") are the contest copy's own term
+ * ("at the nozzle") and the supplied guide's title.
  */
 
 export const ui = {
@@ -16,6 +18,8 @@ export const ui = {
     play: "Play film",
     pause: "Pause film",
     heroName: "background film",
+    watchFull: "Watch the full film",
+    close: "Close film",
     withSound: "with sound",
     excerpt: (part: string, whole: string) => `Excerpt, ${part} of ${whole}`,
   },
@@ -24,6 +28,15 @@ export const ui = {
   },
   system: {
     specsLabel: "Specification",
+    viewsLabel: "Choose a view of the C10",
+    views: { side: "Side", "three-quarter": "Three-quarter", front: "Front" } as Record<string, string>,
+    nozzle: "Nozzle",
+    inOperation: "In operation",
+    studio: "Studio photograph",
+    sceneLabel: "Choose what the cleaning-system pictures show",
+    scene: ["In operation", "Nozzle", "With the Clean Station"],
+    cleanStation: "ABZ Clean Station",
+    frame: (time: string) => `Film frame ${time}`,
   },
   support: {
     selectorLabel: "Service areas",

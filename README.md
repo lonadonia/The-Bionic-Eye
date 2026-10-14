@@ -21,9 +21,9 @@ No environment variables are required (see `.env.example`).
 
 ## Stack
 
-Next.js 16 (App Router, static) · React 19 · TypeScript · Tailwind CSS 4 · Manrope via `next/font` (one family) · CSS motion plus one IntersectionObserver (no animation library) · no backend.
+Next.js 16 (App Router, static) · React 19 · TypeScript · Tailwind CSS 4 · Manrope via `next/font` (one family) · GSAP 3 + ScrollTrigger + `@gsap/react` for the cleaning-system scene and a few entrances (CSS for simple states) · no backend.
 
-Current design and its evidence: [`docs/ASSET_CLEANING_REFINEMENT_2.md`](docs/ASSET_CLEANING_REFINEMENT_2.md) (13 October 2026). It covers the sources used, the differences between the contest copy and the announcement, the content removed for lack of a source, tokens, type, motion and QA results.
+Current design and its evidence: [`docs/ASSET_CLEANING_REFINEMENT_3.md`](docs/ASSET_CLEANING_REFINEMENT_3.md) (14 October 2026), covering the product explorer, the cleaning-system scene, the full-resolution asset map, decoration layers, motion, skills and QA. Source differences between the contest copy and the announcement, and the content removed for lack of a source, remain in [`docs/ASSET_CLEANING_REFINEMENT_2.md`](docs/ASSET_CLEANING_REFINEMENT_2.md) §3.
 
 **Status:** Claude-assisted **internal prototype**. The contest currently prohibits AI-generated layouts and images, so this build and its exports are not a contest entry unless the organiser permits it.
 
@@ -32,7 +32,7 @@ Current design and its evidence: [`docs/ASSET_CLEANING_REFINEMENT_2.md`](docs/AS
 ```
 src/
   app/            layout (fonts, capture-state flag), page (section order), tokens (globals.css), favicon
-  components/     header/nav, sections/*, video/*, support selector, enquiry form, motion, icons
+  components/     header/nav, sections/*, product explorer, cleaning-system story, callout, video/* (incl. the media viewer), support selector, enquiry form, motion, icons
   content/
     copy.ts       every visitor-facing word, verbatim from the contest copy PDF (source keys inline)
     ui.ts         interface labels only (controls, validation, status); no product claims
@@ -44,7 +44,7 @@ design-handoff/the-bionic-eye-asset-cleaning/
   01–08 *.md      earlier analysis, blueprint, master prompt, QA, handoff, Figma spec, walkthrough, design note
   exports/        1440 full PNG/PDF; 1024 full PNG; 390 @2x full PNG and hero + Applications PNG/PDF
   qa/             interaction results, copy audit, hero contrast, page weight, first-viewport screens
-docs/             refinement notes; refinement-2/ holds the native baseline and before/after captures
+docs/             refinement notes; refinement-2/ and refinement-3/ hold baselines and before/after captures
 scripts/qa/       QA, export and media-pipeline scripts (not part of the build)
 ```
 
@@ -57,7 +57,7 @@ scripts/qa/       QA, export and media-pipeline scripts (not part of the build)
 
 ## Media
 
-`public/media` is generated from the client asset pack with `scripts/qa/encode-media.sh` (H.264, faststart; a silent 25 s hero loop cut from `C10-Use-Case-Shorts-Final-Horizontal.mp4` at 1080p/540p; labelled excerpts for long films; operational poster frames) and `scripts/qa/brand-svg.mjs` (logos from the supplied `.ai` files). `/media/*` is served as immutable, so a changed file must get a new name. The original asset pack is not committed.
+`public/media` is generated from the client asset pack with `scripts/qa/encode-media.sh` (H.264, faststart; a silent 25 s hero loop cut from `C10-Use-Case-Shorts-Final-Horizontal.mp4` at 1080p/540p plus the complete film at 720p for the media viewer; labelled excerpts for long films; operational poster frames; studio views and detail crops cut from the 8640 × 5760 originals; 4K frames from the Clean Station guide) and `scripts/qa/brand-svg.mjs` (logos from the supplied `.ai` files). `/media/*` is served as immutable, so a changed file must get a new name. The original asset pack is not committed.
 
 All photography, film, logos and documents are © The Bionic Eye Ltd / ABZ Innovation, supplied for this contest. They are not licensed for any other use. Manrope is licensed under the SIL Open Font License 1.1 and self-hosted at build time by `next/font/google`.
 
@@ -71,7 +71,7 @@ Framework preset **Next.js**, default build (`next build`), no environment varia
 |---|---|---|
 | Desktop 1440 full page (PNG/PDF) | `design-handoff/…/exports/asset-cleaning-1440-full.{png,pdf}` | Done (internal prototype; see Status) |
 | Mobile 390, hero + another section | `design-handoff/…/exports/asset-cleaning-390@2x-hero-applications.{png,pdf}`, full page `asset-cleaning-390@2x-full.png` | Done (internal prototype) |
-| Design note ≤100 words | `design-handoff/…/08_DESIGN_NOTE.md` (97 tokens) | Done |
+| Design note ≤100 words | `design-handoff/…/08_DESIGN_NOTE.md` (93 words) | Done |
 | Figma view link | — | **To do by the entrant**: must be the entrant's own work under the contest rules |
 | 2–3 min walkthrough in the entrant's own voice | outline in `07_WALKTHROUGH_OUTLINE.md` | **To do by the entrant** |
 

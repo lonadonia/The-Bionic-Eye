@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
-import { RevealObserver } from "@/components/motion/reveal-observer";
+import { PageMotion } from "@/components/motion/page-motion";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { hero, site } from "@/content/copy";
@@ -59,7 +59,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
         </main>
         <SiteFooter />
-        <RevealObserver />
+        <PageMotion />
       </body>
     </html>
   );

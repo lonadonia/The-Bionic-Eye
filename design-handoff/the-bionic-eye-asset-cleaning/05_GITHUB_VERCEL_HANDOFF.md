@@ -1,5 +1,28 @@
 # 05 · GitHub and Vercel handoff
 
+## Refinement 3 (14 October 2026)
+
+```
+Implementation:     BUILT — richer C10 product presentation (product explorer, detail frames, Clean Station pair and
+                    scroll scene, media viewer, decoration layers); copy unchanged. See docs/ASSET_CLEANING_REFINEMENT_3.md
+Starting point:     local copy fast-forwarded to GitHub main c6d4f45 before any change (no local work to merge)
+Local build:        PASS — npm run lint, npm run typecheck, npm run build (static prerender)
+QA:                 60/60 interaction + axe checks PASS (Chrome 155, real H.264); copy audit 0 unverified;
+                    hero contrast PASS at 1440/1280/1024; no overflow at 1440/1280/1024/768/720/640/390/360
+Dependencies:       + gsap 3.15.0, + @gsap/react 2.1.2 (package.json and package-lock.json)
+GitHub:             pushed normally (no force) to branch refinement-3-product-presentation; main left at c6d4f45
+Pull request:       none opened from this environment (no GitHub CLI); compare link:
+                    https://github.com/lonadonia/The-Bionic-Eye/compare/main...refinement-3-product-presentation
+Vercel:             NOT VERIFIED. If the repository is Git-linked (the brief names the-bionic-eye.vercel.app), a push to a
+                    branch creates a preview deployment, and only a merge into main updates production. No Vercel tool
+                    was authorised in this session, so no deployment URL is claimed.
+Environment keys:   none
+```
+
+To publish on the production URL, merge the branch into `main` (fast-forward), or ask Claude to do it. Only the account owner should take that step.
+
+---
+
 ## Refinement 2 (13 October 2026)
 
 ```

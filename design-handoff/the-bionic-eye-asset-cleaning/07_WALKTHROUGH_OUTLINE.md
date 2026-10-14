@@ -1,5 +1,7 @@
 # 07 · Walkthrough speaking outline (target 2 min 30 s)
 
+> **Note (14 October 2026).** Spend the 1:25–1:50 slot on The system: the three real angles, the nozzle close-ups and the Clean Station pair. Say plainly that every image is a supplied photograph or film frame.
+>
 > **Note (13 October 2026).** The section names and order changed with the contest copy: Hero → Applications → The system → Full service support → Operating legally → Proven in the field → Enquiry. Adjust the talking points to `docs/ASSET_CLEANING_REFINEMENT_2.md`.
 
 

@@ -1,6 +1,6 @@
 # 04 · QA and acceptance checklist
 
-> **Superseded (13 October 2026).** Current evidence is in `qa/interaction-results.json` (52 checks), `qa/copy-audit.json` (contest copy PDF), `qa/hero-contrast.json`, `qa/page-weight.txt` and `docs/ASSET_CLEANING_REFINEMENT_2.md` §6. The checks below describe the previous design.
+> **Superseded (14 October 2026).** Current evidence is in `qa/interaction-results.json` (60 checks, all PASS), `qa/copy-audit.json` (contest copy PDF), `qa/hero-contrast.json`, `qa/page-weight.txt` and `docs/ASSET_CLEANING_REFINEMENT_3.md` §8. The checks below describe the previous design.
 
 
 Run on 11 October 2026 against the local **production** build (`next build` + `next start`) in Chrome 154 (headless, driven by Playwright). Evidence files are in `qa/`. Statuses: `VERIFIED_PASS`, `FAILED`, `NOT_TESTED`, `BLOCKED_EXTERNAL`, `NOT_APPLICABLE`.

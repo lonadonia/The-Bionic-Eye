@@ -56,7 +56,26 @@ frame "C10-Use-Case-Shorts-Final-Horizontal.mp4" 16.5 "crop=1728:2160:1596:0,sca
 
 # ---------- Photographs and render ----------
 log "photographs"
-"$FF" -v error -y -i "$SRC/865A0018.jpg" -vf "scale='min(2048,iw)':-2:flags=lanczos,format=yuvj420p" -q:v 3 "$OUT/img/field-rendered-wall.jpg"
 "$FF" -v error -y -i "$SRC/IMG_2240.JPG" -vf "scale=2400:-2:flags=lanczos,format=yuvj420p" -q:v 3 "$OUT/img/field-uk-demonstration.jpg"
-"$FF" -v error -y -i "$SRC/C10-2.png" -vf "crop=7576:3392:184:1328,scale=2400:-2:flags=lanczos,format=yuvj444p" -q:v 3 "$OUT/img/render-c10-side.jpg"
 log "done"
+
+# ---------- Refinement 3: product explorer, detail frames, cleaning-system pair, full hero film ----------
+# Studio views share one 16:10 canvas on the photographs' own pure-white (255) background; crops were
+# measured from each photograph's bounding box (drone ≈ 90% of the canvas width, or 76% of its height).
+log "refinement 3: studio views and detail crops"
+still() { "$FF" -v error -y -i "$1" -vf "$2,format=yuvj444p" -q:v 3 "$OUT/img/$3"; }
+still "$SRC/C10-2.png" "crop=7754:4846:94:594,scale=1920:1200:flags=lanczos" product-c10-side.jpg
+still "$SRC/C10-5.png" "crop=8424:5265:0:495,scale=1920:1200:flags=lanczos" product-c10-three-quarter.jpg
+still "$SRC/C10.png" "crop=5652:3533:1440:1469,scale=1920:1200:flags=lanczos" product-c10-front.jpg
+still "$SRC/C10-7.png" "crop=2880:2160:2592:1944,scale=1200:900:flags=lanczos" detail-c10-nozzle-studio.jpg
+still "$SRC/865A0018.jpg" "crop=1024:768:512:512" detail-c10-nozzle-operation.jpg
+still "$SRC/C10 3.jpg" "scale=2000:-2:flags=lanczos" app-facade-glazing.jpg
+"$FF" -v error -y -i "$SRC/IMG_2224.JPG" -vf "scale=1600:-2:flags=lanczos,format=yuvj420p" -q:v 5 "$OUT/img/support-c10-ready.jpg"
+log "refinement 3: Clean Station guide frames (4K AV1 source; accurate seek)"
+GUIDE="$SRC/ABZ Clean Station _ Full Setup & Operation Guide.mp4"
+"$FF" -v error -y -ss 316 -i "$GUIDE" -frames:v 1 -vf "scale=2880:-2:flags=lanczos,format=yuvj444p" -q:v 3 "$OUT/img/system-operation-0516.jpg"
+"$FF" -v error -y -ss 22.5 -i "$GUIDE" -frames:v 1 -vf "crop=3510:2160:330:0,scale=1800:-2:flags=lanczos,format=yuvj444p" -q:v 3 "$OUT/img/system-clean-station-0022.jpg"
+log "refinement 3: films opened in the media viewer"
+"$FF" -v error -y -i "$SRC/C10-Use-Case-Shorts-Final-Horizontal.mp4" -map 0:v:0 -map 0:a:0 -vf "scale=1280:-2:flags=lanczos" "${X264[@]}" -crf 28 -maxrate 1300k -bufsize 2600k -g 50 -c:a aac -b:a 96k -ac 2 -map_metadata -1 "$OUT/video/hero-c10-use-cases-full-720.mp4"
+"$FF" -v error -y -ss 310 -t 39.4 -i "$GUIDE" -map 0:v:0 -map 0:a:0 -vf "scale=1280:-2:flags=lanczos,fps=24" "${X264[@]}" -crf 26 -maxrate 1800k -bufsize 3600k -g 48 -c:a aac -b:a 96k -ac 2 -map_metadata -1 "$OUT/video/system-clean-station-operation-excerpt.mp4"
+log "done (refinement 3)"

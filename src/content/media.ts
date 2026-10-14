@@ -46,6 +46,19 @@ export const films = {
     orientation: "landscape",
     description: "The C10 at work: rinsing rooftop solar panels, façades, glazing and roof edges.",
   },
+  /** The complete supplied film (01:23, with its own title cards and sound), opened from the hero. */
+  heroFull: {
+    id: "c10-use-cases-full",
+    title: "C10 Use Case Shorts",
+    source: "C10-Use-Case-Shorts-Final-Horizontal.mp4",
+    src: { large: "/media/video/hero-c10-use-cases-full-720.mp4" },
+    poster: "/media/poster/hero-c10-use-cases.jpg",
+    posterFrame: "Film 00:10.9: the C10 rinsing a rooftop solar array (first frame of the hero loop)",
+    duration: 83.4,
+    hasAudio: true,
+    orientation: "landscape",
+    description: "The complete film: the C10 cleaning solar panels, façades, roofs and gutters, with the film's own title cards.",
+  },
   montage: {
     id: "c10-short",
     title: "C10 Short",
@@ -123,6 +136,20 @@ export const films = {
     description:
       "Step-by-step guide to the ABZ Clean Station ground unit: visual inspection and mechanical check, powering up and water connection.",
   },
+  /** The guide's closing flight sequence (film 05:10–05:49): the C10 working on its supply hose. */
+  stationOperation: {
+    id: "clean-station-operation",
+    title: "ABZ Clean Station, setup and operation guide",
+    source: "ABZ Clean Station _ Full Setup & Operation Guide.mp4",
+    src: { large: "/media/video/system-clean-station-operation-excerpt.mp4" },
+    poster: "/media/img/system-operation-0516.jpg",
+    posterFrame: "Film frame 05:16: the C10 holding off a rendered wall, its jet on the wall and its hose to the ground",
+    duration: 39.4,
+    fullDuration: 349.4,
+    hasAudio: true,
+    orientation: "landscape",
+    description: "The closing flight sequence of the ABZ Clean Station guide: the C10 washing building walls on its supply hose.",
+  },
   cleaningVan: {
     id: "tbe-cleaning-van",
     title: "TBE Cleaning Van",
@@ -142,19 +169,12 @@ export const films = {
 export type Photo = { src: string; width: number; height: number; source: string; alt: string };
 
 export const photos = {
-  productSide: {
-    src: "/media/img/render-c10-side.jpg",
-    width: 2400,
-    height: 1074,
-    source: "C10-2.png",
-    alt: "Studio side view of the ABZ Innovation C10 with arms unfolded, the carbon spray lance mounted beneath the frame and the yellow hose coupling at the rear.",
-  },
   facade: {
-    src: "/media/img/field-rendered-wall.jpg",
-    width: 2048,
-    height: 1378,
-    source: "865A0018.jpg",
-    alt: "The C10 hovering beside a rendered building facade between two tall windows, its lance throwing a fine spray across the wall.",
+    src: "/media/img/app-facade-glazing.jpg",
+    width: 2000,
+    height: 1125,
+    source: "C10 3.jpg (6000 × 3376)",
+    alt: "The C10 high above the street beside an office building, its lance spraying the stone facade and the ribbon of windows under a deep blue sky, its supply hose hanging to the ground.",
   },
   solar: {
     src: "/media/img/app-solar-panel-cleaning.jpg",
@@ -170,7 +190,93 @@ export const photos = {
     source: "IMG_2240.JPG",
     alt: "Two people standing on gravel watch the C10 spray the roofline of a green corrugated steel building, the red supply hose coiled across the yard.",
   },
+  ready: {
+    src: "/media/img/support-c10-ready.jpg",
+    width: 1600,
+    height: 1200,
+    source: "IMG_2224.JPG (4032 × 3024)",
+    alt: "The C10 standing on a wet gravel yard with its arms unfolded, the lance and nozzle mounted beneath the frame and a red hose connected.",
+  },
+  /** Close crop of C10-7.png (studio macro, source region 2880 × 2160 px at 2592, 1944). */
+  nozzleStudio: {
+    src: "/media/img/detail-c10-nozzle-studio.jpg",
+    width: 1200,
+    height: 900,
+    source: "C10-7.png (8640 × 5760)",
+    alt: "Studio close-up beneath the C10: the carbon lance ending in its orange-collared nozzle, the yellow hose and its coupling, between the landing-gear legs.",
+  },
+  /** Native-resolution crop of 865A0018.jpg (1024 × 768 px at 512, 512). */
+  nozzleOperation: {
+    src: "/media/img/detail-c10-nozzle-operation.jpg",
+    width: 1024,
+    height: 768,
+    source: "865A0018.jpg (2048 × 1378)",
+    alt: "The C10's lance beside a rendered wall, a jet of water leaving the nozzle and fanning out across the render.",
+  },
+  /** ABZ Clean Station guide, film frame 05:16 (3840 × 2160 source frame). */
+  operation: {
+    src: "/media/img/system-operation-0516.jpg",
+    width: 2880,
+    height: 1620,
+    source: "ABZ Clean Station _ Full Setup & Operation Guide.mp4 @ 05:16",
+    alt: "The C10 hovering in a courtyard of rendered industrial walls, its jet striking the wall at left while its red hose coupling and green supply hose run down to the ground.",
+  },
+  /** ABZ Clean Station guide, film frame 00:22, cropped clear of the guide's corner logo. */
+  cleanStation: {
+    src: "/media/img/system-clean-station-0022.jpg",
+    width: 1800,
+    height: 1108,
+    source: "ABZ Clean Station _ Full Setup & Operation Guide.mp4 @ 00:22",
+    alt: "The ABZ Clean Station ground unit in its steel frame: a hose reel and motor at upper left, a pump with pressure gauge below, a tank with the ABZ logo, a tall blue vessel and white water-treatment units.",
+  },
 } as const satisfies Record<string, Photo>;
+
+export type ProductView = {
+  id: string;
+  photo: Photo;
+  /** The nozzle, as a fraction of the image box, where it is clearly visible in this view. */
+  nozzle?: { x: number; y: number };
+};
+
+/**
+ * Real studio photographs of the C10 (8640 × 5760 sources), each cropped to the same 16:10 canvas
+ * on the photographs' own pure-white background, so the stage height never changes between views.
+ * The nozzle position was measured on each photograph; the three-quarter view hides it, so it has none.
+ */
+export const productViews = [
+  {
+    id: "side",
+    photo: {
+      src: "/media/img/product-c10-side.jpg",
+      width: 1920,
+      height: 1200,
+      source: "C10-2.png",
+      alt: "Studio side view of the ABZ Innovation C10 with its arms unfolded, the carbon lance and nozzle mounted beneath the frame and the yellow hose and red coupling at the rear.",
+    },
+    nozzle: { x: 0.884, y: 0.551 },
+  },
+  {
+    id: "three-quarter",
+    photo: {
+      src: "/media/img/product-c10-three-quarter.jpg",
+      width: 1920,
+      height: 1200,
+      source: "C10-5.png",
+      alt: "Studio three-quarter view of the ABZ Innovation C10 from the front left, showing all four arms and propellers, the landing gear and the yellow hose with its red coupling.",
+    },
+  },
+  {
+    id: "front",
+    photo: {
+      src: "/media/img/product-c10-front.jpg",
+      width: 1920,
+      height: 1200,
+      source: "C10.png",
+      alt: "Studio front view of the ABZ Innovation C10, looking along the lance to the orange-collared nozzle between the landing-gear legs.",
+    },
+    nozzle: { x: 0.516, y: 0.82 },
+  },
+] as const satisfies readonly ProductView[];
 
 export function formatTime(seconds: number) {
   const s = Math.max(0, Math.round(seconds));

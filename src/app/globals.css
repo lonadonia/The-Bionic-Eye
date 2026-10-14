@@ -1,17 +1,23 @@
 @import "tailwindcss";
 
 /*
- * The Bionic Eye · Asset cleaning · refined industrial editorial.
+ * The Bionic Eye · Asset cleaning · industrial product presentation.
  *
  * Interface tokens (proposals for the prototype, not an official brand guide). The cyan/graphite
  * direction is the established one; #00BFF3 is the accent used on thebioniceye.co.uk.
- * Contrast (WCAG 2.x):  ink on paper 15.6:1 · secondary on paper 6.2:1, on soft 5.8:1 ·
- * link on paper 5.3:1, on soft 4.9:1 · ink text on cyan 7.2:1 · cyan on deep 8.3:1 ·
- * on-deep secondary 8.6:1 · control border on paper 3.5:1. White on cyan (2.2:1) is never used.
+ * Contrast (WCAG 2.x):  ink on paper 15.6:1 · ink on cyan 7.2:1 · secondary on paper 6.2:1, on
+ * soft 5.8:1 · link on paper 5.3:1, on soft 4.9:1 · cyan on deep 8.3:1 · on-deep secondary 8.6:1 ·
+ * control border on paper 3.5:1. White on cyan (2.2:1) is never used.
  *
  * Type: Manrope only (variable, next/font), weights 400 / 500 / 600 / 700.
- * Decoration is limited to three motifs: the section accent rule, corner marks on selected media
- * frames, and the faint product-stage grid.
+ *
+ * Three decoration layers, each tied to the brand or the subject:
+ * 1. Brand: a broad cyan plane behind the product stage, the supplied eye symbol as a cropped
+ *    low-opacity watermark in two dark areas (hero, enquiry), cyan edge rules.
+ * 2. Technical: fine grid fragments, corner framing marks, and callouts only on parts identified
+ *    in the photograph (the nozzle). No measurements, coordinates, telemetry or counters.
+ * 3. Depth: a large white product stage, smaller detail frames, contrasting surface planes and
+ *    restrained ambient shadows.
  */
 @theme {
   --color-ink: #112634;
@@ -33,8 +39,9 @@
   --font-sans: var(--font-manrope), "Manrope", ui-sans-serif, system-ui, sans-serif;
 
   --radius-control: 8px;
-  --radius-media: 10px;
-  --radius-panel: 14px;
+  --radius-media: 12px;
+  --radius-panel: 16px;
+  --radius-stage: 20px;
 
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
@@ -45,10 +52,12 @@
   --gutter: clamp(1.25rem, 5.714vw - 0.143rem, 5rem);
   --gap: 1.5rem;
   --header-h: 4.25rem;
-  /* Section padding: 56px at 390 → 88px at 1440. */
-  --section-y: clamp(3.5rem, 2.756rem + 3.05vw, 5.5rem);
-  /* Heading-to-content: 24px → 36px. */
-  --intro-gap: clamp(1.5rem, 1.22rem + 1.14vw, 2.25rem);
+  /* Section padding: 64px at 390 → 112px at 1440. */
+  --section-y: clamp(4rem, 2.89rem + 4.57vw, 7rem);
+  /* Heading-to-content: 24px → 40px. */
+  --intro-gap: clamp(1.5rem, 1.13rem + 1.52vw, 2.5rem);
+  --shadow-media: 0 1px 0 rgb(17 38 52 / 0.04), 0 28px 56px -36px rgb(5 12 16 / 0.55);
+  --grid-line: rgb(17 38 52 / 0.08);
 }
 
 @media (width >= 64rem) {
@@ -151,10 +160,10 @@
   }
 
   .t-h2 {
-    font-size: clamp(1.875rem, 1.596rem + 1.143vw, 2.625rem); /* 30 → 42 */
-    line-height: 1.16;
+    font-size: clamp(1.875rem, 1.53rem + 1.43vw, 2.875rem); /* 30 → 46 */
+    line-height: 1.13;
     font-weight: 600;
-    letter-spacing: -0.022em;
+    letter-spacing: -0.024em;
     text-wrap: balance;
   }
 
@@ -167,10 +176,10 @@
   }
 
   .t-lede {
-    font-size: clamp(1.1875rem, 1.12rem + 0.29vw, 1.375rem); /* 19 → 22 */
-    line-height: 1.5;
+    font-size: clamp(1.375rem, 1.27rem + 0.45vw, 1.625rem); /* 22 → 26 */
+    line-height: 1.45;
     font-weight: 500;
-    letter-spacing: -0.008em;
+    letter-spacing: -0.012em;
     text-wrap: pretty;
   }
 
@@ -199,7 +208,7 @@
     max-width: 38em;
   }
 
-  /* ---------- Motif 1: section accent rule ---------- */
+  /* ---------- Section introduction: cyan accent rule aligned to the H2 ---------- */
   .section-intro {
     display: grid;
     gap: 1.125rem;
@@ -208,11 +217,11 @@
   .accent-rule {
     display: block;
     width: 2.5rem;
-    height: 2px;
+    height: 3px;
     background: var(--color-cyan);
   }
 
-  /* ---------- Motif 2: corner marks on selected media frames ---------- */
+  /* ---------- Technical layer: corner framing marks ---------- */
   .corner-marks {
     position: relative;
   }
@@ -234,6 +243,112 @@
       linear-gradient(var(--c), var(--c)) bottom right / var(--m) 1px,
       linear-gradient(var(--c), var(--c)) bottom right / 1px var(--m);
     background-repeat: no-repeat;
+  }
+
+  /* ---------- Brand layer: the eye symbol as a watermark ---------- */
+  .brand-mark {
+    position: absolute;
+    z-index: 0;
+    max-width: none;
+    height: auto;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ---------- Technical layer: truthful callout (ring on an identified part, connector, label) ---------- */
+  .callout {
+    --len: 2.75rem;
+    position: absolute;
+    z-index: 2;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease;
+  }
+
+  .callout[data-hidden] {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .callout__ring {
+    position: absolute;
+    left: -0.6875rem;
+    top: -0.6875rem;
+    width: 1.375rem;
+    height: 1.375rem;
+    border-radius: 999px;
+    border: 2px solid var(--color-cyan);
+    box-shadow:
+      0 0 0 1px rgb(17 38 52 / 0.35),
+      inset 0 0 0 1px rgb(17 38 52 / 0.35);
+  }
+
+  .callout__line {
+    position: absolute;
+    background: var(--color-ink);
+  }
+
+  .callout__label {
+    position: absolute;
+    padding: 0.25rem 0.625rem;
+    border-radius: 6px;
+    background: var(--color-ink);
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+
+  .callout--right .callout__line {
+    left: 0.6875rem;
+    top: -0.5px;
+    width: var(--len);
+    height: 1px;
+  }
+
+  .callout--right .callout__label {
+    left: calc(0.6875rem + var(--len));
+    top: 0;
+    transform: translateY(-50%);
+  }
+
+  .callout--left .callout__line {
+    right: 0.6875rem;
+    top: -0.5px;
+    width: var(--len);
+    height: 1px;
+  }
+
+  .callout--left .callout__label {
+    right: calc(0.6875rem + var(--len));
+    top: 0;
+    transform: translateY(-50%);
+  }
+
+  .callout--down-left .callout__line {
+    left: -0.5px;
+    top: 0.6875rem;
+    width: 1px;
+    height: var(--len);
+  }
+
+  .callout--down-left .callout__label {
+    right: -0.5rem;
+    top: calc(0.6875rem + var(--len));
+  }
+
+  .callout--up-right .callout__line {
+    left: -0.5px;
+    bottom: 0.6875rem;
+    width: 1px;
+    height: var(--len);
+  }
+
+  .callout--up-right .callout__label {
+    left: -0.5rem;
+    bottom: calc(0.6875rem + var(--len));
   }
 
   /* ---------- Media ---------- */
@@ -305,9 +420,11 @@
     transition: background-color 180ms ease;
   }
 
-  .play-chip__icon {
+  .play-chip__icon,
+  .film-btn__icon {
     display: grid;
     place-items: center;
+    flex-shrink: 0;
     width: 2rem;
     height: 2rem;
     border-radius: 999px;
@@ -315,7 +432,8 @@
     color: var(--color-ink);
   }
 
-  .play-chip__icon svg {
+  .play-chip__icon svg,
+  .film-btn__icon svg {
     margin-left: 2px;
   }
 
@@ -348,6 +466,103 @@
     color: var(--color-on-deep-2);
   }
 
+  /* Film button (opens the media viewer). */
+  .film-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    min-height: 2.75rem;
+    padding: 0.375rem 1rem 0.375rem 0.375rem;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  .film-btn__time {
+    font-weight: 500;
+    opacity: 0.8;
+  }
+
+  .on-deep .film-btn {
+    border-color: rgb(255 255 255 / 0.32);
+  }
+
+  .on-deep .film-btn:hover {
+    background: rgb(255 255 255 / 0.08);
+  }
+
+  /* ---------- Media viewer (native modal dialog) ---------- */
+  .viewer {
+    width: min(100% - 2rem, 70rem);
+    max-width: none;
+    max-height: calc(100dvh - 2rem);
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-panel);
+    background: var(--color-deep);
+    color: #fff;
+    overflow: hidden;
+  }
+
+  .viewer::backdrop {
+    background: rgb(5 10 12 / 0.84);
+  }
+
+  .viewer__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.625rem 0.625rem 0.625rem 1.25rem;
+    border-bottom: 1px solid var(--color-deep-line);
+  }
+
+  .viewer__title {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.125rem 0.875rem;
+    align-items: baseline;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .viewer__meta {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-on-deep-2);
+  }
+
+  .viewer__close {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-shrink: 0;
+    border-radius: var(--radius-control);
+    border: 1px solid rgb(255 255 255 / 0.28);
+  }
+
+  .viewer__close:hover {
+    background: rgb(255 255 255 / 0.08);
+  }
+
+  .viewer__frame {
+    aspect-ratio: 16 / 9;
+    max-height: calc(100dvh - 2rem - 4rem);
+    background: #000;
+  }
+
+  .viewer__frame video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
   /* ---------- Buttons and links ---------- */
   .btn {
     display: inline-flex;
@@ -365,6 +580,12 @@
       background-color 180ms ease,
       border-color 180ms ease,
       color 180ms ease;
+  }
+
+  .btn-lg {
+    min-height: 3.5rem; /* 56 */
+    padding: 0 1.875rem;
+    font-size: 1.0625rem;
   }
 
   .btn-primary {
@@ -588,11 +809,14 @@
   .hero {
     position: relative;
     isolation: isolate;
+    overflow: clip;
     background: var(--color-deep);
     color: #fff;
   }
 
   .hero__grid {
+    position: relative;
+    z-index: 2;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     padding-block: 2rem 3.5rem;
@@ -634,12 +858,12 @@
     opacity: 1;
   }
 
-  /* Phones: the film sits in the flow, so only the control needs a soft base shade. */
+  /* Phones: the film sits in the flow, so only the control group needs a soft base shade. */
   .hero__scrim {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: linear-gradient(0deg, rgb(11 17 20 / 0.5) 0%, rgb(11 17 20 / 0) 34%);
+    background: linear-gradient(0deg, rgb(11 17 20 / 0.55) 0%, rgb(11 17 20 / 0) 38%);
   }
 
   .hero__intro {
@@ -650,37 +874,55 @@
   }
 
   .hero__actions {
-    margin-top: 1.75rem;
+    margin-top: 2rem;
   }
 
   .hero__actions .btn {
     width: 100%;
   }
 
-  .film-control {
+  /* Watermark: the supplied eye, cropped off the dark outer edge. */
+  .hero__mark {
+    z-index: 1;
+    width: 30rem;
+    right: -13rem;
+    bottom: 5rem;
+    opacity: 0.06;
+  }
+
+  /* Control group: Play/Pause follows playback; "Watch the full film" opens the complete film. */
+  .hero__controls {
     position: absolute;
     right: 0.75rem;
     bottom: 0.75rem;
     z-index: 2;
     display: inline-flex;
     align-items: center;
-    gap: 0.625rem;
-    min-height: 2.75rem;
-    padding: 0.25rem 0.875rem 0.25rem 0.25rem;
+    padding: 0.25rem;
     border-radius: 999px;
-    background: rgb(17 25 29 / 0.72);
+    background: rgb(17 25 29 / 0.78);
+    backdrop-filter: blur(8px);
+  }
+
+  .hero__control {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0 0.875rem 0 0.25rem;
+    border-radius: 999px;
     color: #fff;
     font-size: 0.875rem;
     font-weight: 600;
-    backdrop-filter: blur(6px);
+    white-space: nowrap;
     transition: background-color 180ms ease;
   }
 
-  .film-control:hover {
-    background: rgb(17 25 29 / 0.9);
+  .hero__control:hover {
+    background: rgb(255 255 255 / 0.1);
   }
 
-  .film-control__icon {
+  .hero__control-icon {
     display: grid;
     place-items: center;
     width: 2.25rem;
@@ -689,9 +931,42 @@
     border: 1px solid rgb(255 255 255 / 0.4);
   }
 
+  .hero__control--full .film-btn__icon {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .hero__control-sep {
+    width: 1px;
+    height: 1.5rem;
+    margin-inline: 0.125rem;
+    background: rgb(255 255 255 / 0.2);
+  }
+
+  /* Phones: Play/Pause is an icon with its label kept for assistive technology. */
+  @media (width < 40rem) {
+    .hero__control--toggle {
+      padding-right: 0.25rem;
+    }
+
+    .hero__control--toggle .hero__control-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+
+  .hero__frame,
+  .hero__edge {
+    display: none;
+  }
+
   @media (width >= 64rem) {
     .hero {
-      min-height: clamp(40rem, 41vw + 12rem, 51.25rem); /* 640 → 820 */
+      min-height: clamp(40rem, 36vw + 18rem, 52rem); /* ≈ 656 at 1024 → 806 at 1440 */
       display: grid;
       align-items: center;
     }
@@ -699,12 +974,13 @@
     /* Reading zone: 480px at 1024 growing to 600px at 1440, so the copy never reaches the drone. */
     .hero__grid {
       grid-template-columns: minmax(0, clamp(30rem, 28.85vw + 11.54rem, 37.5rem)) minmax(0, 1fr);
-      padding-block: 6rem;
+      padding-block: 6.5rem 7rem;
+      position: static;
     }
 
     .hero__grid > :not(.hero__media) {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       grid-column: 1;
     }
 
@@ -740,7 +1016,7 @@
           rgb(11 17 20 / 0.22) 60%,
           rgb(11 17 20 / 0) 72%
         ),
-        linear-gradient(0deg, rgb(11 17 20 / 0.45) 0%, rgb(11 17 20 / 0) 26%);
+        linear-gradient(0deg, rgb(11 17 20 / 0.5) 0%, rgb(11 17 20 / 0) 28%);
     }
 
     .hero__intro {
@@ -748,26 +1024,86 @@
       max-width: 35rem;
     }
 
+    .hero__actions {
+      margin-top: 2.25rem;
+    }
+
     .hero__actions .btn {
       width: auto;
     }
 
-    .film-control {
+    .hero__mark {
+      z-index: 1;
+      width: clamp(40rem, 52vw, 52rem);
+      left: calc(-0.17 * clamp(40rem, 52vw, 52rem));
+      right: auto;
+      bottom: calc(-0.13 * clamp(40rem, 52vw, 52rem));
+      opacity: 0.09;
+    }
+
+    /* Fine frame boundary at the content edges, with framing marks at its corners. */
+    .hero__frame {
+      --m: 14px;
+      --c: rgb(255 255 255 / 0.85);
+      --x: max(calc(var(--gutter) - 1.5rem), calc((100% - var(--content-max)) / 2 - 1.5rem));
+      display: block;
+      position: absolute;
+      z-index: 1;
+      inset: 1.75rem var(--x) 1.75rem var(--x);
+      pointer-events: none;
+      border: 1px solid rgb(255 255 255 / 0.16);
+      background:
+        linear-gradient(var(--c), var(--c)) top left / var(--m) 1px,
+        linear-gradient(var(--c), var(--c)) top left / 1px var(--m),
+        linear-gradient(var(--c), var(--c)) top right / var(--m) 1px,
+        linear-gradient(var(--c), var(--c)) top right / 1px var(--m),
+        linear-gradient(var(--c), var(--c)) bottom left / var(--m) 1px,
+        linear-gradient(var(--c), var(--c)) bottom left / 1px var(--m),
+        linear-gradient(var(--c), var(--c)) bottom right / var(--m) 1px,
+        linear-gradient(var(--c), var(--c)) bottom right / 1px var(--m);
+      background-repeat: no-repeat;
+    }
+
+    /* One cyan edge rule, running in from the page edge under the reading group. */
+    .hero__edge {
+      display: block;
+      position: absolute;
+      z-index: 2;
+      left: 0;
+      bottom: 0;
+      height: 5px;
+      width: calc(max(var(--gutter), (100% - var(--content-max)) / 2) + clamp(30rem, 28.85vw + 11.54rem, 37.5rem));
+      background: var(--color-cyan);
+    }
+
+    .hero__controls {
       right: max(var(--gutter), calc((100% - var(--content-max)) / 2));
-      bottom: 2rem;
+      bottom: 3rem;
     }
   }
 
-  /* ---------- Applications gallery ---------- */
-  .gallery {
+  /* ---------- Applications ---------- */
+  .apps {
+    overflow-x: clip;
+  }
+
+  .apps .shell {
+    container-type: inline-size;
+  }
+
+  .apps__grid {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 2.5rem;
+    margin-top: var(--intro-gap);
   }
 
-  .tile__frame {
+  .app__frame {
     aspect-ratio: 4 / 3;
+    box-shadow: var(--shadow-media);
   }
 
-  .tile__caption {
+  .app__caption {
     margin-top: 0.875rem;
     font-size: clamp(1.125rem, 1.08rem + 0.19vw, 1.25rem); /* 18 → 20 */
     line-height: 1.35;
@@ -776,292 +1112,283 @@
     text-wrap: pretty;
   }
 
-  .tile__qualifier {
+  .app__qualifier {
     font-weight: 500;
     color: var(--color-secondary);
   }
 
-  /* Text-led entries: consecutive items form one soft panel. */
-  .tile--text {
+  /* Phones: the featured facade runs edge to edge. */
+  .app--facades .app__media {
+    margin-inline: calc(-1 * var(--gutter));
+  }
+
+  .app--facades .app__frame {
+    border-radius: 0;
+  }
+
+  /* Text-led entries: consecutive items form one framed panel. */
+  .apps__grid > .app--text {
+    order: 2;
+    position: relative;
     padding: 1.125rem 1.5rem;
     background: var(--color-soft);
   }
 
-  .tile--text:not(.tile--text-first) {
+  .apps__grid > .app--text:not(.app--text-first) {
     border-top: 1px solid var(--color-line);
   }
 
-  .tile--text .tile__caption {
+  .apps__grid > .app--text-first ~ .app--text {
+    margin-top: -2.5rem;
+  }
+
+  .app--text .app__caption {
     margin: 0;
   }
 
-  .tile--text-first {
-    border-top-left-radius: var(--radius-media);
-    border-top-right-radius: var(--radius-media);
-    padding-top: 1.5rem;
+  .app--text-first {
+    border-top-left-radius: var(--radius-panel);
+    border-top-right-radius: var(--radius-panel);
+    padding-top: 1.75rem !important;
   }
 
-  .tile--text-last {
-    border-bottom-left-radius: var(--radius-media);
-    border-bottom-right-radius: var(--radius-media);
-    padding-bottom: 1.5rem;
+  .app--text-last {
+    border-bottom-left-radius: var(--radius-panel);
+    border-bottom-right-radius: var(--radius-panel);
+    padding-bottom: 1.75rem !important;
   }
 
-  /* Phones: images first, then the text panel (one list in source order for assistive tech). */
-  .gallery {
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: 2.25rem;
+  /* Grid fragment in the panel's top corner (technical layer: no figures, no markers). */
+  .app--text-first::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: min(46%, 15rem);
+    height: 100%;
+    border-top-right-radius: var(--radius-panel);
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(ellipse 100% 100% at 100% 0%, #000 0%, transparent 72%);
+    pointer-events: none;
   }
 
-  .gallery > .tile--text {
-    order: 2;
+  /* Framing marks at the panel's outer corners. */
+  .app--text-first::before,
+  .app--text-last::before {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: var(--color-ink);
+    border-style: solid;
+    pointer-events: none;
   }
 
-  /* Text entries after the first close the row gap so they read as one panel. */
-  .gallery > .tile--text-first ~ .tile--text {
-    margin-top: -2.25rem;
+  .app--text-first::before {
+    left: -7px;
+    top: -7px;
+    border-width: 1px 0 0 1px;
+  }
+
+  .app--text-last::before {
+    right: -7px;
+    bottom: -7px;
+    border-width: 0 1px 1px 0;
   }
 
   @media (width >= 48rem) and (width < 64rem) {
-    .gallery {
+    .apps__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       column-gap: 1.25rem;
     }
 
-    .gallery > .tile--text {
+    .apps__grid > .app--text,
+    .app--facades,
+    .app--industrial {
       grid-column: 1 / -1;
     }
 
-    .gallery > .tile--industrial {
-      grid-column: 1 / -1;
+    .app--facades .app__media {
+      margin-inline: calc((100cqw - 100vw) / 2);
     }
 
-    .gallery > .tile--industrial .tile__frame {
+    .app--facades .app__frame,
+    .app--industrial .app__frame {
       aspect-ratio: 16 / 9;
     }
   }
 
-  /* Desktop: 7/5 then 5/7, rows share heights; captions align to their frame edges. */
+  /* Desktop: 7/5 then 5/7. The featured facade frame runs out to the page edge; captions stay on the grid. */
   @media (width >= 64rem) {
-    .gallery-wrap {
-      container-type: inline-size;
-    }
-
-    .gallery {
-      --col: calc((100cqw - 11 * var(--gap)) / 12);
-      --row-a: calc((var(--col) * 7 + 6 * var(--gap)) / 1.55);
-      --row-b: calc((var(--col) * 7 + 6 * var(--gap)) / 1.9);
+    .apps__grid {
       grid-template-columns: repeat(12, minmax(0, 1fr));
-      grid-template-rows: auto auto 3.5rem repeat(4, minmax(calc(var(--row-b) / 4), auto)) auto;
+      grid-template-rows: auto 4.5rem repeat(4, minmax(6.25rem, auto));
       column-gap: var(--gap);
       row-gap: 0;
     }
 
-    .gallery > .tile--text {
+    .apps__grid > .app--text {
       order: 0;
+      grid-column: 7 / 13;
+      display: flex;
+      align-items: center;
+      padding-inline: 2.5rem 2rem;
     }
 
-    .gallery > .tile--text-first ~ .tile--text {
+    .apps__grid > .app--text-first ~ .app--text {
       margin-top: 0;
     }
 
-    .gallery > .tile--image {
-      display: grid;
-      grid-template-rows: subgrid;
-    }
-
-    .tile--facades {
+    .app--facades {
       grid-column: 1 / 8;
-      grid-row: 1 / 3;
+      grid-row: 1;
     }
 
-    .tile--solar {
+    .app--facades .app__media {
+      margin-inline: calc((100cqw - 100vw) / 2) 0;
+    }
+
+    .app--facades .app__frame {
+      aspect-ratio: auto;
+      height: clamp(26rem, 34vw + 2rem, 36rem);
+      border-radius: 0 var(--radius-media) var(--radius-media) 0;
+    }
+
+    .app--solar {
       grid-column: 8 / 13;
-      grid-row: 1 / 3;
+      grid-row: 1;
     }
 
-    .tile--facades .tile__frame,
-    .tile--solar .tile__frame {
+    .app--solar .app__frame {
       aspect-ratio: auto;
-      height: var(--row-a);
+      height: clamp(26rem, 34vw + 2rem, 36rem);
     }
 
-    .tile--industrial {
-      grid-column: 1 / 6;
-      grid-row: 4 / 9;
-    }
-
-    .tile--industrial .tile__media {
-      grid-row: 1 / 5;
-    }
-
-    .tile--industrial .tile__frame {
-      aspect-ratio: auto;
-      height: 100%;
-      min-height: var(--row-b);
-    }
-
-    .tile--industrial .tile__caption {
-      grid-row: 5;
-    }
-
-    .gallery > .tile--text {
-      grid-column: 6 / 13;
+    .app--industrial {
+      grid-column: 1 / 7;
+      grid-row: 3 / 7;
       display: flex;
-      align-items: center;
-      padding-inline: 2.5rem;
+      flex-direction: column;
     }
 
-    .tile--wind {
+    .app--industrial .app__media {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app--industrial .app__media > div,
+    .app--industrial .app__frame {
+      flex: 1 1 auto;
+    }
+
+    .app--industrial .app__frame {
+      aspect-ratio: auto;
+      min-height: 22rem;
+    }
+
+    .app--wind {
+      grid-row: 3;
+    }
+
+    .app--heritage {
       grid-row: 4;
     }
 
-    .tile--heritage {
+    .app--graffiti {
       grid-row: 5;
     }
 
-    .tile--graffiti {
+    .app--coating {
       grid-row: 6;
-    }
-
-    .tile--coating {
-      grid-row: 7;
     }
   }
 
-  /* Supporting footage: equal frame heights across a landscape and a portrait clip. */
-  .footage {
+  /* Supporting application films: equal frame heights across landscape and portrait clips. */
+  .film-strip {
     display: grid;
     gap: 2rem;
+    margin-top: clamp(3.5rem, 6vw, 5.5rem);
   }
 
   @media (width >= 48rem) {
-    .footage {
+    .film-strip {
       display: flex;
       align-items: flex-start;
       gap: var(--gap);
     }
 
-    .footage__item--landscape {
+    .film-strip__item--landscape {
       flex: 1.7778 1 0;
       min-width: 0;
     }
 
-    .footage__item--portrait {
+    .film-strip__item--portrait {
       flex: 0.5625 1 0;
       min-width: 0;
+    }
+
+    .film-strip__item--portrait .media-caption {
+      flex-direction: column;
+      gap: 0.125rem;
     }
   }
 
   /* ---------- The system ---------- */
-  .system-band {
-    padding-top: var(--section-y);
-    padding-bottom: calc(var(--section-y) + var(--stage-overlap));
-    --stage-overlap: clamp(3rem, 8vw, 7.5rem);
-  }
-
-  .system-stage-band {
-    display: flow-root; /* keeps the panel's negative margin from collapsing through the band */
-    background: var(--color-soft);
-    padding-bottom: var(--section-y);
-  }
-
-  .stage-panel {
+  .system {
     position: relative;
-    margin-top: calc(-1 * clamp(3rem, 8vw, 7.5rem));
-    padding: 1.25rem;
-    border-radius: var(--radius-panel);
-    background: var(--color-paper);
-    box-shadow:
-      0 0 0 1px rgb(17 38 52 / 0.06),
-      0 32px 64px -40px rgb(5 12 16 / 0.55);
+    overflow-x: clip;
+    padding-block: var(--section-y);
   }
 
-  @media (width >= 64rem) {
-    .stage-panel {
-      display: grid;
-      grid-template-columns: minmax(0, 58fr) minmax(0, 42fr);
-      gap: 3.5rem;
-      padding: 2.5rem;
-    }
+  /* Phones and tablets: introduction → product stage and details → specification (imagery early). */
+  .system__grid {
+    display: flex;
+    flex-direction: column;
+    container-type: inline-size;
   }
 
-  /* Motif 3: the faint product-stage grid, faded at its edges. */
-  .stage {
-    position: relative;
-    display: grid;
-    place-items: center;
-    min-height: 15rem;
-    padding: 2.5rem 1rem 3.5rem;
-    border-radius: var(--radius-media);
-    background-color: #fbfcfd;
-    background-image:
-      linear-gradient(to right, rgb(17 38 52 / 0.07) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(17 38 52 / 0.07) 1px, transparent 1px);
-    background-size: 72px 72px;
-    background-position: center center;
-    overflow: hidden;
+  .system__visual {
+    margin-top: 2.5rem;
   }
 
-  .stage::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 72% 70% at 50% 50%, transparent 30%, #fbfcfd 92%);
-    pointer-events: none;
+  .system__specs {
+    margin-top: 5.5rem;
   }
 
-  .stage__img {
-    position: relative;
-    width: 88%;
-    height: auto;
-    mix-blend-mode: multiply;
+  .system__lede {
+    margin-top: var(--intro-gap);
+    font-size: clamp(1.125rem, 1.08rem + 0.19vw, 1.25rem); /* 18 → 20 */
+    line-height: 1.6;
+    font-weight: 500;
+    color: rgb(255 255 255 / 0.9);
+    max-width: 36em;
   }
 
-  .stage__caption {
-    position: absolute;
-    left: 1.25rem;
-    bottom: 1rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-secondary);
-  }
-
-  @media (width >= 64rem) {
-    .stage {
-      height: 100%;
-      min-height: 26rem;
-    }
-  }
-
+  /* Specification panel: five supplied values, dominant figure, qualifiers in reading order. */
   .specs {
-    margin-top: 1.5rem;
-  }
-
-  @media (width >= 64rem) {
-    .specs {
-      margin-top: 0;
-      align-self: center;
-    }
+    border-top: 3px solid var(--color-cyan);
   }
 
   .specs__title {
+    padding-block: 1rem 0.25rem;
     font-size: 0.9375rem;
     font-weight: 600;
-    color: var(--color-secondary);
-    padding-bottom: 0.875rem;
-    border-bottom: 1px solid var(--color-ink);
+    color: var(--color-on-deep-2);
   }
 
   .spec {
     padding-block: 1rem 1.125rem;
-    border-bottom: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-deep-line);
   }
 
   .spec dt {
     font-size: 0.9375rem;
     font-weight: 500;
-    color: var(--color-secondary);
+    color: var(--color-on-deep-2);
   }
 
   /* Proportional lining figures: the values stack rather than form columns, and Manrope's
@@ -1069,48 +1396,474 @@
   .spec dd {
     margin-top: 0.25rem;
     font-variant-numeric: lining-nums proportional-nums;
-    color: var(--color-ink);
+    color: #fff;
   }
 
   .spec__line {
     display: block;
-    line-height: 1.15;
+    line-height: 1.1;
   }
 
   .spec__line + .spec__line {
-    margin-top: 0.375rem;
+    margin-top: 0.5rem;
   }
 
   .spec__figure {
-    font-size: clamp(1.875rem, 1.643rem + 0.952vw, 2.5rem); /* 30 → 40 */
+    font-size: clamp(2.25rem, 1.92rem + 1.33vw, 3.125rem); /* 36 → 50 */
     font-weight: 600;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
   }
 
   .spec__qualifier,
   .spec__unit {
-    font-size: clamp(1.0625rem, 0.99rem + 0.29vw, 1.25rem); /* 17 → 20 */
+    font-size: clamp(1.125rem, 1.06rem + 0.29vw, 1.3125rem); /* 18 → 21 */
     font-weight: 500;
+    color: rgb(255 255 255 / 0.88);
   }
 
   .spec__text {
-    font-size: clamp(1.25rem, 1.16rem + 0.38vw, 1.5rem); /* 20 → 24 */
+    font-size: clamp(1.5rem, 1.36rem + 0.57vw, 1.875rem); /* 24 → 30 */
     font-weight: 600;
-    letter-spacing: -0.012em;
+    letter-spacing: -0.016em;
   }
 
   /* Pressure: the peak figure is a qualified second line, deliberately smaller. */
   .spec--working-pressure .spec__line + .spec__line .spec__figure {
-    font-size: clamp(1.375rem, 1.26rem + 0.48vw, 1.75rem); /* 22 → 28 */
+    font-size: clamp(1.625rem, 1.48rem + 0.57vw, 2rem); /* 26 → 32 */
   }
 
   .spec--working-pressure .spec__line + .spec__line .spec__qualifier,
   .spec--working-pressure .spec__line + .spec__line .spec__unit {
     font-size: clamp(1rem, 0.96rem + 0.19vw, 1.125rem);
+    color: var(--color-on-deep-2);
+  }
+
+  .specs__note {
+    margin-top: 1.5rem;
+    color: rgb(255 255 255 / 0.84);
+    max-width: 36em;
+  }
+
+  /* Product explorer */
+  .system__visual {
+    position: relative;
+  }
+
+  .explorer {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Brand layer: the broad cyan plane behind the stage, cropped at the page edge. */
+  .system__visual::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 4rem;
+    bottom: -3rem;
+    left: calc(-1 * var(--gutter));
+    right: calc(-1 * var(--gutter));
+    background-color: var(--color-cyan);
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.28) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.28) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-position: right top;
+  }
+
+  .stage {
+    position: relative;
+    margin: 0 0 0;
+    border-radius: var(--radius-stage);
+    background: #fff;
+    box-shadow:
+      0 0 0 1px rgb(17 38 52 / 0.06),
+      0 48px 90px -50px rgb(5 12 16 / 0.75);
+  }
+
+  /* Framing marks just outside the stage. */
+  .stage::after {
+    --m: 16px;
+    --c: var(--color-ink);
+    content: "";
+    position: absolute;
+    inset: -9px;
+    pointer-events: none;
+    background:
+      linear-gradient(var(--c), var(--c)) top left / var(--m) 1px,
+      linear-gradient(var(--c), var(--c)) top left / 1px var(--m),
+      linear-gradient(var(--c), var(--c)) bottom right / var(--m) 1px,
+      linear-gradient(var(--c), var(--c)) bottom right / 1px var(--m);
+    background-repeat: no-repeat;
+  }
+
+  .stage__canvas {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-stage) var(--radius-stage) 0 0;
+    overflow: hidden;
+  }
+
+  /* Faint stage grid, faded towards the edges; the photographs' own white multiplies over it. */
+  .stage__canvas::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    background-position: center center;
+    mask-image: radial-gradient(ellipse 70% 62% at 50% 55%, #000 10%, transparent 80%);
+  }
+
+  .stage__img {
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    opacity: 0;
+    transition: opacity 260ms ease;
+  }
+
+  .stage__img[data-active="true"] {
+    opacity: 1;
+  }
+
+  .stage__caption {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.875rem 1.25rem 1rem;
+    border-top: 1px solid var(--color-line);
     color: var(--color-secondary);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .stage__view {
+    color: var(--color-ink);
+  }
+
+  .views {
+    position: relative;
+    display: flex;
+    gap: 0.625rem;
+    margin-top: 1.25rem;
+  }
+
+  .views__option {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.375rem;
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 8.5rem;
+    padding: 0.375rem 0.375rem 0.5rem;
+    border-radius: 10px;
+    background: rgb(255 255 255 / 0.86);
+    color: var(--color-ink);
+    font-size: 0.875rem;
+    font-weight: 500;
+    box-shadow: inset 0 0 0 1px rgb(17 38 52 / 0.16);
+    transition:
+      box-shadow 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .views__option:hover {
+    background: #fff;
+  }
+
+  .views__option[aria-checked="true"] {
+    background: #fff;
+    font-weight: 700;
+    box-shadow: inset 0 0 0 2px var(--color-ink);
+  }
+
+  .views__thumb {
+    display: block;
+    aspect-ratio: 16 / 10;
+    border-radius: 6px;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .views__thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .views__label {
+    padding-inline: 0.125rem;
+    text-align: left;
+  }
+
+  /* Two substantial detail frames, always in view. */
+  .details {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .detail {
+    margin: 0;
+  }
+
+  .detail__frame {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-panel);
+    overflow: hidden;
+    background: var(--color-graphite);
+    box-shadow: var(--shadow-media);
+  }
+
+  /* Small detail frames on phones: a shorter connector keeps the label inside the frame. */
+  @media (width < 40rem) {
+    .detail .callout {
+      --len: 1.25rem;
+    }
+  }
+
+  .detail__caption {
+    margin-top: 0.625rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  @media (width >= 40rem) {
+    .details {
+      gap: 1.5rem;
+    }
+  }
+
+  @media (width >= 64rem) {
+    /* Left: introduction then specification; right: the stage spanning both rows. */
+    .system__grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-template-rows: auto 1fr;
+      column-gap: var(--gap);
+      align-items: start;
+    }
+
+    .system__copy,
+    .system__specs {
+      grid-column: 1 / 6;
+      padding-right: 2rem;
+    }
+
+    .system__specs {
+      grid-row: 2;
+      margin-top: 2.5rem;
+    }
+
+    .system__visual {
+      grid-column: 6 / 13;
+      grid-row: 1 / 3;
+      margin-top: 0;
+      padding-top: 1.5rem;
+    }
+
+    .system__visual::before {
+      top: 7rem;
+      bottom: -4.5rem;
+      left: -1.25rem;
+      right: calc((100cqw - 100vw) / 2);
+      border-top-left-radius: var(--radius-stage);
+    }
+
+    /* The second detail frame sits lower: two planes, not a row of equal tiles. */
+    .detail + .detail {
+      margin-top: 2.5rem;
+    }
+  }
+
+  /* Cleaning system: the operation/Clean Station pair (and, on desktop with motion, the scene). */
+  .system__story {
+    margin-top: clamp(5rem, 9vw, 8.5rem);
+  }
+
+  .story__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .story__control {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    min-height: 2.75rem;
+    padding: 0 1rem 0 0.375rem;
+    border-radius: 999px;
+    border: 1px solid rgb(255 255 255 / 0.28);
+    color: #fff;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    transition:
+      background-color 200ms ease,
+      color 200ms ease,
+      border-color 200ms ease;
+  }
+
+  .story__control-index {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    border: 1px solid rgb(255 255 255 / 0.4);
+    font-size: 0.8125rem;
+  }
+
+  .story__control:hover {
+    background: rgb(255 255 255 / 0.08);
+  }
+
+  .story__control[aria-checked="true"] {
+    background: var(--color-cyan);
+    border-color: var(--color-cyan);
+    color: var(--color-ink);
+  }
+
+  .story__control[aria-checked="true"] .story__control-index {
+    border-color: var(--color-ink);
+  }
+
+  .story__body {
+    display: grid;
+    gap: 0.875rem;
+  }
+
+  /* Phones: frame → caption, frame → caption. */
+  .story__stage,
+  .story__captions {
+    display: contents;
+  }
+
+  .story__frame--operation {
+    order: 1;
+  }
+
+  .story__caption--operation {
+    order: 2;
+    margin-bottom: 1.75rem;
+  }
+
+  .story__frame--station {
+    order: 3;
+  }
+
+  .story__caption--station {
+    order: 4;
+  }
+
+  .story__frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-panel);
+    background: var(--color-graphite);
+  }
+
+  .story__frame--operation {
+    aspect-ratio: 16 / 9;
+  }
+
+  .story__frame--station {
+    aspect-ratio: 4 / 3;
+  }
+
+  .story__zoom {
+    position: absolute;
+    inset: 0;
+  }
+
+  .story__img {
+    object-fit: cover;
+  }
+
+  .story__caption {
+    display: grid;
+    justify-items: start;
+    gap: 0.25rem;
+  }
+
+  .story__cap-title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+  }
+
+  .story__cap-meta {
+    font-size: 0.875rem;
+    color: var(--color-on-deep-2);
+  }
+
+  .story__caption .film-btn {
+    margin-top: 0.5rem;
+  }
+
+  @media (width >= 64rem) {
+    .story__body {
+      display: block;
+    }
+
+    /* A clipped stage, so the operation frame can grow to the full width in the scene. */
+    .story__stage {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 6fr) minmax(0, 4fr);
+      gap: 1.75rem;
+      overflow: clip;
+      border-radius: var(--radius-panel);
+    }
+
+    .story__frame--operation {
+      aspect-ratio: 3 / 2;
+    }
+
+    .story__frame--station {
+      aspect-ratio: auto;
+    }
+
+    /* The picture is centred in the 3:2 frame: the nozzle sits at 36.37% (see the component). */
+    .story__callout {
+      left: 36.37% !important;
+    }
+
+    .story__captions {
+      display: grid;
+      grid-template-columns: minmax(0, 6fr) minmax(0, 4fr);
+      gap: 1.75rem;
+      margin-top: 1rem;
+    }
+
+    .story__caption--operation {
+      margin-bottom: 0;
+    }
+
+    .story__frame--operation {
+      will-change: transform;
+    }
   }
 
   /* ---------- Support ---------- */
+  .support {
+    position: relative;
+    overflow-x: clip;
+  }
+
+  .support__grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+
   .selector {
     display: grid;
     border-top: 1px solid var(--color-line);
@@ -1126,7 +1879,7 @@
     padding: 0.75rem 1rem 0.75rem 1.25rem;
     border-bottom: 1px solid var(--color-line);
     text-align: left;
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
     font-weight: 500;
     color: var(--color-ink);
     transition:
@@ -1140,7 +1893,7 @@
 
   .selector__option[aria-checked="true"] {
     background: var(--color-soft);
-    box-shadow: inset 3px 0 0 var(--color-cyan);
+    box-shadow: inset 4px 0 0 var(--color-cyan);
     font-weight: 600;
   }
 
@@ -1158,8 +1911,13 @@
   }
 
   .supply {
+    margin-top: 2.25rem;
+  }
+
+  .supply__list {
     display: grid;
     gap: 1.25rem;
+    margin-top: 1.25rem;
   }
 
   .supply__para {
@@ -1176,49 +1934,274 @@
     color: var(--color-ink);
   }
 
-  .clips {
+  /* Media surface with a cyan structural edge; stable dimensions, brief crossfade. */
+  .support__media {
+    position: relative;
+  }
+
+  .support__surface {
+    position: relative;
     display: grid;
-    gap: 2rem;
   }
 
-  .clips .media-caption {
-    flex-direction: column;
-    gap: 0.125rem;
+  .support__surface::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    left: -0.75rem;
+    top: 2.5rem;
+    bottom: 2.5rem;
+    width: 4px;
+    background: var(--color-cyan);
   }
 
-  @media (width >= 48rem) {
-    .clips {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--gap);
+  .support__layer {
+    grid-area: 1 / 1;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 240ms ease,
+      visibility 0s linear 240ms;
+  }
+
+  .support__layer[data-active="true"] {
+    opacity: 1;
+    visibility: visible;
+    transition:
+      opacity 240ms ease,
+      visibility 0s;
+  }
+
+  .support__frame {
+    aspect-ratio: 4 / 3;
+    box-shadow: var(--shadow-media);
+  }
+
+  .support__captions {
+    display: grid;
+    min-height: 1.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .support__caption {
+    grid-area: 1 / 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    opacity: 0;
+    transition: opacity 240ms ease;
+  }
+
+  .support__caption[data-active="true"] {
+    opacity: 1;
+  }
+
+  /* Soft plane behind the media half (relates the section to the system chapter's planes). */
+  .support__plane {
+    display: none;
+  }
+
+  .support__van {
+    display: grid;
+    gap: 0.875rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+
+  .support__van-text {
+    display: grid;
+    align-content: end;
+    gap: 0.25rem;
+  }
+
+  @media (width >= 64rem) {
+    .support__grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gap);
+      align-items: start;
+    }
+
+    .support__copy {
+      grid-column: 1 / 6;
+    }
+
+    .support__media {
+      grid-column: 6 / 13;
+      padding-left: 1.5rem;
+    }
+
+    .support__surface::before {
+      left: 0.25rem;
+    }
+
+    .support__plane {
+      display: block;
+      position: absolute;
+      top: calc(var(--section-y) + 7rem);
+      right: 0;
+      bottom: 0;
+      width: 44%;
+      background: var(--color-soft);
+      background-image:
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, #000 55%, transparent);
+      border-top-left-radius: var(--radius-stage);
+    }
+
+    .support__van {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gap);
+    }
+
+    .support__van-film {
+      grid-column: 1 / 9;
+    }
+
+    .support__van-text {
+      grid-column: 9 / 13;
+      padding-left: 1.25rem;
+      border-left: 3px solid var(--color-cyan);
+      align-self: end;
     }
   }
 
   /* ---------- Operating legally ---------- */
-  .reg-text {
-    display: grid;
-    gap: 1.25rem;
-    max-width: 52rem;
-    padding-left: clamp(1.25rem, 2.5vw, 2rem);
-    border-left: 2px solid var(--color-graphite);
+  .legal {
+    background: var(--color-soft);
   }
 
-  .reg-text strong {
+  .sheet {
+    position: relative;
+    max-width: 54rem;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+    border-radius: var(--radius-panel);
+    background: var(--color-paper);
+    box-shadow:
+      0 0 0 1px rgb(17 38 52 / 0.06),
+      0 20px 40px -32px rgb(5 12 16 / 0.35);
+  }
+
+  /* Discreet cyan edge at the top of the sheet. */
+  .sheet::before {
+    content: "";
+    position: absolute;
+    left: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+    top: 0;
+    width: 4.5rem;
+    height: 3px;
+    background: var(--color-cyan);
+  }
+
+  .sheet__body {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .sheet__body strong {
     font-weight: 700;
     color: var(--color-ink);
   }
 
-  /* ---------- Proven in the field ---------- */
-  .case {
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--color-ink);
+  .sheet__foot {
+    margin-top: 1.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-line);
   }
 
+  /* ---------- Proven in the field ---------- */
+  .evidence__intro {
+    max-width: 30em;
+  }
+
+  .evidence__cases {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .case {
+    padding-top: 1.25rem;
+    border-top: 2px solid var(--color-ink);
+  }
+
+  .case__text {
+    font-size: clamp(1.1875rem, 1.12rem + 0.29vw, 1.375rem); /* 19 → 22 */
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+
+  /* Restrained emphasis on the supplied values, inside their sentences. */
   .case strong {
     font-weight: 700;
+    box-shadow: inset 0 -0.32em 0 rgb(0 191 243 / 0.28);
+  }
+
+  .evidence__note {
+    margin-top: 1.25rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--color-secondary);
+  }
+
+  @media (width >= 48rem) {
+    .evidence__cases {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--gap);
+    }
   }
 
   /* ---------- Enquiry and form ---------- */
+  .enquiry {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+  }
+
+  .enquiry .shell {
+    position: relative;
+    z-index: 1;
+  }
+
+  .enquiry__mark {
+    width: 34rem;
+    left: -14rem;
+    bottom: -6rem;
+    opacity: 0.06;
+  }
+
+  .enquiry__closing {
+    margin-top: var(--intro-gap);
+    color: rgb(255 255 255 / 0.92);
+  }
+
+  .enquiry__lines {
+    display: grid;
+    gap: 0.25rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-deep-line);
+    color: var(--color-on-deep-2);
+  }
+
+  .form-wrap {
+    position: relative;
+  }
+
+  /* Cyan plane behind the card's top edge: brand layer, never under the labels. */
+  .form-wrap__plane {
+    position: absolute;
+    top: -0.75rem;
+    right: -0.75rem;
+    width: 38%;
+    height: 4.5rem;
+    border-radius: var(--radius-panel);
+    background: var(--color-cyan);
+  }
+
   .form-card {
+    position: relative;
     padding: 1.25rem;
     border-radius: var(--radius-panel);
     background: var(--color-paper);
@@ -1230,7 +2213,21 @@
 
   @media (width >= 40rem) {
     .form-card {
-      padding: 2rem;
+      padding: 2.25rem;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .enquiry__mark {
+      width: 52rem;
+      left: -20rem;
+      bottom: -12rem;
+      opacity: 0.07;
+    }
+
+    .form-wrap__plane {
+      top: -1.125rem;
+      right: -1.125rem;
     }
   }
 
@@ -1324,18 +2321,6 @@
     animation: hero-in 520ms var(--ease-out) both;
     animation-delay: calc(var(--i, 0) * 50ms);
   }
-
-  /* One-shot reveals: RevealObserver marks only below-the-fold elements as pending. */
-  [data-reveal-state="pending"] {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-
-  [data-reveal-state="in"] {
-    transition:
-      opacity 500ms var(--ease-out) var(--reveal-delay, 0ms),
-      transform 500ms var(--ease-out) var(--reveal-delay, 0ms);
-  }
 }
 
 @keyframes hero-in {
@@ -1361,11 +2346,6 @@ html[data-capture] *::before,
 html[data-capture] *::after {
   animation: none !important;
   transition: none !important;
-}
-
-html[data-capture] [data-reveal-state] {
-  opacity: 1 !important;
-  transform: none !important;
 }
 
 html[data-capture] .hero__video {
