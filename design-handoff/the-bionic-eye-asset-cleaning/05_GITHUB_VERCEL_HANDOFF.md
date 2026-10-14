@@ -1,5 +1,18 @@
 # 05 · GitHub and Vercel handoff
 
+## Refinement 4 (14 October 2026)
+
+```
+Implementation:     BUILT — balanced Applications inside the page frame, films that play in place (silent loops,
+                    no labels), no visible hero pause, brand ornaments site-wide. See docs/ASSET_CLEANING_REFINEMENT_4.md
+Local build:        PASS — lint, typecheck, build
+QA:                 63/63 interaction + axe checks PASS; hero contrast PASS; copy audit 0 unverified
+GitHub:             branch refinement-4-applications-decoration, then main fast-forwarded to it at the owner's
+                    request ("Merging into main"); normal pushes, no force, no merge commit
+Vercel:             production deployment status recorded below once verified
+Environment keys:   none
+```
+
 ## Refinement 3 (14 October 2026)
 
 ```

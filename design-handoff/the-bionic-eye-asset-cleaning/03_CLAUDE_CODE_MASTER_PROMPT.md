@@ -11,7 +11,7 @@ You are continuing the **Asset Cleaning page for The Bionic Eye Ltd** (UK and Ir
 ## Read first (source of truth, in priority order)
 
 1. `design-handoff/the-bionic-eye-asset-cleaning/source-reference/Asset_Cleaning_Contest_Copy.pdf` — the client's contest copy. **Use its text exactly as written.**
-2. `docs/ASSET_CLEANING_REFINEMENT_3.md` — current design (product explorer, cleaning-system scene, decoration layers), full-resolution asset map, motion, skills and verification.
+2. `docs/ASSET_CLEANING_REFINEMENT_4.md` — latest changes (Applications balance, films in place, ornaments) — then `docs/ASSET_CLEANING_REFINEMENT_3.md` — the design (product explorer, cleaning-system scene, decoration layers), full-resolution asset map, motion, skills and verification.
 3. `docs/ASSET_CLEANING_REFINEMENT_2.md` §3 — source differences (announcement vs PDF) and removed content.
 4. `design-handoff/the-bionic-eye-asset-cleaning/qa/` — current QA evidence; `scripts/qa/README.md` for how to rerun it.
 5. `05_GITHUB_VERCEL_HANDOFF.md` — repo, branch, deployment state.
@@ -24,9 +24,9 @@ Run `git status`, `git log --oneline -5` and `git remote -v` before editing. Nev
 - **Provenance:** this is a Claude-assisted **internal prototype**. The contest currently prohibits AI-generated layouts and images; never present it, its exports or a Figma conversion of it as the entry unless the organiser permits it.
 - **Section order:** Header → Hero → Applications → The system → Full service support → Operating legally → Proven in the field → Enquiry → Footer.
 - **Copy:** only the contest copy PDF, character for character (typographic apostrophes allowed), plus the announcement's section names, `Book a demonstration` and the five service areas. No brochure or datasheet wording, slogans, extra figures, testimonials, logos, pricing, guarantees or certifications. `scripts/qa/copy-audit.mjs` must report 0 unverified.
-- **Hero:** headline `Facade and structure cleaning without access equipment.`, both opening paragraphs complete, one `Book a demonstration` button, film = loop cut from `C10-Use-Case-Shorts-Final-Horizontal.mp4` with an operational poster and a working Play/Pause control, plus `Watch the full film` opening the complete supplied film in the media viewer. Rerun `scripts/qa/hero-contrast.mjs` after changing the loop, scrim or hero text.
+- **Hero:** headline `Facade and structure cleaning without access equipment.`, both opening paragraphs complete, one `Book a demonstration` button, film = loop cut from `C10-Use-Case-Shorts-Final-Horizontal.mp4` with an operational poster and a Play/Pause control that has no visible button (owner's request) but appears on keyboard focus, plus `Watch the full film` opening the complete supplied film in the media viewer. Rerun `scripts/qa/hero-contrast.mjs` after changing the loop, scrim or hero text.
 - **Specifications:** exactly the five supplied rows with all qualifiers (`Over`, `Up to`, `Around … up to … at peak`), always visible.
-- **Applications:** all seven entries, including `Surface coating and treatment, currently in development`. Never relabel an unrelated photograph as evidence for an entry.
+- **Applications:** all seven entries, including `Surface coating and treatment, currently in development`. Never relabel an unrelated photograph as evidence for an entry. Everything stays inside the page frame; its films play in place as silent loops with no labels over the pictures (pause and watch-with-sound icons on hover/focus).
 - **Support:** five service areas; the three supplied paragraphs stay whole and visible.
 - **Form:** fields Name, Company, Email, Telephone, Sites or work involved; submit `Discuss a requirement`. No handler exists: never show a success state or add fields.
 - **Design system:** Manrope only; tokens in `globals.css`; dark ink text on cyan. Decoration stays in its three tied layers (brand, technical, depth; refinement 3 §4). Callouts only on parts identified in the photograph itself; no measurements, coordinates, telemetry or counters.
