@@ -1,8 +1,8 @@
 {
   "url": "https://the-bionic-eye.vercel.app/",
-  "ranAt": "2026-10-14T01:13:38.007Z",
+  "ranAt": "2026-10-14T04:30:53.932Z",
   "totals": {
-    "PASS": 60
+    "PASS": 63
   },
   "results": [
     {
@@ -43,7 +43,7 @@
     {
       "id": "QA-HERO-AUTOPLAY-AND-PAUSE",
       "status": "PASS",
-      "detail": "playing=true paused=true label=Play film, background film"
+      "detail": "playing=true paused=true label=Play film, background film hiddenUntilFocus=true"
     },
     {
       "id": "QA-HERO-CONTROL-HONEST",
@@ -101,14 +101,29 @@
       "detail": "{\"headerBottom\":84,\"targetTop\":232}"
     },
     {
+      "id": "QA-APPS-FILMS-PLAY",
+      "status": "PASS",
+      "detail": "{\"playing\":\"true,true,true,true\",\"chips\":0,\"labels\":0,\"inFrame\":true}"
+    },
+    {
+      "id": "QA-APPS-IN-FRAME",
+      "status": "PASS",
+      "detail": "every Applications frame inside the 12-column frame"
+    },
+    {
       "id": "QA-WATCH-VIDEO",
       "status": "PASS",
-      "detail": "{\"before\":0,\"watch\":{\"controls\":true,\"focused\":true,\"src\":\"/media/video/system-c10-introduction-720.mp4\"}}"
+      "detail": "{\"before\":0,\"watch\":{\"controls\":true,\"focusInside\":true,\"src\":\"/media/video/system-c10-introduction-720.mp4\"}}"
+    },
+    {
+      "id": "QA-APPS-FILM-PAUSE",
+      "status": "PASS",
+      "detail": "{\"userPause\":true,\"offscreen\":true}"
     },
     {
       "id": "QA-ALL-FILMS-REACHABLE",
       "status": "PASS",
-      "detail": "{\"inline\":6,\"dialogs\":[\"Watch the full film01:23 — C10 Use Case \",\"Play film00:39 — ABZ Clean Station, setu\",\"Play film01:15 — ABZ Clean Station, setu\"]}"
+      "detail": "{\"loops\":4,\"inline\":2,\"dialogs\":6}"
     },
     {
       "id": "QA-EXPLORER-VIEWS",
@@ -213,7 +228,7 @@
     {
       "id": "QA-MOBILE-SYSTEM-ORDER",
       "status": "PASS",
-      "detail": "{\"lede\":3815,\"stage\":4146,\"specs\":4779,\"story\":5575,\"controls\":0,\"station\":\"1\"}"
+      "detail": "{\"lede\":3945,\"stage\":4276,\"specs\":4909,\"story\":5769,\"controls\":0,\"station\":\"1\"}"
     },
     {
       "id": "QA-MENU-OPEN",
@@ -253,12 +268,12 @@
     {
       "id": "QA-REDUCED-MOTION",
       "status": "PASS",
-      "detail": "{\"pending\":0,\"scene\":0,\"videoPaused\":true,\"videoNetwork\":1,\"smooth\":\"auto\"}"
+      "detail": "{\"pending\":0,\"scene\":0,\"videoPaused\":true,\"loopsPaused\":true,\"videoNetwork\":1,\"smooth\":\"auto\"}"
     },
     {
       "id": "QA-CAPTURE-STATE",
       "status": "PASS",
-      "detail": "{\"flag\":\"1\",\"pending\":0,\"header\":\"relative\",\"scene\":0,\"details\":2,\"heroVideo\":\"none\",\"specs\":5}"
+      "detail": "{\"flag\":\"1\",\"pending\":0,\"header\":\"relative\",\"scene\":0,\"details\":2,\"heroVideo\":\"none\",\"loopsPaused\":true,\"specs\":5}"
     },
     {
       "id": "QA-NO-JS-CONTENT-VISIBLE",

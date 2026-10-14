@@ -7,9 +7,12 @@ Implementation:     BUILT — balanced Applications inside the page frame, films
                     no labels), no visible hero pause, brand ornaments site-wide. See docs/ASSET_CLEANING_REFINEMENT_4.md
 Local build:        PASS — lint, typecheck, build
 QA:                 63/63 interaction + axe checks PASS; hero contrast PASS; copy audit 0 unverified
-GitHub:             branch refinement-4-applications-decoration, then main fast-forwarded to it at the owner's
-                    request ("Merging into main"); normal pushes, no force, no merge commit
-Vercel:             production deployment status recorded below once verified
+GitHub:             branch refinement-4-applications-decoration (04674da code, 03a7908 docs/exports), then main
+                    fast-forwarded 9b70d56 → 03a7908 at the owner's request ("Merging into main"); normal pushes,
+                    no force, no merge commit
+Vercel:             production deployment of 03a7908: state "success". https://the-bionic-eye.vercel.app serves
+                    refinement 4 (new loops and posters return 206); qa/interaction.mjs against it: 63/63 PASS
+                    (qa/interaction-results-production.json)
 Environment keys:   none
 ```
 
