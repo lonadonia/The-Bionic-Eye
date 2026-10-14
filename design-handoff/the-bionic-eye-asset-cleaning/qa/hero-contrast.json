@@ -1,6 +1,6 @@
 {
   "url": "http://localhost:3000/",
-  "ranAt": "2026-10-14T04:22:16.020Z",
+  "ranAt": "2026-10-14T04:53:50.217Z",
   "samples": [
     0.2,
     1.27,
@@ -31,90 +31,90 @@
     "1440x900": {
       "headline": {
         "need": 3,
-        "minP95": 10.42,
-        "brightestPixel": 7.04,
+        "minP95": 9.1,
+        "brightestPixel": 6.17,
         "atTime": 21.56,
         "pass": true
       },
       "intro paragraph 1": {
         "need": 4.5,
-        "minP95": 10.08,
-        "brightestPixel": 6.71,
+        "minP95": 7.76,
+        "brightestPixel": 5.44,
         "atTime": 4.47,
         "pass": true
       },
       "intro paragraph 2": {
         "need": 4.5,
-        "minP95": 10.85,
-        "brightestPixel": 8.19,
-        "atTime": 24.76,
+        "minP95": 8.65,
+        "brightestPixel": 6.49,
+        "atTime": 3.4,
         "pass": true
       },
       "full film control": {
         "need": 4.5,
-        "minP95": 9.47,
-        "brightestPixel": 8.78,
-        "atTime": 9.81,
+        "minP95": 9.6,
+        "brightestPixel": 9.13,
+        "atTime": 20.49,
         "pass": true
       }
     },
     "1280x900": {
       "headline": {
         "need": 3,
-        "minP95": 9.87,
-        "brightestPixel": 6.18,
-        "atTime": 21.56,
+        "minP95": 8.48,
+        "brightestPixel": 5.58,
+        "atTime": 3.4,
         "pass": true
       },
       "intro paragraph 1": {
         "need": 4.5,
-        "minP95": 8.21,
-        "brightestPixel": 4.31,
-        "atTime": 3.4,
+        "minP95": 6.47,
+        "brightestPixel": 3.8,
+        "atTime": 4.47,
         "pass": true
       },
       "intro paragraph 2": {
         "need": 4.5,
-        "minP95": 9.01,
-        "brightestPixel": 6.44,
+        "minP95": 7.07,
+        "brightestPixel": 4.75,
         "atTime": 4.47,
         "pass": true
       },
       "full film control": {
         "need": 4.5,
-        "minP95": 9.48,
+        "minP95": 9.57,
         "brightestPixel": 8.78,
-        "atTime": 9.81,
+        "atTime": 20.49,
         "pass": true
       }
     },
     "1024x900": {
       "headline": {
         "need": 3,
-        "minP95": 7.47,
-        "brightestPixel": 4.32,
-        "atTime": 21.56,
+        "minP95": 6.6,
+        "brightestPixel": 4.08,
+        "atTime": 4.47,
         "pass": true
       },
       "intro paragraph 1": {
         "need": 4.5,
-        "minP95": 6.13,
-        "brightestPixel": 2.94,
+        "minP95": 5.04,
+        "brightestPixel": 2.93,
         "atTime": 4.47,
         "pass": true
       },
       "intro paragraph 2": {
         "need": 4.5,
-        "minP95": 6.06,
-        "brightestPixel": 3.31,
-        "atTime": 23.69,
+        "minP95": 4.92,
+        "brightestPixel": 3.04,
+        "atTime": 4.47,
         "pass": true
       },
       "full film control": {
         "need": 4.5,
-        "minP95": 9.33,
+        "minP95": 9.61,
         "brightestPixel": 8.78,
-        "atTime": 6.61,
+        "atTime": 19.42,
         "pass": true
       }
     }

@@ -59,6 +59,27 @@ export function WaveEdge({ className = "", flip = false }: DecorProps & { flip?:
   );
 }
 
+/**
+ * The hero's lower edge: the wing sweep cut across the bottom of the film. Below the curve is the
+ * colour of the next section; a cyan line (with a fainter second line, like the mark's paired
+ * strokes) runs along it and draws itself once on arrival (CSS only; static with reduced motion).
+ */
+export function HeroWave({ className = "" }: DecorProps) {
+  const curve = "M0 30 C 300 30 560 84 860 74 S 1260 22 1440 40";
+  const echo = "M0 46 C 300 46 560 96 860 88 S 1260 38 1440 56";
+  return (
+    <div className={`hero-wave ${className}`} aria-hidden="true">
+      <svg className="hero-wave__fill" viewBox="0 0 1440 96" preserveAspectRatio="none" focusable="false">
+        <path d={`${curve} L1440 98 L0 98 Z`} />
+      </svg>
+      <svg className="hero-wave__line" viewBox="0 0 1440 96" preserveAspectRatio="none" focusable="false">
+        <path d={curve} fill="none" vectorEffect="non-scaling-stroke" />
+        <path className="hero-wave__echo" d={echo} fill="none" vectorEffect="non-scaling-stroke" />
+      </svg>
+    </div>
+  );
+}
+
 export function DotField({ className = "" }: DecorProps) {
   return <span className={`decor decor-dots ${className}`} aria-hidden="true" />;
 }

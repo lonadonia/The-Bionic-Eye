@@ -1,5 +1,16 @@
 # 05 · GitHub and Vercel handoff
 
+## Refinement 5 (14 October 2026)
+
+```
+Implementation:     BUILT — hero and Applications polish (curved wing edge, visible watermark and frame after a
+                    stacking fix, caption cards, film band). See docs/ASSET_CLEANING_REFINEMENT_5.md
+Local build:        PASS — lint, typecheck, build
+QA:                 63/63 interaction + axe checks PASS; hero contrast PASS (lowest 4.92:1); copy audit 0 unverified
+GitHub:             branch refinement-5-hero-applications-aesthetics; main not changed by this round yet
+Environment keys:   none
+```
+
 ## Refinement 4 (14 October 2026)
 
 ```

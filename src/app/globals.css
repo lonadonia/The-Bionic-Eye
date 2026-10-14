@@ -833,6 +833,7 @@
 
   /* ---------- Hero ---------- */
   .hero {
+    --hero-wave-h: clamp(3rem, 6.5vw, 6rem);
     position: relative;
     isolation: isolate;
     overflow: clip;
@@ -845,7 +846,11 @@
     z-index: 2;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    padding-block: 2rem 3.5rem;
+    padding-block: 2rem calc(var(--hero-wave-h) + 1.75rem);
+  }
+
+  .hero__rule {
+    margin-bottom: 1.25rem;
   }
 
   .hero__media {
@@ -992,9 +997,56 @@
     }
   }
 
-  .hero__frame,
-  .hero__edge {
+  .hero__frame {
     display: none;
+  }
+
+  /* The CTA carries a soft cyan glow and lifts slightly on hover. */
+  .hero .btn-primary {
+    box-shadow: 0 14px 34px -14px rgb(0 191 243 / 0.75);
+    transition:
+      background-color 180ms ease,
+      box-shadow 220ms ease,
+      transform 220ms var(--ease-out);
+  }
+
+  .hero .btn-primary:hover {
+    box-shadow: 0 18px 42px -12px rgb(0 191 243 / 0.9);
+    transform: translateY(-1px);
+  }
+
+  /* Curved wing edge across the bottom of the hero (HeroWave). */
+  .hero-wave {
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: var(--hero-wave-h);
+    pointer-events: none;
+  }
+
+  .hero-wave svg {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .hero-wave__fill path {
+    fill: var(--color-paper);
+  }
+
+  .hero-wave__line path {
+    stroke: var(--color-cyan);
+    stroke-width: 3px;
+  }
+
+  .hero-wave__line .hero-wave__echo {
+    stroke-width: 1.5px;
+    opacity: 0.45;
   }
 
   @media (width >= 64rem) {
@@ -1007,8 +1059,17 @@
     /* Reading zone: 480px at 1024 growing to 600px at 1440, so the copy never reaches the drone. */
     .hero__grid {
       grid-template-columns: minmax(0, clamp(30rem, 28.85vw + 11.54rem, 37.5rem)) minmax(0, 1fr);
-      padding-block: 6.5rem 7rem;
+      padding-block: 6rem calc(var(--hero-wave-h) + 3.5rem);
       position: static;
+      /* As a grid item of .hero, a z-index would still create a stacking context and lift the film
+         above the watermark; auto lets the film, watermark, frame and copy layer in .hero itself. */
+      z-index: auto;
+    }
+
+    /* A soft shadow gives the copy depth over the moving film. */
+    .hero__title,
+    .hero__intro {
+      text-shadow: 0 2px 28px rgb(4 9 11 / 0.45);
     }
 
     .hero__grid > :not(.hero__media) {
@@ -1065,13 +1126,17 @@
       width: auto;
     }
 
+    /* The eye symbol, large, behind the reading zone, fading out before the drone. */
     .hero__mark {
       z-index: 1;
-      width: clamp(40rem, 52vw, 52rem);
-      left: calc(-0.17 * clamp(40rem, 52vw, 52rem));
+      width: clamp(46rem, 68vw, 64rem);
+      left: calc(-0.3 * clamp(46rem, 68vw, 64rem));
       right: auto;
-      bottom: calc(-0.13 * clamp(40rem, 52vw, 52rem));
-      opacity: 0.09;
+      top: 50%;
+      bottom: auto;
+      transform: translateY(-46%);
+      opacity: 0.085;
+      mask-image: linear-gradient(to right, #000 38%, transparent 80%);
     }
 
     /* Fine frame boundary at the content edges, with framing marks at its corners. */
@@ -1082,7 +1147,7 @@
       display: block;
       position: absolute;
       z-index: 1;
-      inset: 1.75rem var(--x) 1.75rem var(--x);
+      inset: 1.75rem var(--x) calc(var(--hero-wave-h) + 0.75rem) var(--x);
       pointer-events: none;
       border: 1px solid rgb(255 255 255 / 0.16);
       background:
@@ -1097,21 +1162,9 @@
       background-repeat: no-repeat;
     }
 
-    /* One cyan edge rule, running in from the page edge under the reading group. */
-    .hero__edge {
-      display: block;
-      position: absolute;
-      z-index: 2;
-      left: 0;
-      bottom: 0;
-      height: 5px;
-      width: calc(max(var(--gutter), (100% - var(--content-max)) / 2) + clamp(30rem, 28.85vw + 11.54rem, 37.5rem));
-      background: var(--color-cyan);
-    }
-
     .hero__controls {
       right: max(var(--gutter), calc((100% - var(--content-max)) / 2));
-      bottom: 3rem;
+      bottom: calc(var(--hero-wave-h) + 1.25rem);
     }
   }
 
@@ -1127,6 +1180,88 @@
     z-index: 1;
   }
 
+  /* A soft cyan atmosphere at two corners (kept away from the copy). */
+  .apps::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(56rem 26rem at 96% 0%, rgb(0 191 243 / 0.1), transparent 70%),
+      radial-gradient(44rem 24rem at 0% 100%, rgb(0 191 243 / 0.07), transparent 70%);
+  }
+
+  /* Heading row: a measured line runs from the heading towards the lens rings. */
+  .apps__head {
+    display: flex;
+    align-items: flex-end;
+    gap: 1.75rem;
+  }
+
+  .apps__head-line {
+    position: relative;
+    flex: 1 1 auto;
+    height: 1px;
+    margin-bottom: 0.95rem;
+    margin-right: 0.75rem;
+    background: linear-gradient(90deg, var(--color-line), var(--color-cyan));
+  }
+
+  .apps__head-line::after {
+    content: "";
+    position: absolute;
+    right: -0.75rem;
+    top: -5px;
+    width: 11px;
+    height: 11px;
+    border-radius: 999px;
+    border: 2px solid var(--color-cyan);
+    background: var(--color-paper);
+  }
+
+  /* Caption cards: white, overlapping the lower edge of the picture, with the lens marker. */
+  .app__card {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap: 0.75rem;
+    align-self: flex-start;
+    max-width: calc(100% - 2rem);
+    margin: -1.75rem 0 0 1rem;
+    padding: 0.875rem 1.25rem 0.875rem 1rem;
+    border-radius: 12px;
+    background: var(--color-paper);
+    box-shadow:
+      0 0 0 1px rgb(17 38 52 / 0.06),
+      0 20px 40px -24px rgb(5 12 16 / 0.5);
+  }
+
+  .app__card .app__caption {
+    margin: 0;
+  }
+
+  /* Fine viewfinder marks inside the two photographs' corners. */
+  .app--facades .app__frame::after,
+  .app--solar .app__frame::after {
+    --m: 18px;
+    --c: rgb(255 255 255 / 0.75);
+    content: "";
+    position: absolute;
+    inset: 16px;
+    pointer-events: none;
+    background:
+      linear-gradient(var(--c), var(--c)) top left / var(--m) 2px,
+      linear-gradient(var(--c), var(--c)) top left / 2px var(--m),
+      linear-gradient(var(--c), var(--c)) top right / var(--m) 2px,
+      linear-gradient(var(--c), var(--c)) top right / 2px var(--m),
+      linear-gradient(var(--c), var(--c)) bottom right / var(--m) 2px,
+      linear-gradient(var(--c), var(--c)) bottom right / 2px var(--m);
+    background-repeat: no-repeat;
+  }
+
   /* Brand ornaments: lens rings cropped at the right edge beside the heading, a dot field behind the films. */
   .apps__iris {
     top: calc(var(--section-y) - 7rem);
@@ -1137,10 +1272,10 @@
   }
 
   .apps__dots {
-    left: 0;
-    bottom: calc(var(--section-y) + 4rem);
-    width: min(34vw, 26rem);
-    height: 15rem;
+    right: 0;
+    top: 46%;
+    width: min(30vw, 22rem);
+    height: 16rem;
   }
 
   .apps__grid {
@@ -1178,7 +1313,21 @@
     align-items: center;
     gap: 1rem;
     padding: 1.125rem 1.5rem;
-    background: var(--color-soft);
+    background: linear-gradient(135deg, var(--color-soft) 0%, #fbfdfe 100%);
+  }
+
+  /* Faint lens rings in the panel's lower corner, clear of the text. */
+  .app--text-last::after {
+    content: "";
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    width: 7.5rem;
+    height: 7.5rem;
+    border-radius: 999px;
+    pointer-events: none;
+    background: repeating-radial-gradient(circle, transparent 0 13px, rgb(0 191 243 / 0.22) 13px 14px, transparent 14px 20px);
+    mask-image: radial-gradient(circle, #000 55%, transparent 72%);
   }
 
   .apps__grid > .app--text:not(.app--text-first) {
@@ -1345,18 +1494,53 @@
     }
   }
 
-  /* Supporting application films: one shared frame height; widths 5 / 4 / 3 of the grid. */
+  /* Dark film band: a cinematic panel holding the three films. */
+  .film-band {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    margin-top: clamp(3.5rem, 6vw, 5rem);
+    padding: clamp(1rem, 2.4vw, 2rem);
+    border-radius: 24px;
+    background:
+      radial-gradient(40rem 18rem at 0% 0%, rgb(0 191 243 / 0.16), transparent 70%),
+      var(--color-deep);
+    box-shadow: 0 40px 80px -48px rgb(5 12 16 / 0.7);
+  }
+
+  .film-band::before {
+    content: "";
+    position: absolute;
+    left: clamp(1rem, 2.4vw, 2rem);
+    top: 0;
+    width: 4.5rem;
+    height: 3px;
+    background: var(--color-cyan);
+  }
+
+  .film-band__dots {
+    top: 0;
+    right: 0;
+    width: 18rem;
+    height: 11rem;
+  }
+
+  .film-band .media-caption__title {
+    color: #fff;
+  }
+
+  /* Supporting application films: one shared frame height; widths 5 / 4 / 3 of the band. */
   .film-strip {
     position: relative;
+    z-index: 1;
     display: grid;
     gap: 2rem;
-    margin-top: clamp(3.5rem, 6vw, 5rem);
   }
 
   .film-strip__frame {
     aspect-ratio: 16 / 10;
-    border-radius: var(--radius-panel);
-    box-shadow: var(--shadow-media);
+    border-radius: 14px;
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.08);
   }
 
   .film-strip__item--narrow .film-strip__frame {
@@ -2685,6 +2869,47 @@
   html:not([data-capture]) .hero-in {
     animation: hero-in 520ms var(--ease-out) both;
     animation-delay: calc(var(--i, 0) * 50ms);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-capture]) .hero-wave__line {
+    animation: wave-draw 1600ms var(--ease-out) 350ms both;
+  }
+
+  html:not([data-capture]) .hero__control--full .film-btn__icon {
+    position: relative;
+  }
+
+  html:not([data-capture]) .hero__control--full .film-btn__icon::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 999px;
+    border: 2px solid var(--color-cyan);
+    opacity: 0;
+    animation: ring-pulse 2400ms var(--ease-out) 1200ms 2;
+  }
+}
+
+@keyframes wave-draw {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes ring-pulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.9;
+  }
+  70%,
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
   }
 }
 

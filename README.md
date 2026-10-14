@@ -23,7 +23,7 @@ No environment variables are required (see `.env.example`).
 
 Next.js 16 (App Router, static) · React 19 · TypeScript · Tailwind CSS 4 · Manrope via `next/font` (one family) · GSAP 3 + ScrollTrigger + `@gsap/react` for the cleaning-system scene and a few entrances (CSS for simple states) · no backend.
 
-Current design: [`docs/ASSET_CLEANING_REFINEMENT_4.md`](docs/ASSET_CLEANING_REFINEMENT_4.md) (balanced Applications, films that play in place, brand ornaments), building on [`docs/ASSET_CLEANING_REFINEMENT_3.md`](docs/ASSET_CLEANING_REFINEMENT_3.md) (14 October 2026), covering the product explorer, the cleaning-system scene, the full-resolution asset map, decoration layers, motion, skills and QA. Source differences between the contest copy and the announcement, and the content removed for lack of a source, remain in [`docs/ASSET_CLEANING_REFINEMENT_2.md`](docs/ASSET_CLEANING_REFINEMENT_2.md) §3.
+Current design: [`docs/ASSET_CLEANING_REFINEMENT_5.md`](docs/ASSET_CLEANING_REFINEMENT_5.md) (hero and Applications polish) and [`docs/ASSET_CLEANING_REFINEMENT_4.md`](docs/ASSET_CLEANING_REFINEMENT_4.md) (balanced Applications, films that play in place, brand ornaments), building on [`docs/ASSET_CLEANING_REFINEMENT_3.md`](docs/ASSET_CLEANING_REFINEMENT_3.md) (14 October 2026), covering the product explorer, the cleaning-system scene, the full-resolution asset map, decoration layers, motion, skills and QA. Source differences between the contest copy and the announcement, and the content removed for lack of a source, remain in [`docs/ASSET_CLEANING_REFINEMENT_2.md`](docs/ASSET_CLEANING_REFINEMENT_2.md) §3.
 
 **Status:** Claude-assisted **internal prototype**. The contest currently prohibits AI-generated layouts and images, so this build and its exports are not a contest entry unless the organiser permits it.
 
@@ -44,7 +44,7 @@ design-handoff/the-bionic-eye-asset-cleaning/
   01–08 *.md      earlier analysis, blueprint, master prompt, QA, handoff, Figma spec, walkthrough, design note
   exports/        1440 full PNG/PDF; 1024 full PNG; 390 @2x full PNG and hero + Applications PNG/PDF
   qa/             interaction results, copy audit, hero contrast, page weight, first-viewport screens
-docs/             refinement notes; refinement-2/, refinement-3/ and refinement-4/ hold baselines and before/after captures
+docs/             refinement notes; refinement-2/ to refinement-5/ hold baselines and before/after captures
 scripts/qa/       QA, export and media-pipeline scripts (not part of the build)
 ```
 

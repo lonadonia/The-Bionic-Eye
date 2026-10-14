@@ -11,8 +11,10 @@ import { AmbientFilm } from "../video/ambient-film";
  * pairs the industrial cladding film (6) with a text-led panel (6) of equal height. Only those
  * three entries have credible supplied imagery; the other four share the panel, because no
  * photograph in the pack shows wind turbine towers, heritage work, graffiti removal or surface
- * coating, and a nearby image must not be relabelled as evidence for them. A strip of three films
- * at one shared height closes the section. Every film plays in place as a short silent loop.
+ * coating, and a nearby image must not be relabelled as evidence for them. Captions of the pictured
+ * entries sit on white cards that overlap the picture edge (all seven entries share the lens
+ * marker). A dark film band with three films at one shared height closes the section. Every film
+ * plays in place as a short silent loop.
  */
 const visual: Record<string, "facades" | "solar" | "industrial"> = {
   facades: "facades",
@@ -39,7 +41,10 @@ export function Applications() {
       <IrisRings className="apps__iris" />
       <DotField className="apps__dots" />
       <div className="shell apps__shell">
-        <SectionIntro id="applications-heading" heading={applications.heading} />
+        <div className="apps__head">
+          <SectionIntro id="applications-heading" heading={applications.heading} />
+          <span className="apps__head-line" aria-hidden="true" />
+        </div>
 
         <ul className="apps__grid" aria-labelledby="applications-heading">
           {applications.items.map((item) => {
@@ -84,27 +89,33 @@ export function Applications() {
                     </div>
                   </div>
                 )}
-                <Caption item={item} />
+                <div className="app__card">
+                  <span className="app__marker" aria-hidden="true" />
+                  <Caption item={item} />
+                </div>
               </li>
             );
           })}
         </ul>
 
-        {/* Supporting application films: one shared height, widths 5 / 4 / 3 columns. */}
-        <div className="film-strip">
-          <div className="film-strip__item film-strip__item--wide" data-motion="stagger">
-            <AmbientFilm film={films.montage} frameClass="film-strip__frame" sizes="(min-width: 80rem) 520px, (min-width: 48rem) 42vw, 100vw" />
-          </div>
-          <div className="film-strip__item film-strip__item--mid" data-motion="stagger">
-            <AmbientFilm film={films.systemIntroduction} frameClass="film-strip__frame" sizes="(min-width: 80rem) 410px, (min-width: 48rem) 33vw, 100vw" />
-          </div>
-          <div className="film-strip__item film-strip__item--narrow" data-motion="stagger">
-            <AmbientFilm
-              film={films.claddingPortrait}
-              frameClass="film-strip__frame"
-              focus="50% 8%"
-              sizes="(min-width: 80rem) 300px, (min-width: 48rem) 25vw, 100vw"
-            />
+        {/* Supporting application films on a dark band: one shared height, widths 5 / 4 / 3 columns. */}
+        <div className="film-band on-deep">
+          <DotField className="film-band__dots" />
+          <div className="film-strip">
+            <div className="film-strip__item film-strip__item--wide" data-motion="stagger">
+              <AmbientFilm film={films.montage} frameClass="film-strip__frame" sizes="(min-width: 80rem) 520px, (min-width: 48rem) 42vw, 100vw" />
+            </div>
+            <div className="film-strip__item film-strip__item--mid" data-motion="stagger">
+              <AmbientFilm film={films.systemIntroduction} frameClass="film-strip__frame" sizes="(min-width: 80rem) 410px, (min-width: 48rem) 33vw, 100vw" />
+            </div>
+            <div className="film-strip__item film-strip__item--narrow" data-motion="stagger">
+              <AmbientFilm
+                film={films.claddingPortrait}
+                frameClass="film-strip__frame"
+                focus="50% 8%"
+                sizes="(min-width: 80rem) 300px, (min-width: 48rem) 25vw, 100vw"
+              />
+            </div>
           </div>
         </div>
       </div>
